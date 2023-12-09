@@ -1,0 +1,73 @@
+@mixin header-container {
+  header {
+    z-index: 2;
+    width: 100vw;
+    height: 72px;
+    padding: 12px 0;
+    position: fixed;
+    animation: changeColor 1s both;
+  }
+
+  .istest {
+    animation: changeToDefault 1s both;
+  }
+
+  @keyframes changeColor {
+    from {
+      background-color: $transparent_gray;
+      backdrop-filter: blur(4px);
+    }
+    to {
+      background-color: $pink;
+    }
+  }
+
+  @keyframes changeToDefault {
+    from {
+      background-color: $pink;
+    }
+    to {
+      background-color: $transparent_gray;
+      backdrop-filter: blur(4px);
+    }
+  }
+
+  .container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    object-fit: contain;
+    height: 100%;
+  }
+
+  .account-buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  // button {
+  //   font-weight: 600;
+  //   border: 1px solid $white;
+  //   border-radius: 40px;
+  //   padding: 7px 23px;
+  // }
+
+  .account-button-signIn {
+    color: $pink;
+    background-color: $white;
+  }
+
+  .account-button-signUp {
+    color: $white;
+    background-color: none;
+  }
+
+  #scrollArea {
+    position: relative;
+    top: 300px;
+  }
+}

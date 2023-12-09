@@ -1,0 +1,38 @@
+@mixin info-container {
+  .content {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+  }
+
+  .info {
+    padding: 30px 0 40px;
+    position: relative;
+  }
+
+  .info-circle {
+    display: flex;
+    color: $white;
+    top: 18px;
+    left: 47%;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    background-color: $pink;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 14px;
+  }
+
+  .info-title {
+    font-size: 22px;
+    padding-block: 32px 22px;
+    text-align: center;
+  }
+
+  hr {
+    border-color: $pink;
+  }
+}

@@ -1,8 +1,36 @@
-@import './header';
+@import './landing/header';
+@import './landing/info';
+@import './landing/content';
+@import './landing/aprove';
+@import './landing/reviews';
 @import './general';
 @import './theme';
 
 @mixin header {
   @include header-container;
+  @include container;
+}
+
+@mixin content {
+  @include content-container;
+  @include container;
+}
+
+@mixin info {
+  @include container;
+  @include info-container;
+}
+
+@mixin component-info {
+  @include info-container;
+}
+
+@mixin aprove {
+  @include aprove-container;
+  @include container;
+}
+
+@mixin reviews {
+  @include reviews-container;
   @include container;
 }

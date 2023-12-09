@@ -1,0 +1,57 @@
+@mixin aprove-container {
+  .aprove {
+    margin: 30px 0;
+    position: relative;
+  }
+
+  .aprove-message {
+    width: 68%;
+    height: 543px;
+    padding: 110px 200px 0;
+    gap: 30px;
+    background: rgb(251, 130, 177);
+    background: linear-gradient(196deg, rgba(251, 130, 177, 1) 0%, rgba(231, 35, 112, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    & p {
+      font-size: 19px;
+      font-weight: 600;
+      width: fit-content;
+      background-color: $white;
+      padding: 10px;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    p:nth-child(odd) {
+      align-self: end;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 10px;
+    }
+  }
+
+  .aprove-block {
+    top: 35%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    position: absolute;
+    padding: 30px 20px;
+    background-color: $white;
+    width: 48%;
+    box-shadow: 0 2px 8px $grey;
+    & h1 {
+      font-weight: 600;
+      font-size: 24px;
+    }
+    & button {
+      border-color: $pink;
+      color: $pink;
+    }
+    & p {
+      font-size: 14px;
+    }
+  }
+}
