@@ -3,6 +3,8 @@
 @import './landing/content';
 @import './landing/aprove';
 @import './landing/reviews';
+@import './landing/accordion';
+@import './landing/footer';
 @import './general';
 @import './theme';
 
@@ -33,4 +35,19 @@
 @mixin reviews {
   @include reviews-container;
   @include container;
+}
+
+@mixin accordion {
+  @include accordion-container;
+  @include container;
+}
+
+@mixin component-accordion {
+  @include container;
+  @include component-accordion-container;
+}
+
+@mixin footer {
+  @include container;
+  @include footer-container;
 }

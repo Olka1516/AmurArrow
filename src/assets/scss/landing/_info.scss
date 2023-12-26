@@ -4,17 +4,22 @@
     display: flex;
     justify-content: space-between;
     gap: 30px;
+    padding-block: 60px;
+    @media screen and (max-width: 1024px) {
+      flex-direction: column;
+    }
   }
 
   .info {
-    padding: 30px 0 40px;
-    position: relative;
+    &:only-child {
+      text-align-last: center;
+    }
   }
 
   .info-circle {
     display: flex;
     color: $white;
-    top: 18px;
+    top: -11px;
     left: 47%;
     justify-content: space-evenly;
     align-items: center;
@@ -26,13 +31,28 @@
     font-size: 14px;
   }
 
+  .info-line {
+    margin-top: 20px;
+    position: relative;
+  }
   .info-title {
     font-size: 22px;
     padding-block: 32px 22px;
     text-align: center;
   }
 
+  .info-text {
+    text-align: center;
+  }
+
   hr {
     border-color: $pink;
+  }
+
+  .info-image {
+    object-fit: cover;
+    border-radius: 100px;
+    height: 200px;
+    width: 200px;
   }
 }

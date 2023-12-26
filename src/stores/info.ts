@@ -22,18 +22,41 @@ export const useInfoStore = defineStore('info', () => {
 
   const review = ref([
     {
-      text: 'AmurArrow’s prompts really made the difference—I felt like I got a good sense of a guy’s vibe from his answers, and it was easy to jump right into a real conversation.',
+      text: "I didn't believe that I would be able to find my soulmate online, but this platform impressed me! Here I met fun and interesting people, and one of them became my lover. Thank you for changing my life!",
       id: 1
     },
     {
-      text: 'Thank you AmurArrow! We’re getting married in a few months!',
+      text: 'I was looking for a relationship for a long time, but I did not find what I was looking for. Thanks to this platform, I met a beautiful woman with whom we share many interests. Now my heart belongs to her.',
       id: 2
     },
     {
-      text: 'Other dating apps were like shooting fish in a barrel. But my girlfriend and I clicked right away on AmurArrow, and the conversation was effortless. We’ve been together for over a year.',
+      text: 'Everything started naturally, but it turned out unexpectedly cool! I met my girlfriend here, and now we are planning a future together. Thank you for being you and helping people find love.',
       id: 3
     }
   ])
 
-  return { info, review }
+  const accordion = ref([
+    {
+      title: 'Is this platform safe to use?',
+      text: 'Yes, our site uses advanced technologies to protect personal information and ensure the safety of users.',
+      id: 1
+    },
+    {
+      title: 'Are there real questionnaires here?',
+      text: 'Yes, we do a thorough background check to ensure the authenticity and seriousness of our users.',
+      id: 2
+    },
+    {
+      title: 'What features make our platform unique?',
+      text: 'We offer innovative tools to facilitate dating and facilitate deeper communication between users.',
+      id: 3
+    },
+    {
+      title: 'How to get support if needed?',
+      text: 'Our support team is available 24/7. Contact us and we are ready to help you at any time.',
+      id: 4
+    }
+  ])
+
+  return { info, review, accordion }
 })

@@ -10,10 +10,10 @@ var options = {
   rootMargin: '0px',
   threshold: 1.0
 }
-var callback = function (entries, observer) {
+const callback: IntersectionObserverCallback = () => {
   istest.value = !istest.value
 }
-var observer = new IntersectionObserver(callback, options)
+const observer = new IntersectionObserver(callback, options)
 onMounted(() => {
   const target = document.querySelector('#scrollArea')
   if (target) {

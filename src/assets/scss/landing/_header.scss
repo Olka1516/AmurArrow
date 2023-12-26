@@ -5,11 +5,11 @@
     height: 72px;
     padding: 12px 0;
     position: fixed;
-    animation: changeColor 1s both;
+    animation: changeToDefault 1s both;
   }
 
   .istest {
-    animation: changeToDefault 1s both;
+    animation: changeColor 1s both;
   }
 
   @keyframes changeColor {

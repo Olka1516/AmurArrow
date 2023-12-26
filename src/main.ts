@@ -5,5 +5,6 @@ import '@/assets/scss/_reset.scss'
 
 const pinia = createPinia()
 const app = createApp(App)
+import router from './router'
 
-app.use(pinia).mount('#app')
+app.use(router).use(pinia).mount('#app')
