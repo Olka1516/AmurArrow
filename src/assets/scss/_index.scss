@@ -6,7 +6,7 @@
 @import './landing/accordion';
 @import './landing/footer';
 @import './auth/signPages';
-@import './auth/signUp';
+@import './auth/signIn';
 @import './errors/errors';
 @import './inputs/inputs';
 @import './general';
@@ -60,12 +60,12 @@
 
 @mixin sign-up {
   @include sign-container;
-  @include sign-up-container;
   @include buttons-container;
 }
+
 @mixin sign-in {
-  @include sign-container;
-  @include buttons-container;
+  @include sign-in-container;
+  @include sign-up;
 }
 
 @mixin inputs {

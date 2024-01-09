@@ -1,7 +1,7 @@
 <template>
   <div class="error">
     <span v-if="(props.v.$error && props.v.$dirty) || props.error">
-      <small class="p-error">{{ getError() }}</small>
+      <small class="text-error">{{ getError() }}</small>
     </span>
   </div>
 </template>
@@ -20,36 +20,44 @@ const props = defineProps<{
   error?: string
 }>()
 
+const {
+  EmailIsNotValid,
+  IsRequired,
+  EmailInUse,
+  EmailNotFound,
+  PasswordMinLength,
+  PasswordNotFound,
+  PasswordIsEqual
+} = ErrorMessageEnum
+
 const getError = () => {
   const { $message: message } = props.v.$errors?.[0] ?? { $message: null }
   switch (props.v.$path) {
     case 'email':
-      if (message === ErrorMessageEnum.EmailIsNotValid) return 'Value is not a valid email address.'
-      else if (message === ErrorMessageEnum.IsRequired) return 'Email is required'
-      else if (props.error === ErrorMessageEnum.EmailInUse) return 'This account already exists.'
-      else if (props.error === ErrorMessageEnum.EmailNotFound)
-        return 'Email is incorrect. Please try again'
+      if (message === EmailIsNotValid) return 'Value is not a valid email address.'
+      else if (message === IsRequired) return 'Email is required'
+      else if (props.error === EmailInUse) return 'This account already exists.'
+      else if (props.error === EmailNotFound) return 'Email is incorrect. Please try again'
       break
     case 'password':
-      if (message === ErrorMessageEnum.IsRequired) return 'Password is required'
-      else if (message === ErrorMessageEnum.PasswordMinLength)
+      if (message === IsRequired) return 'Password is required'
+      else if (message === PasswordMinLength)
         return 'This field should be at least 6 characters long'
-      else if (props.error === ErrorMessageEnum.PasswordNotFound)
-        return 'Password is incorrect. Please try again.'
+      else if (props.error === PasswordNotFound) return 'Password is incorrect. Please try again.'
       break
     case 'confirmPassword':
-      if (message === ErrorMessageEnum.IsRequired) return 'Password is required'
-      else if (message === ErrorMessageEnum.PasswordIsEqual)
+      if (message === IsRequired) return 'Password is required'
+      else if (message === PasswordIsEqual)
         return 'The password must be equal to the other password'
       break
     case 'username':
-      if (message === ErrorMessageEnum.IsRequired) return 'Name is required'
+      if (message === IsRequired) return 'Name is required'
       break
     case 'date':
-      if (message === ErrorMessageEnum.IsRequired) return 'Date is required'
+      if (message === IsRequired) return 'Date is required'
       break
     case 'phone':
-      if (message === ErrorMessageEnum.IsRequired) return 'Phone is required'
+      if (message === IsRequired) return 'Phone is required'
       break
   }
 }

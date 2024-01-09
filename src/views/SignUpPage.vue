@@ -30,7 +30,6 @@ const rules = {
 const v$ = useVuelidate(rules, user)
 const signUp = async () => {
   const isFormCorrect = await v$.value.$validate()
-  // console.log('work', user.username)
   if (!isFormCorrect) return
 
   try {
@@ -51,23 +50,23 @@ const signIn = async () => {
       <span></span>
     </div>
 
-    <div class="signin">
-      <div class="content">
+    <div class="sign-page">
+      <div class="sign-page-content">
         <h2>Sign up</h2>
         <div class="form">
-          <div class="inputBox">
+          <div class="form-input">
             <TextInput v-model="user.username" :v="v$.username" type="Username" />
             <ErrorMessage :v="v$.username" />
           </div>
-          <div class="inputBox">
+          <div class="form-input">
             <TextInput v-model="user.email" :v="v$.email" :error="error" type="Email" />
             <ErrorMessage :v="v$.email" />
           </div>
-          <div class="inputBox">
+          <div class="form-input">
             <PasswordInput v-model="user.password" :v="v$.password" type="Password" />
             <ErrorMessage :v="v$.password" />
           </div>
-          <div class="inputBox">
+          <div class="form-input">
             <PasswordInput
               v-model="user.confirmPassword"
               :v="v$.confirmPassword"
@@ -75,7 +74,7 @@ const signIn = async () => {
             />
             <ErrorMessage :v="v$.confirmPassword" />
           </div>
-          <div class="inputBox">
+          <div class="form-input">
             <button class="fill-pink-button" @click="signUp">Submit</button>
             <button class="contour-button" @click="signIn">Sign in</button>
           </div>

@@ -2,9 +2,9 @@
   .error {
     position: absolute;
     top: 46px;
-    // left: 5px;
   }
-  .p-error {
-    color: red;
+  .text-error {
+    font-size: 12px;
+    color: $red;
   }
 }

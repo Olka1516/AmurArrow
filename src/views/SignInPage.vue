@@ -42,15 +42,15 @@ const signUp = async () => {
       <span></span>
     </div>
 
-    <div class="signin">
-      <div class="content">
+    <div class="sign-page">
+      <div class="sign-page-content">
         <h2>Sign in</h2>
         <div class="form">
-          <div class="inputBox">
+          <div class="form-input">
             <TextInput v-model="user.username" :v="v$.username" type="Username" :error="error" />
             <ErrorMessage :v="v$.username" :error="error" />
           </div>
-          <div class="inputBox">
+          <div class="form-input">
             <PasswordInput
               v-model="user.password"
               :v="v$.password"
@@ -59,12 +59,12 @@ const signUp = async () => {
             />
             <ErrorMessage :v="v$.password" :error="error" />
           </div>
-          <div class="links">
+          <div class="form-links">
             <a href="#">Forgot Password</a>
-            <button class="no-background-no-contour-button" @click="signUp">Sign up</button>
           </div>
-          <div class="inputBox">
+          <div class="form-input">
             <button class="fill-pink-button" @click="signIn">Submit</button>
+            <button class="contour-button" @click="signUp">Sign up</button>
           </div>
         </div>
       </div>
