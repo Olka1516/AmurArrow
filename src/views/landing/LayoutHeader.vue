@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 const istest = ref(true)
-const test = () => {
-  console.log('hello')
+const signIn = async () => {
+  await router.push('/sign-in')
+}
+
+const signUp = async () => {
+  await router.push('/sign-up')
 }
 
 var options = {
@@ -27,8 +34,8 @@ onMounted(() => {
     <div class="container">
       <img class="logo" src="@/assets/pictures/logo.png" alt="Logo" />
       <div class="account-buttons">
-        <button class="account-button-signIn" @click="test">Sign In</button>
-        <button class="account-button-signUp" @click="test">Sign Up</button>
+        <button class="contour-button" @click="signIn">Sign In</button>
+        <button class="contour-no-background-button" @click="signUp">Sign Up</button>
       </div>
     </div>
   </header>

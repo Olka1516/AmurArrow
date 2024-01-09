@@ -1,0 +1,61 @@
+@mixin inputs-container {
+  input {
+    position: relative;
+    width: 100%;
+    border: 1px solid $grey;
+    outline: none;
+    padding: 16px 10px 8px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1em;
+  }
+  i {
+    position: absolute;
+    left: 0;
+    margin: 12px 13px;
+    padding: 0 2px;
+    font-style: normal;
+    color: $black;
+    background-color: $white;
+    transition: 0.5s;
+    pointer-events: none;
+  }
+
+  input:focus ~ i,
+  input:valid ~ i {
+    transform: translateY(-21.5px);
+    font-size: 0.8em;
+  }
+
+  .invalid {
+    border: 1px solid red;
+  }
+}
+
+@mixin password-container {
+  .password-suggestion {
+    position: absolute;
+    top: 70px;
+    border-radius: 8px;
+    padding: 15px 40px;
+    background-color: $white;
+    border: 1px solid $grey;
+    z-index: 1;
+  }
+
+  h4 {
+    margin-bottom: 5px;
+  }
+  li {
+    padding: 1px;
+    list-style: disc;
+  }
+
+  button {
+    // color: $black;
+    position: absolute;
+    right: 5px;
+    margin: 12px 13px;
+    // transition: 0.5s;
+  }
+}

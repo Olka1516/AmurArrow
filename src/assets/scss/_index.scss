@@ -5,11 +5,16 @@
 @import './landing/reviews';
 @import './landing/accordion';
 @import './landing/footer';
+@import './auth/signPages';
+@import './auth/signUp';
+@import './errors/errors';
+@import './inputs/inputs';
 @import './general';
 @import './theme';
 
 @mixin header {
   @include header-container;
+  @include buttons-container;
   @include container;
 }
 
@@ -30,6 +35,7 @@
 @mixin aprove {
   @include aprove-container;
   @include container;
+  @include buttons-container;
 }
 
 @mixin reviews {
@@ -50,4 +56,28 @@
 @mixin footer {
   @include container;
   @include footer-container;
+}
+
+@mixin sign-up {
+  @include sign-container;
+  @include sign-up-container;
+  @include buttons-container;
+}
+@mixin sign-in {
+  @include sign-container;
+  @include buttons-container;
+}
+
+@mixin inputs {
+  @include inputs-container;
+}
+
+@mixin password-inputs {
+  @include inputs-container;
+  @include password-container;
+  @include buttons-container;
+}
+
+@mixin errors {
+  @include error-container;
 }

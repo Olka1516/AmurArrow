@@ -1,0 +1,10 @@
+@mixin error-container {
+  .error {
+    position: absolute;
+    top: 46px;
+    // left: 5px;
+  }
+  .p-error {
+    color: red;
+  }
+}

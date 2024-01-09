@@ -23,7 +23,7 @@
         process exciting and productive. Our responsive support is ready to help at any time,
         building a positive community and keeping your dating experience safe.
       </p>
-      <button>Learn More</button>
+      <button class="contour-button">Learn More</button>
     </div>
   </div>
 </template>
