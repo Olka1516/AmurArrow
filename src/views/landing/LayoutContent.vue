@@ -15,7 +15,7 @@ const test = () => {
             interesting conversation partners. We created this site so that you can experience all
             the magic of online dating and discover many possibilities for yourself.
           </p>
-          <button class="content-banner-button" @click="test">Get started</button>
+          <button class="contour-no-background-button" @click="test">Get started</button>
         </div>
         <div class="content-img">
           <img class="content-img-couple" src="@/assets/pictures/couple.png" alt="" />

@@ -29,12 +29,6 @@ body {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
-
 input {
   background-color: #fff;
 }
@@ -46,18 +40,21 @@ input {
 }
 
 button {
-  background-color: transparent;
+  background-color: #e72370;
   cursor: pointer;
-  border: none;
-  padding: 0;
   margin: 0;
+  padding: 7px 23px;
   font-family: 'Nunito Sans', sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 16px;
   line-height: 22px;
   color: #fff;
-  user-select: none;
+  border: 1px solid #fff;
+  border-radius: 40px;
+  &:active {
+    opacity: 0.6;
+  }
 }
 
 button:focus {
@@ -117,7 +114,6 @@ p {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  // line-height: 22px;
   color: #191919;
 }
 
