@@ -24,26 +24,26 @@ const {
   EmailIsNotValid,
   IsRequired,
   EmailInUse,
-  EmailNotFound,
   PasswordMinLength,
-  PasswordNotFound,
-  PasswordIsEqual
+  PasswordIsEqual,
+  UsernameInUse,
+  UsernameOrPasswordWrong
 } = ErrorMessageEnum
 
 const getError = () => {
+  console.log("here work&")
   const { $message: message } = props.v.$errors?.[0] ?? { $message: null }
   switch (props.v.$path) {
     case 'email':
       if (message === EmailIsNotValid) return 'Value is not a valid email address.'
       else if (message === IsRequired) return 'Email is required'
       else if (props.error === EmailInUse) return 'This account already exists.'
-      else if (props.error === EmailNotFound) return 'Email is incorrect. Please try again'
       break
     case 'password':
       if (message === IsRequired) return 'Password is required'
       else if (message === PasswordMinLength)
         return 'This field should be at least 6 characters long'
-      else if (props.error === PasswordNotFound) return 'Password is incorrect. Please try again.'
+      else if (props.error === UsernameOrPasswordWrong) return 'Username or password is incorrect.'
       break
     case 'confirmPassword':
       if (message === IsRequired) return 'Password is required'
@@ -52,6 +52,7 @@ const getError = () => {
       break
     case 'username':
       if (message === IsRequired) return 'Name is required'
+      else if (props.error === UsernameInUse) return 'This account already exists.'
       break
     case 'date':
       if (message === IsRequired) return 'Date is required'
