@@ -12,11 +12,12 @@ const signUp = async () => {
   await router.push('/sign-up')
 }
 
-var options = {
+const options = {
   root: document.querySelector('#scrollArea'),
   rootMargin: '0px',
   threshold: 1.0
 }
+
 const callback: IntersectionObserverCallback = () => {
   istest.value = !istest.value
 }

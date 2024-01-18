@@ -1,6 +1,9 @@
 <script setup lang="ts">
-const test = () => {
-  console.log('here')
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const signUp = async () => {
+  await router.push('/sign-up')
 }
 </script>
 
@@ -15,7 +18,7 @@ const test = () => {
             interesting conversation partners. We created this site so that you can experience all
             the magic of online dating and discover many possibilities for yourself.
           </p>
-          <button class="contour-no-background-button" @click="test">Get started</button>
+          <button class="contour-no-background-button" @click="signUp">Get started</button>
         </div>
         <div class="content-img">
           <img class="content-img-couple" src="@/assets/pictures/couple.png" alt="" />

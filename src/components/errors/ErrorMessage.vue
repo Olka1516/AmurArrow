@@ -31,7 +31,6 @@ const {
 } = ErrorMessageEnum
 
 const getError = () => {
-  console.log("here work&")
   const { $message: message } = props.v.$errors?.[0] ?? { $message: null }
   switch (props.v.$path) {
     case 'email':
