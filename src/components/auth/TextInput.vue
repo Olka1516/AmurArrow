@@ -36,12 +36,15 @@ const handleInput = (event: any) => {
   emit('update:modelValue', event.target.value)
 }
 
+const { UsernameOrPasswordWrong, EmailInUse, EmailIsNotValid, UsernameInUse } = ErrorMessageEnum
 const isNameInvalid = () => {
   return (
     (props.v.$invalid && props.v.$dirty) ||
-    props.error === ErrorMessageEnum.EmailNotFound ||
-    props.error === ErrorMessageEnum.EmailInUse ||
-    props.error === ErrorMessageEnum.EmailIsNotValid
+    ((props.error === EmailInUse ||
+      props.error === EmailIsNotValid) &&
+      props.type === 'Email') ||
+    (props.error === UsernameInUse && props.type === 'Username') ||
+    props.error === UsernameOrPasswordWrong
   )
 }
 

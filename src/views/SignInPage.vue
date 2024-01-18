@@ -5,8 +5,10 @@ import PasswordInput from '@/components/auth/PasswordInput.vue'
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { reactive, ref } from 'vue'
+import { authStore } from '@/stores'
 import { useRouter } from 'vue-router'
 
+const authS = authStore()
 const router = useRouter()
 const error = ref('')
 const user = reactive({
@@ -25,10 +27,10 @@ const signIn = async () => {
     return
   }
   try {
-    // await authStore.signIn(user)
-    // userStore.role === 'client' ? router.push('/client/mainPage') : router.push('/admin/tablePage')
+    await authS.signIn({ username: user.username, password: user.password })
+    router.push('/user-profile')
   } catch (err: any) {
-    error.value = err.message
+    error.value = err.response.data.message
   }
 }
 

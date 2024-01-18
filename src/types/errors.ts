@@ -1,9 +1,9 @@
 export enum ErrorMessageEnum {
     IsRequired = "Value is required",
     EmailIsNotValid = "Value is not a valid email address",
-    EmailNotFound = "Firebase: Error (auth/user-not-found).",
-    EmailInUse = "Firebase: Error (auth/email-already-in-use).",
-    PasswordNotFound = "Firebase: Error (auth/wrong-password).",
+    EmailInUse = "Error: Email is already in use!",
+    UsernameInUse = "Error: Username is already taken!",
     PasswordMinLength = "This field should be at least 6 characters long",
     PasswordIsEqual = "The value must be equal to the other value",
+    UsernameOrPasswordWrong = "Bad credentials",
   }
