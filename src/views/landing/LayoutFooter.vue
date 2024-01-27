@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import Button from '@/components/general/ComponentButton.vue'
+</script>
 <template>
   <footer>
     <div class="container">
@@ -5,24 +8,26 @@
         <div class="footer-column">
           <h2>Legal</h2>
           <div class="footer-column-inner">
-            <button>Privacy</button>
-            <button>Terms</button>
-            <button>Cookie Policy</button>
-            <button>Intellectual Property</button>
+            <Button text="Privacy" />
+            <Button text="Terms" />
+            <Button text="Cookie Policy" />
+            <Button text="Intellectual Property" />
           </div>
         </div>
         <div class="footer-column">
           <div class="footer-column-inner">
-            <button>FAQ</button> <button>Destanations</button> <button>Press Room</button>
-            <button>Contact</button>
-            <button>Promo Code</button>
+            <Button text="FAQ" />
+            <Button text="Destanations" />
+            <Button text="Press Room" />
+            <Button text="Contact" />
+            <Button text="Promo Code" />
           </div>
         </div>
         <div class="footer-column">
           <h2>Careers</h2>
           <div class="footer-column-inner">
-            <button>Careers Portal</button>
-            <button>Tech Blog</button>
+            <Button text="Careers Portal" />
+            <Button text="Tech Blog" />
           </div>
         </div>
         <div>
@@ -58,8 +63,11 @@
       </div>
       <div class="footer-nav footer-nav-bottom">
         <div>
-          <button>FAQ</button>/<button>Safety Tips</button>/<button>Terms</button>/
-          <button>Cookie Policy</button>/<button>Privacy Settings</button>
+          <Button text="FAQ" />/
+          <Button text="Safety Tips" />/
+          <Button text="Terms" />/
+          <Button text="Cookie Policy" />/
+          <Button text="Privacy Settings" />
         </div>
         <p>© 2023 Match Group, LLC, All Rights Reserved</p>
       </div>

@@ -5,6 +5,7 @@
 @import './landing/reviews';
 @import './landing/accordion';
 @import './landing/footer';
+@import './profile/user';
 @import './auth/signPages';
 @import './auth/signIn';
 @import './errors/errors';
@@ -80,4 +81,19 @@
 
 @mixin errors {
   @include error-container;
+}
+
+@mixin user-profile {
+  @include container;
+  @include buttons-container;
+  @include user-profile-container;
+}
+
+@mixin component-user-item {
+  @include user-item-container;
+}
+
+@mixin component-user-photos {
+  @include user-photos-container;
+  @include buttons-container;
 }

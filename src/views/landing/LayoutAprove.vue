@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import Button from '@/components/general/ComponentButton.vue'
+</script>
 <template>
   <div class="aprove">
     <div class="aprove-message">
@@ -23,7 +26,7 @@
         process exciting and productive. Our responsive support is ready to help at any time,
         building a positive community and keeping your dating experience safe.
       </p>
-      <button class="contour-button">Learn More</button>
+      <Button class="contour-button" text="Learn More" />
     </div>
   </div>
 </template>
