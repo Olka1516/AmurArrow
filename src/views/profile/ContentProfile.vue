@@ -16,8 +16,8 @@ const getGender = () => {
   return store.gender == 'male' ? 'Male' : 'Female'
 }
 
-const test = () => {
-  console.log('test')
+const getContent = (item: string) => {
+  return item === 'posts'
 }
 </script>
 <template>
@@ -25,7 +25,7 @@ const test = () => {
     <div class="container">
       <div class="profile-contents">
         <img class="profile-content-img" src="@/assets/pictures/white-blank.jpg" alt="" />
-        <Button class="fill-pink-button settings" icon="settings" @click="test" />
+        <Button class="fill-pink-button settings" icon="settings" />
 
         <div class="profile-circle">
           {{ store.firstname.at(0) }}{{ store.lastname.at(0) }}
@@ -65,14 +65,14 @@ const test = () => {
               icon="grid"
               @click="changeContent('posts')"
               text="Posts"
-              :class="{ isActive: content === 'posts' }"
+              :class="{ isActive: getContent(content) }"
             />
             <Button
               class="contour-no-background-button"
               icon="favourite"
               @click="changeContent('favourite')"
               text="Favorite"
-              :class="{ isActive: content === 'favourite' }"
+              :class="{ isActive: getContent(content) }"
             />
           </div>
           <ContentPhotos
