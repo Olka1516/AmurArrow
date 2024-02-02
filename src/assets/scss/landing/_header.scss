@@ -5,6 +5,7 @@
     height: 72px;
     padding: 12px 0;
     position: fixed;
+    box-shadow: 0 -1px 8px $black;
     animation: changeToDefault 1s both;
   }
 
@@ -51,6 +52,6 @@
 
   #scrollArea {
     position: relative;
-    top: 300px;
+    top: var(--limit-length) px;
   }
 }

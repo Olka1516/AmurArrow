@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import Button from '@/components/general/ComponentButton.vue'
 
+const props = defineProps<{ limit: number }>()
 const router = useRouter()
 const istest = ref(true)
 const signIn = async () => {
@@ -35,12 +37,17 @@ onMounted(() => {
     <div class="container">
       <img class="logo" src="@/assets/pictures/logo.png" alt="Logo" />
       <div class="account-buttons">
-        <button class="contour-button" @click="signIn">Sign In</button>
-        <button class="contour-no-background-button" @click="signUp">Sign Up</button>
+        <Button class="contour-button" @click="signIn" text="Sign In" />
+        <Button class="contour-no-background-button" @click="signUp" text="Sign Up" />
       </div>
     </div>
   </header>
-  <div id="scrollArea"></div>
+  <div
+    id="scrollArea"
+    :style="{
+      '--limit-length': props.limit
+    }"
+  ></div>
 </template>
 
 <style scoped lang="scss">

@@ -1,0 +1,257 @@
+@mixin user-profile-container {
+  .profile {
+    height: 100%;
+    background-color: $pink_dark;
+    padding-top: 130px;
+    @media screen and (max-width: 600px) {
+      padding-top: 100px;
+    }
+  }
+
+  .profile-contents {
+    padding-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    background-color: $pink;
+  }
+
+  .profile-content-img {
+    border: 0;
+    width: 100%;
+    height: 180px;
+    @media screen and (max-width: 600px) {
+      height: 130px;
+    }
+  }
+
+  .fill-pink-button {
+    border: 0;
+    padding: 8px;
+    border-radius: 50px;
+    position: absolute;
+    display: flex;
+    right: 0;
+    &.settings {
+      margin: 10px;
+    }
+    &.photo {
+      background-color: $pink_to_light;
+      bottom: 0;
+    }
+  }
+  .profile-content {
+    margin-left: 230px;
+    margin-top: 20px;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    @media screen and (max-width: 600px) {
+      gap: 8px;
+      align-items: center;
+      margin-left: 0;
+      padding-top: 70px;
+    }
+  }
+  .profile-content-inner {
+    display: flex;
+    gap: 20px;
+  }
+
+  .info {
+    @media screen and (max-width: 600px) {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0;
+      .profile-content-item:first-child {
+        margin-right: 20px;
+      }
+    }
+  }
+  h1,
+  h2,
+  p {
+    color: $white;
+  }
+  h1 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .profile-circle {
+    position: absolute;
+    left: 55px;
+    top: 120px;
+    width: 150px;
+    height: 150px;
+    background-color: $milky;
+    border: 5px solid $pink;
+    border-radius: 100px;
+    font-weight: 500;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 5px $black;
+    @media screen and (max-width: 600px) {
+      width: 135px;
+      height: 135px;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .profile-about {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 0;
+    height: 100%;
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      gap: 25px;
+    }
+  }
+
+  .profile-about-info {
+    width: 30%;
+    background-color: $pink;
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
+
+  .profile-info-inner {
+    position: sticky;
+    top: 80px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    padding: 12px 16px;
+    & h1 {
+      text-align: center;
+    }
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .links {
+    flex-direction: column;
+    & .link {
+      width: 100%;
+      gap: 8px;
+    }
+  }
+  .profile-about-photos {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
+  .profile-about-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    border-bottom: $transparent_pink 1px solid;
+    & .contour-no-background-button {
+      margin-bottom: -1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 24px;
+      border-radius: 0;
+      border-bottom-color: $pink;
+      border-top: 0;
+      border-inline: 0;
+    }
+    & .isActive {
+      background: $linear_pink;
+    }
+  }
+}
+
+@mixin user-item-container {
+  .profile-content-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media screen and (max-width: 767px) {
+      justify-content: flex-start;
+      gap: 8px;
+    }
+  }
+  .profile-content-item-inner {
+    display: flex;
+    gap: 4px;
+    overflow: hidden;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  h2 {
+    color: $white;
+    font-size: 14px;
+    font-weight: 300;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .additionalLinks {
+    gap: 8px;
+  }
+}
+
+@mixin user-photos-container {
+  .profile-about-photo {
+    padding-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-template-rows: repeat(var(--grid-length), 1fr);
+
+    @media screen and (max-width: 540px) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(var(--grid-phone-length), 1fr);
+    }
+    & img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .profile-about-photo-inner {
+    height: 100%;
+    width: 100%;
+  }
+
+  .profile-about-empty {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 25px;
+  }
+
+  h1 {
+    max-width: 400px;
+    color: $white;
+  }
+
+  .no-background-no-contour-button img {
+    width: 50px;
+    height: 50px;
+  }
+}

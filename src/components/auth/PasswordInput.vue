@@ -14,9 +14,7 @@
     }"
   />
   <i>{{ props.type }} </i>
-  <button class="no-background-no-contour-button" @click="isVisible">
-    <img :src="newUrl()" />
-  </button>
+  <Button class="no-background-no-contour-button" @click="isVisible" :icon="newUrl()" />
   <div v-if="$props.type == 'Password' && isFocused() && typeof props.error !== 'string'" class="password-suggestion">
     <h4><b>Suggestions</b></h4>
     <ul>
@@ -29,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '@/components/general/ComponentButton.vue'
 import { ErrorMessageEnum } from '@/types'
 import { ref, watch } from 'vue'
 
@@ -75,9 +74,7 @@ const isVisible = () => {
 }
 
 const newUrl = () => {
-  const text = bloke.value === 'password' ? 'eye' : 'eye-off'
-  const st = new URL(`../../assets/pictures/icons/${text}.png`, import.meta.url)
-  return st.pathname
+  return bloke.value === 'password' ? 'eye' : 'eye-off'
 }
 
 watch(

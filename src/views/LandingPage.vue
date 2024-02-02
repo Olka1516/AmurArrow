@@ -9,7 +9,7 @@ import Accordion from './landing/LayoutAccordion.vue'
 </script>
 
 <template>
-  <Header />
+  <Header :limit="300"/>
   <Content />
   <Info />
   <Aprove />

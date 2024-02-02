@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ErrorMessage from '@/components/errors/ErrorMessage.vue'
+import Button from '@/components/general/ComponentButton.vue'
 import TextInput from '@/components/auth/TextInput.vue'
 import PasswordInput from '@/components/auth/PasswordInput.vue'
 import { required } from '@vuelidate/validators'
@@ -65,8 +66,8 @@ const signUp = async () => {
             <a href="#">Forgot Password</a>
           </div>
           <div class="form-input">
-            <button class="fill-pink-button" @click="signIn">Submit</button>
-            <button class="contour-button" @click="signUp">Sign up</button>
+            <Button class="fill-pink-button" @click="signIn" text="Submit" />
+            <Button class="contour-button" @click="signUp" text="Sign up" />
           </div>
         </div>
       </div>
