@@ -6,8 +6,8 @@ import PasswordInput from '@/components/auth/PasswordInput.vue'
 import { reactive, ref, computed } from 'vue'
 import { email, required, sameAs, minLength } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import { useRouter } from 'vue-router'
 import { authStore } from '@/stores'
+import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const authS = authStore()
@@ -36,7 +36,7 @@ const signUp = async () => {
 
   try {
     await authS.signUp({ username: user.username, email: user.email, password: user.password })
-    router.push('/user-profile')
+    router.push('/user-profile/' + user.username)
   } catch (err: any) {
     error.value = err.response.data.message
   }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Button from '@/components/general/ComponentButton.vue'
-const props = defineProps<{ photos: string[], text: string }>()
+const props = defineProps<{ photos: string[] | []; text: string; isMyProfile?: boolean }>()
 
 const photos = ref(props.photos)
 const gridLength = ref(Math.ceil(props.photos.length / 3))
@@ -26,8 +26,8 @@ const getImage = (item: string) => {
     </div>
   </div>
   <div v-else class="profile-about-empty">
-    <h1>{{props.text}}</h1>
-    <Button class="no-background-no-contour-button" icon="camera-plus" />
+    <h1>{{ props.text }}</h1>
+    <Button v-if="isMyProfile" class="no-background-no-contour-button" icon="camera-plus" />
   </div>
 </template>
 <style scoped lang="scss">

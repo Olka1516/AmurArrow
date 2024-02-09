@@ -1,8 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { userStore } from '@/stores'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/:pathMatch(.*)',
+      name: '404',
+      component: () => import('../views/404Page.vue')
+    },
     {
       path: '/',
       name: 'home',
@@ -17,14 +23,29 @@ const router = createRouter({
       path: '/sign-up',
       name: 'sign-up',
       component: () => import('../views/SignUpPage.vue')
-    }
-    ,
+    },
     {
-      path: '/user-profile',
+      path: '/user-profile/:username',
       name: 'user-profile',
-      component: () => import('../views/UserProfilePage.vue')
+      component: () => import('../views/UserProfilePage.vue'),
+      meta: { requiresAuth: true }
     }
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  const store = userStore()
+  try {
+    if (to.params.username) await store.getUserInfo(String(to.params.username))
+    next()
+  } catch (e: any) {
+    if (e.response.status === 404) {
+      next('/:pathMatch(.*)')
+    } else {
+      next('/')
+    }
+    return
+  }
 })
 
 export default router

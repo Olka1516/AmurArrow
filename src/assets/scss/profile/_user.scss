@@ -43,6 +43,7 @@
   }
   .profile-content {
     margin-left: 230px;
+    min-height: 50px;
     margin-top: 20px;
     color: $white;
     display: flex;
@@ -58,6 +59,12 @@
   .profile-content-inner {
     display: flex;
     gap: 20px;
+  }
+
+  .profile-no-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .info {
@@ -117,6 +124,7 @@
 
   .profile-about-info {
     width: 30%;
+    min-height: 400px;
     background-color: $pink;
     @media screen and (max-width: 767px) {
       width: 100%;

@@ -6,6 +6,7 @@
 @import './landing/accordion';
 @import './landing/footer';
 @import './profile/user';
+@import './profile/notFound';
 @import './auth/signPages';
 @import './auth/signIn';
 @import './errors/errors';
@@ -95,5 +96,11 @@
 
 @mixin component-user-photos {
   @include user-photos-container;
+  @include buttons-container;
+}
+
+@mixin not-found-profile {
+  @include container;
+  @include not-found-container;
   @include buttons-container;
 }
