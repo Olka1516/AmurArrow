@@ -29,7 +29,7 @@ const signIn = async () => {
   }
   try {
     await authS.signIn({ username: user.username, password: user.password })
-    router.push('/user-profile')
+    router.push('/user-profile/' + user.username)
   } catch (err: any) {
     error.value = err.response.data.message
   }
