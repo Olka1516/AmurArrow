@@ -7,6 +7,7 @@
 @import './landing/footer';
 @import './profile/user';
 @import './profile/notFound';
+@import './profile/user-settings';
 @import './auth/signPages';
 @import './auth/signIn';
 @import './errors/errors';
@@ -74,6 +75,22 @@
   @include inputs-container;
 }
 
+@mixin description {
+  @include inputs-container;
+  @include description-container;
+}
+
+@mixin selector {
+  @include inputs-container;
+  @include selector-container;
+  @include buttons-container;
+}
+
+@mixin location-select {
+  @include inputs-container;
+  @include location-container;
+}
+
 @mixin password-inputs {
   @include inputs-container;
   @include password-container;
@@ -99,8 +116,21 @@
   @include buttons-container;
 }
 
+
 @mixin not-found-profile {
   @include container;
   @include not-found-container;
   @include buttons-container;
 }
+
+@mixin component-avatar {
+  @include avatar-container;
+  @include buttons-container;
+}
+
+@mixin user-settings {
+  @include buttons-container;
+  @include container;
+  @include user-settings-container;
+}
+

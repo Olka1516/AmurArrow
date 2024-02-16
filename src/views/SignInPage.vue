@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import ErrorMessage from '@/components/errors/ErrorMessage.vue'
 import Button from '@/components/general/ComponentButton.vue'
-import TextInput from '@/components/auth/TextInput.vue'
-import PasswordInput from '@/components/auth/PasswordInput.vue'
+import TextInput from '@/components/general/TextInput.vue'
+import PasswordInput from '@/components/general/PasswordInput.vue'
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { reactive, ref } from 'vue'

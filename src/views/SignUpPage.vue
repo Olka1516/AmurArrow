@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import ErrorMessage from '@/components/errors/ErrorMessage.vue'
-import TextInput from '@/components/auth/TextInput.vue'
+import TextInput from '@/components/general/TextInput.vue'
 import Button from '@/components/general/ComponentButton.vue'
-import PasswordInput from '@/components/auth/PasswordInput.vue'
+import PasswordInput from '@/components/general/PasswordInput.vue'
 import { reactive, ref, computed } from 'vue'
 import { email, required, sameAs, minLength } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'

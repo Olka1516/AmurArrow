@@ -2,8 +2,11 @@ import App from './App.vue'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import '@/assets/scss/_reset.scss'
-import router from './router'
+
+import vueCountryRegionSelect from 'vue3-country-region-select'
 
 const pinia = createPinia()
 const app = createApp(App)
-app.use(router).use(pinia).mount('#app')
+import router from './router'
+
+app.use(router).use(pinia).use(vueCountryRegionSelect).mount('#app')
