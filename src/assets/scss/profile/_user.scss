@@ -84,20 +84,7 @@
     position: absolute;
     left: 55px;
     top: 120px;
-    width: 150px;
-    height: 150px;
-    background-color: $milky;
-    border: 5px solid $pink;
-    border-radius: 100px;
-    font-weight: 500;
-    font-size: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 5px $black;
     @media screen and (max-width: 600px) {
-      width: 135px;
-      height: 135px;
       top: 45%;
       left: 50%;
       transform: translate(-50%, -50%);
