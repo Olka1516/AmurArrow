@@ -78,6 +78,20 @@
     }
   }
 
+  .user-settings-upload {
+    padding: 16px;
+    background-color: $grey_lighter;
+    // height: 300px;
+    & input {
+      height: 300px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: unset;
+    }
+  }
+
   .form {
     margin: auto;
     width: 70%;
@@ -112,8 +126,8 @@
     display: flex;
     gap: 26px;
     @media screen and (max-width: 540px) {
-    flex-direction: column;
-  }
+      flex-direction: column;
+    }
   }
 
   .form-input {
