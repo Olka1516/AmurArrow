@@ -50,14 +50,26 @@ const getError = () => {
         return 'The password must be equal to the other password'
       break
     case 'username':
-      if (message === IsRequired) return 'Name is required'
+      if (message === IsRequired) return 'Username is required'
       else if (props.error === UsernameInUse) return 'This account already exists.'
       break
-    case 'date':
-      if (message === IsRequired) return 'Date is required'
+    case 'age':
+      if (message === IsRequired) return 'Age is required'
       break
-    case 'phone':
-      if (message === IsRequired) return 'Phone is required'
+    case 'firstName':
+      if (message === IsRequired) return 'First name is required'
+      break
+    case 'lastName':
+      if (message === IsRequired) return 'Last name is required'
+      break
+    case 'gender':
+      if (message === IsRequired) return 'Gender is required'
+      break
+    case 'location':
+      if (message === IsRequired) return 'Location is required'
+      break
+    case 'description':
+      if (message === IsRequired) return 'Description is required'
       break
   }
 }
