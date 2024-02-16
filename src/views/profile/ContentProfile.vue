@@ -4,9 +4,11 @@ import Button from '@/components/general/ComponentButton.vue'
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
 import { ref } from 'vue'
 import { userStore } from '@/stores'
+import { TextEnum } from '@/types'
 
 const store = userStore()
 const content = ref('posts')
+const { OwnerAbout, UserAbout, OwnerPhotos, UserPhotos } = TextEnum
 
 const changeContent = (name: string) => {
   content.value = name
@@ -17,7 +19,15 @@ const getGender = () => {
 }
 
 const getContent = (item: string) => {
-  return item === 'posts'
+  return content.value === item
+}
+
+const getName = () => {
+  return store.firstName ? store.firstName.at(0) + store.lastName!.at(0) : store.username.at(0)
+}
+
+const getText = (text1: string, text2: string) => {
+  return store.userType === 'OWNER' ? text1 : text2
 }
 </script>
 <template>
@@ -25,18 +35,25 @@ const getContent = (item: string) => {
     <div class="container">
       <div class="profile-contents">
         <img class="profile-content-img" src="@/assets/pictures/white-blank.jpg" alt="" />
-        <Button class="fill-pink-button settings" icon="settings" />
+        <Button
+          v-if="store.userType === 'OWNER'"
+          class="fill-pink-button settings"
+          icon="settings"
+        />
 
         <div class="profile-circle">
-          {{ store.firstname.at(0) }}{{ store.lastname.at(0) }}
-
-          <Button class="fill-pink-button photo" icon="camera-plus" />
+          {{ getName() }}
+          <Button
+            v-if="store.userType === 'OWNER'"
+            class="fill-pink-button photo"
+            icon="camera-plus"
+          />
         </div>
         <div class="profile-content">
           <h1>{{ store.username }}</h1>
           <div class="profile-content-inner info">
-            <Item name="location" :text="store.location" />
-            <Item name="email" :text="store.email" />
+            <Item v-if="store.location" name="location" :text="store.location" />
+            <Item v-if="store.email" name="email" :text="store.email" />
           </div>
         </div>
       </div>
@@ -45,43 +62,50 @@ const getContent = (item: string) => {
           <div class="profile-info-inner">
             <h1>About</h1>
             <div class="profile-content-inner">
-              <Item :name="store.gender" :text="getGender()" />
-              <Item name="person" :text="`${store.age} years`" />
+              <Item v-if="store.gender" :name="store.gender" :text="getGender()" />
+              <Item v-if="store.age" name="person" :text="`${store.age} years`" />
             </div>
             <p>{{ store.description }}</p>
-            <nav class="profile-content-inner links">
+            <nav class="profile-content-inner links" v-if="store.media.length">
               <div v-for="item in store.media" :key="item.name">
                 <a :href="item.link" class="profile-content-item link">
                   <Item :name="item.name" :text="item.link" additionalImage="copy" />
                 </a>
               </div>
             </nav>
+            <div
+              v-if="!store.gender && !store.age && !store.description && !store.media.length"
+              class="profile-no-content"
+            >
+              <h1>{{ getText(OwnerAbout, UserAbout) }}</h1>
+            </div>
           </div>
         </div>
         <div class="profile-about-photos">
-          <div class="profile-about-buttons">
+          <div class="profile-about-buttons" v-if="store.userType == 'OWNER'">
             <Button
               class="contour-no-background-button"
               icon="grid"
               @click="changeContent('posts')"
               text="Posts"
-              :class="{ isActive: getContent(content) }"
+              :class="{ isActive: getContent('posts') }"
             />
             <Button
               class="contour-no-background-button"
               icon="favourite"
               @click="changeContent('favourite')"
               text="Favorite"
-              :class="{ isActive: getContent(content) }"
+              :class="{ isActive: getContent('favourite') }"
             />
           </div>
           <ContentPhotos
-            v-if="content === 'posts'"
-            :photos="store.userPhotos"
-            text="You don't have any photos, click the button below to add one"
+            v-if="getContent('posts')"
+            :photos="store.ownerPhotos"
+            :text="getText(OwnerPhotos, UserPhotos)"
+            :isMyProfile="store.userType == 'OWNER'"
           />
           <ContentPhotos
-            v-if="content === 'favourite'"
+            v-if="getContent('favourite') && store.userType === 'OWNER'"
             :photos="store.favouritePhotos"
             text="You don't have favorites, use the platform and find them"
           />

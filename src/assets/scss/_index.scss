@@ -6,6 +6,7 @@
 @import './landing/accordion';
 @import './landing/footer';
 @import './profile/user';
+@import './profile/notFound';
 @import './profile/user-settings';
 @import './auth/signPages';
 @import './auth/signIn';
@@ -115,6 +116,13 @@
   @include buttons-container;
 }
 
+
+@mixin not-found-profile {
+  @include container;
+  @include not-found-container;
+  @include buttons-container;
+}
+
 @mixin component-avatar {
   @include avatar-container;
   @include buttons-container;
@@ -125,3 +133,4 @@
   @include container;
   @include user-settings-container;
 }
+

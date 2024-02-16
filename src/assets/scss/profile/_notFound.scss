@@ -1,0 +1,35 @@
+@mixin not-found-container {
+  .not-found-profile {
+    background-color: $pink;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    display: contents;
+  }
+  .not-found-content {
+    background-color: $white;
+    height: 500px;
+    width: 65%;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px #5a6f71;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  h1 {
+    color: $pink;
+    font-size: 115px;
+    line-height: 1;
+  }
+  p {
+    color: $pink;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+}
