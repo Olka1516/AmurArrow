@@ -81,7 +81,6 @@
   .user-settings-upload {
     padding: 16px;
     background-color: $grey_lighter;
-    // height: 300px;
     & input {
       height: 300px;
       width: 100%;
@@ -110,8 +109,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       &::-webkit-scrollbar {
-        border-top-right-radius: 12px;
-        border-bottom-right-radius: 12px;
+        width: 6px;
         background-color: $white;
       }
       &::-webkit-scrollbar-thumb {

@@ -55,8 +55,7 @@ const submit = async () => {
   <div class="warpper-form">
     <div class="user-content">
       <div class="user-settings">
-        <!-- <img src="@/assets/pictures/white-blank.jpg" alt="" class="user-settings-picture" /> -->
-        <Avatar name="OH" />
+        <Avatar name="OH" type="settings"  />
         <hr />
         <div class="form">
           <DragFile/>
