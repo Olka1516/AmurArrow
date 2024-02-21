@@ -11,7 +11,9 @@ import { ref, reactive } from 'vue'
 import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import SelectorInput from '@/components/general/SelectorInput.vue'
+import { userStore } from '@/stores'
 
+const store = userStore()
 const error = ref('')
 const user = reactive({
   username: '',
@@ -42,10 +44,11 @@ const v$ = useVuelidate(rules, user)
 const submit = async () => {
   const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) return
-
   try {
+    await store.updateUser(user, media)
     // router.push('/user-profile')
   } catch (err: any) {
+    console.log(err.response.data.message)
     error.value = err.response.data.message
   }
 }
