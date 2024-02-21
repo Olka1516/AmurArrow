@@ -61,7 +61,6 @@ const handleFiles = (files: FileList) => {
 const uploadFile = (file: File) => {
   const formData = new FormData()
   formData.append('file', file)
-  console.log('DragFile', formData)
 }
 
 const previewFile = (file: File) => {

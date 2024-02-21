@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Button from '@/components/general/ComponentButton.vue'
-import router from '@/router'
 const props = defineProps<{ photos: string[] | []; text: string; isMyProfile?: boolean }>()
 
 const photos = ref(props.photos)
@@ -11,9 +10,6 @@ const gridPhoneLength = ref(Math.ceil(props.photos.length / 2))
 const getImage = (item: string) => {
   const st = new URL(item, import.meta.url)
   return st.pathname
-}
-const routeToSettings = async () => {
-  // await router.push('/user-settings')
 }
 </script>
 <template>
@@ -35,7 +31,6 @@ const routeToSettings = async () => {
       v-if="isMyProfile"
       class="no-background-no-contour-button"
       icon="camera-plus"
-      @click="routeToSettings"
     />
   </div>
 </template>

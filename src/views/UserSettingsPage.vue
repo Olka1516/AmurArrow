@@ -12,7 +12,9 @@ import { ref, reactive } from 'vue'
 import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import SelectorInput from '@/components/general/SelectorInput.vue'
+import { userStore } from '@/stores'
 
+const store = userStore()
 const error = ref('')
 const user = reactive({
   username: '',
@@ -50,15 +52,21 @@ const submit = async () => {
     error.value = err.response.data.message
   }
 }
+
+const getName = () => {
+  return store.firstName
+    ? store.firstName.charAt(0) + store.lastName!.charAt(0)
+    : store.username.charAt(0)
+}
 </script>
 <template>
   <div class="warpper-form">
     <div class="user-content">
       <div class="user-settings">
-        <Avatar name="OH" type="settings"  />
+        <Avatar :name="getName" type="settings" />
         <hr />
         <div class="form">
-          <DragFile/>
+          <DragFile />
           <div class="form-column">
             <div class="form-input">
               <TextInput v-model="user.username" :v="v$.username" type="Username" :error="error" />
