@@ -27,7 +27,11 @@ const getImage = (item: string) => {
   </div>
   <div v-else class="profile-about-empty">
     <h1>{{ props.text }}</h1>
-    <Button v-if="isMyProfile" class="no-background-no-contour-button" icon="camera-plus" />
+    <Button
+      v-if="isMyProfile"
+      class="no-background-no-contour-button"
+      icon="camera-plus"
+    />
   </div>
 </template>
 <style scoped lang="scss">

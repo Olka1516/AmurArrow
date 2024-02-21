@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import Item from '@/components/profile/ComponentItem.vue'
 import Button from '@/components/general/ComponentButton.vue'
+import Avatar from '@/components/general/AvatarComponent.vue'
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
 import { ref } from 'vue'
 import { userStore } from '@/stores'
 import { TextEnum } from '@/types'
+import router from '@/router'
 
 const store = userStore()
 const content = ref('posts')
@@ -23,11 +25,17 @@ const getContent = (item: string) => {
 }
 
 const getName = () => {
-  return store.firstName ? store.firstName.at(0) + store.lastName!.at(0) : store.username.at(0)
+  return store.firstName
+    ? store.firstName.charAt(0) + store.lastName!.charAt(0)
+    : store.username.charAt(0)
 }
 
 const getText = (text1: string, text2: string) => {
   return store.userType === 'OWNER' ? text1 : text2
+}
+
+const routeToSettings = async () => {
+  await router.push('/user-settings')
 }
 </script>
 <template>
@@ -39,16 +47,10 @@ const getText = (text1: string, text2: string) => {
           v-if="store.userType === 'OWNER'"
           class="fill-pink-button settings"
           icon="settings"
+          @click="routeToSettings"
         />
 
-        <div class="profile-circle">
-          {{ getName() }}
-          <Button
-            v-if="store.userType === 'OWNER'"
-            class="fill-pink-button photo"
-            icon="camera-plus"
-          />
-        </div>
+        <Avatar :name="getName()" class="profile-avatar" @click="routeToSettings" />
         <div class="profile-content">
           <h1>{{ store.username }}</h1>
           <div class="profile-content-inner info">

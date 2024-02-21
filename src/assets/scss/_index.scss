@@ -128,6 +128,11 @@
   @include buttons-container;
 }
 
+@mixin component-drag-file {
+  @include drag-file-container;
+  @include buttons-container;
+}
+
 @mixin user-settings {
   @include buttons-container;
   @include container;
