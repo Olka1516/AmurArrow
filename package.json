@@ -31,9 +31,8 @@
     "scss": "^0.2.4",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5",
-    "vue3-cookies": "^1.0.6"
+    "vue3-cookies": "^1.0.6",
     "vue3-country-region-select": "^1.0.0"
-
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",
