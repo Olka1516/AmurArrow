@@ -114,6 +114,9 @@
       width: 135px;
       height: 135px;
     }
+    &:first-child {
+      text-transform: uppercase;
+    }
   }
   .profile-circle .fill-pink-button {
     border: 0;

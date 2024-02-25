@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import Button from './ComponentButton.vue'
 defineProps<{ name: string; type?: string }>()
+const emit = defineEmits<{ (e: 'update', value: File): void }>()
 
 const isImage = ref(false)
 const handleFileInput = (files: Event) => {
@@ -18,8 +19,7 @@ const handleFiles = (files: FileList) => {
 }
 
 const uploadFile = (file: File) => {
-  const formData = new FormData()
-  formData.append('file', file)
+  emit('update', file)
 }
 
 const previewFile = (file: File) => {

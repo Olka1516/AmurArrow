@@ -3,6 +3,7 @@ import { ref, onMounted, type Ref } from 'vue'
 
 const dropArea: Ref<null | Element> = ref(null)
 const isImageChoosen = ref(false)
+const emit = defineEmits<{ (e: 'update', value: File): void }>()
 
 const handleDragEnter = (e: DragEvent) => {
   preventDefaults(e)
@@ -59,8 +60,7 @@ const handleFiles = (files: FileList) => {
 }
 
 const uploadFile = (file: File) => {
-  const formData = new FormData()
-  formData.append('file', file)
+  emit('update', file)
 }
 
 const previewFile = (file: File) => {

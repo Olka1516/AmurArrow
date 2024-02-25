@@ -1,8 +1,28 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
+const props = defineProps<{
+  modelValue: string
+}>()
+const emit = defineEmits<{
+  (e: 'update:modelValue', val: string): void
+}>()
 
 const country = ref('')
 const region = ref('')
+
+watch(
+  () => country.value,
+  () => {
+    emit('update:modelValue', country.value + ' ' + region.value)
+  }
+)
+watch(
+  () => region.value,
+  () => {
+    emit('update:modelValue', country.value + ' ' + region.value)
+  }
+)
 </script>
 <template>
   <div class="select">
@@ -11,7 +31,13 @@ const region = ref('')
       <i>Country</i>
     </div>
     <div>
-      <region-select v-model="region" :country="country" :regionName="true" />
+      <region-select
+        v-model="region"
+        :country="country"
+        :region="region"
+        :countryName="true"
+        :regionName="true"
+      />
       <i>Region</i>
     </div>
   </div>

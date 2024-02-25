@@ -13,18 +13,19 @@ import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import SelectorInput from '@/components/general/SelectorInput.vue'
 import { userStore } from '@/stores'
+import router from '@/router'
 
 const store = userStore()
 const error = ref('')
 const user = reactive({
-  username: '',
-  email: '',
-  firstName: '',
-  lastName: '',
-  description: '',
+  username: store.username,
+  email: store.email,
+  firstName: store.firstName,
+  lastName: store.lastName,
+  description: store.description,
   age: undefined,
-  gender: '',
-  location: ''
+  gender: store.gender,
+  location: store.location
 })
 
 const media = reactive({
@@ -33,6 +34,9 @@ const media = reactive({
   facebook: '',
   pinterest: ''
 })
+
+const profile = ref()
+const blank = ref()
 
 const rules = {
   username: { required },
@@ -47,9 +51,10 @@ const submit = async () => {
   if (!isFormCorrect) return
   try {
     await store.updateUser(user, media)
-    // router.push('/user-profile')
+    if (profile.value) await store.setImage(profile.value, 'profile')
+    if (blank.value) console.log(await store.setImage(blank.value, 'blank'))
+    router.push('/user-profile/' + store.username)
   } catch (err: any) {
-    console.log(err.response.data.message)
     error.value = err.response.data.message
   }
 }
@@ -59,15 +64,23 @@ const getName = () => {
     ? store.firstName.charAt(0) + store.lastName!.charAt(0)
     : store.username.charAt(0)
 }
+
+const setImage = (item: File) => {
+  profile.value = item
+}
+
+const setBlank = (item: File) => {
+  blank.value = item
+}
 </script>
 <template>
   <div class="warpper-form">
     <div class="user-content">
       <div class="user-settings">
-        <Avatar :name="getName" type="settings" />
+        <Avatar :name="getName()" type="settings" @update="(item) => setImage(item)" />
         <hr />
         <div class="form">
-          <DragFile />
+          <DragFile @update="(item) => setBlank(item)" />
           <div class="form-column">
             <div class="form-input">
               <TextInput v-model="user.username" :v="v$.username" type="Username" :error="error" />
