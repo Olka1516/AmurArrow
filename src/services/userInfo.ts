@@ -4,8 +4,6 @@ import { axiosFileInstance } from '@/axios-file'
 
 export const getUserInfoByUsername = async (username: String) => {
   const data = await http.get('/api/user/info/' + username)
-  // const image = await axiosFileInstance.get('/api/user/image/download/' + username)
-  // console.log(image.data)
   return data.data
 }
 

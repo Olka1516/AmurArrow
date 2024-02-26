@@ -52,7 +52,7 @@ const submit = async () => {
   try {
     await store.updateUser(user, media)
     if (profile.value) await store.setImage(profile.value, 'profile')
-    if (blank.value) console.log(await store.setImage(blank.value, 'blank'))
+    if (blank.value) await store.setImage(blank.value, 'blank')
     router.push('/user-profile/' + store.username)
   } catch (err: any) {
     error.value = err.response.data.message
