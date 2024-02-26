@@ -23,16 +23,16 @@ const user = reactive({
   firstName: store.firstName,
   lastName: store.lastName,
   description: store.description,
-  age: undefined,
+  age: store.age,
   gender: store.gender,
   location: store.location
 })
 
 const media = reactive({
-  instagram: '',
-  telegram: '',
-  facebook: '',
-  pinterest: ''
+  instagram: store.media[0].link,
+  telegram: store.media[1].link,
+  facebook: store.media[2].link,
+  pinterest: store.media[3].link
 })
 
 const profile = ref()
@@ -77,10 +77,10 @@ const setBlank = (item: File) => {
   <div class="warpper-form">
     <div class="user-content">
       <div class="user-settings">
-        <Avatar :name="getName()" type="settings" @update="(item) => setImage(item)" />
+        <Avatar :name="getName()" type="settings" @update="(item) => setImage(item)" :url="store.profileImage" />
         <hr />
         <div class="form">
-          <DragFile @update="(item) => setBlank(item)" />
+          <DragFile @update="(item) => setBlank(item)" :url="store.blankImage" />
           <div class="form-column">
             <div class="form-input">
               <TextInput v-model="user.username" :v="v$.username" type="Username" :error="error" />

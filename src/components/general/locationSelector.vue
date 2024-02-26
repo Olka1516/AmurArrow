@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 
-const props = defineProps<{
-  modelValue: string
-}>()
+const props = defineProps<{ modelValue: string }>()
 const emit = defineEmits<{
   (e: 'update:modelValue', val: string): void
 }>()
 
-const country = ref('')
-const region = ref('')
+const locations = ref(props.modelValue.split(' '))
+const country = ref(locations.value[0])
+const region = ref(locations.value[1])
 
 watch(
   () => country.value,

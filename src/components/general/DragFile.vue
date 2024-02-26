@@ -3,6 +3,7 @@ import { ref, onMounted, type Ref } from 'vue'
 
 const dropArea: Ref<null | Element> = ref(null)
 const isImageChoosen = ref(false)
+const props = defineProps<{url?: string}>()
 const emit = defineEmits<{ (e: 'update', value: File): void }>()
 
 const handleDragEnter = (e: DragEvent) => {
@@ -90,6 +91,16 @@ const clearGallery = () => {
 
 onMounted(() => {
   dropArea.value = document.querySelector('.drop-area')
+  if (!props.url) return
+  isImageChoosen.value = true
+  let img = document.createElement('img')
+      img.src = props.url
+      img.style.width = '100%'
+      img.style.height = '180px'
+      img.style.verticalAlign = 'middle'
+      img.style.borderRadius = '16px'
+      img.style.objectFit = 'cover'
+      document.getElementById('gallery')?.appendChild(img)
 })
 </script>
 

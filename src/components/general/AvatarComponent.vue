@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Button from './ComponentButton.vue'
-defineProps<{ name: string; type?: string }>()
+const props = defineProps<{ name: string; type?: string; url?: string }>()
 const emit = defineEmits<{ (e: 'update', value: File): void }>()
 
 const isImage = ref(false)
@@ -52,6 +52,21 @@ const clearGallery = () => {
     })
   }
 }
+
+onMounted(() => {
+  if (!props.url) return
+  isImage.value = true
+  let img = document.createElement('img')
+  img.src = props.url
+  img.style.cssText = `
+        width: 138px;
+        height: 138px;
+        vertical-align: middle;
+        border-radius: 100px;
+        object-fit: cover;
+      `
+  document.getElementById('roundedProfile')?.appendChild(img)
+})
 </script>
 <template>
   <div>
@@ -65,7 +80,7 @@ const clearGallery = () => {
           <img src="@/assets/pictures/icons/camera-plus.svg" alt="" />
         </label>
       </div>
-      <Button v-else class="fill-pink-button photo" icon="camera-plus" />
+      <Button v-if="type === 'OWNER'" class="fill-pink-button photo" icon="camera-plus" />
     </div>
   </div>
 </template>

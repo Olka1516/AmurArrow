@@ -17,7 +17,7 @@ const changeContent = (name: string) => {
 }
 
 const getGender = () => {
-  return store.gender == 'male' ? 'Male' : 'Female'
+  return store.gender == 'Male' ? 'male' : 'female'
 }
 
 const getContent = (item: string) => {
@@ -59,7 +59,7 @@ const getImage = (url: string) => {
           @click="routeToSettings"
         />
 
-        <Avatar :name="getName()" class="profile-avatar" @click="routeToSettings" />
+        <Avatar :type="store.userType" :name="getName()" class="profile-avatar" @click="routeToSettings" :url="store.profileImage" />
         <div class="profile-content">
           <h1>{{ store.username }}</h1>
           <div class="profile-content-inner info">
@@ -74,7 +74,7 @@ const getImage = (url: string) => {
             <h1>About</h1>
             <div v-if="store.gender || store.age || store.description" class="content">
               <div class="profile-content-inner">
-                <Item v-if="store.gender" :name="store.gender" :text="getGender()" />
+                <Item v-if="store.gender" :name="getGender()" :text="store.gender" />
                 <Item v-if="store.age" name="person" :text="`${store.age} years`" />
               </div>
               <p>{{ store.description }}</p>
