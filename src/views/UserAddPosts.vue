@@ -2,10 +2,16 @@
 import DragFile from '@/components/general/DragFile.vue'
 import TextInput from '@/components/general/TextInput.vue'
 import DescriptionInput from '@/components/general/DescriptionInput.vue'
+import Button from '@/components/general/ComponentButton.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const description = ref('')
 const title = ref('')
+const back = () => {
+  router.back()
+}
 </script>
 <template>
   <section>
@@ -15,6 +21,7 @@ const title = ref('')
 
     <div class="user-posts">
       <div class="user-posts-content">
+        <Button icon="back" class="fill-pink-button rounded" @click="back" />
         <DragFile :isPostsPage="true" />
         <hr />
         <div class="user-content-inputs">
@@ -24,6 +31,7 @@ const title = ref('')
           <div class="form-input">
             <DescriptionInput v-model="description" type="Description" />
           </div>
+          <Button text="Submit" class="fill-pink-button" />
         </div>
       </div>
     </div>
