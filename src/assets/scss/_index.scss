@@ -8,6 +8,7 @@
 @import './profile/user';
 @import './profile/notFound';
 @import './profile/user-settings';
+@import './profile/user-posts';
 @import './auth/signPages';
 @import './auth/signIn';
 @import './errors/errors';
@@ -139,3 +140,8 @@
   @include user-settings-container;
 }
 
+@mixin user-posts {
+  @include buttons-container;
+  @include container;
+  @include user-posts-container;
+}

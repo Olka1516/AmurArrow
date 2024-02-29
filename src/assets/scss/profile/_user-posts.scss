@@ -1,4 +1,4 @@
-@mixin not-found-container {
+@mixin user-posts-container {
   section {
     background: $pink;
     position: absolute;
@@ -26,20 +26,16 @@
     }
   }
 
-  .not-found-profile {
+  .user-posts {
     position: absolute;
-    z-index: 10;
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
   }
 
-  .container {
-    display: contents;
-  }
-  .not-found-content {
-    padding: 0 140px;
+  .user-posts-content {
     background-color: $white;
     height: 500px;
     border-radius: 10px;
@@ -47,25 +43,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    @media screen and (max-width: 1024px) {
-      width: 90%;
-      padding: 0 120px;
-    }
-    @media screen and (max-width: 767px) {
-      padding: 0;
-    }
+    padding: 16px 40px;
+    gap: 26px;
+    // flex-direction: column;
   }
 
-  h1 {
-    color: $pink;
-    font-size: 115px;
-    line-height: 1;
+  #drop-area {
+    height: 270px !important;
+    width: 500px !important;
   }
-  p {
-    color: $pink;
-    font-size: 20px;
-    margin: 0 20px 20px;
-    text-align: center;
+
+
+  .user-content-inputs {
+    width: 50%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+  hr {
+    height: 430px;
   }
 }
