@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import { ref, onMounted, type Ref } from 'vue'
 
-defineProps<{ isPostsPage?: boolean }>()
+const props = defineProps<{
+  isPostsPage?: boolean
+  v?: {
+    $invalid: boolean
+    $dirty: boolean
+  }
+}>()
+
+const text = ref(
+  'Upload images using the file selection dialog or by dragging the desired images into the highlighted area'
+)
 const dropArea: Ref<null | Element> = ref(null)
 const isImageChoosen = ref(false)
+const isHeavy = ref(false)
 
 const handleDragEnter = (e: DragEvent) => {
   preventDefaults(e)
@@ -53,10 +64,14 @@ const unhighlight = () => {
 
 const handleFiles = (files: FileList) => {
   clearGallery()
-  Array.from(files).forEach((file) => {
-    uploadFile(file)
-    previewFile(file)
-  })
+  console.log(files[0].size)
+  if (10485760 < files[0].size) {
+    isHeavy.value = true
+    text.value = 'The image size is too large, please choose an image less than 10 MB'
+    return
+  }
+  uploadFile(files[0])
+  previewFile(files[0])
 }
 
 const uploadFile = (file: File) => {
@@ -92,6 +107,11 @@ const clearGallery = () => {
 onMounted(() => {
   dropArea.value = document.querySelector('.drop-area')
 })
+
+const isInfoInvalid = () => {
+  if (!props.v) return
+  return (props.v.$invalid && props.v.$dirty && !isImageChoosen.value) || isHeavy.value
+}
 </script>
 
 <template>
@@ -102,16 +122,14 @@ onMounted(() => {
     @dragleave="handleDragLeave"
     @drop="handleDrop"
     class="drop-area"
+    :class="{ invalid: isInfoInvalid() }"
   >
     <form class="my-form" v-if="!isImageChoosen">
-      <p>
-        Upload images using the file selection dialog or by dragging the desired images into the
-        highlighted area
-      </p>
+      <p>{{ text }}</p>
       <input type="file" id="fileElem" accept="image/*" @change="handleFileInput" />
       <label class="button fill-pink-button" for="fileElem">Choose image</label>
     </form>
-    <div id="gallery" :class="{gallery: isPostsPage}"></div>
+    <div id="gallery" :class="{ gallery: isPostsPage }"></div>
   </div>
 </template>
 

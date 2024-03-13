@@ -144,6 +144,10 @@
     padding: 3px;
   }
 
+  .invalid {
+    border: 2px dashed $red !important;
+  }
+
   #drop-area.highlight {
     border-color: $pink;
   }

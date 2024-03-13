@@ -6,4 +6,6 @@ export enum ErrorMessageEnum {
     PasswordMinLength = "This field should be at least 6 characters long",
     PasswordIsEqual = "The value must be equal to the other value",
     UsernameOrPasswordWrong = "Bad credentials",
+    MaxLength50 = "The maximum length allowed is 50",
+    MaxLength255 = "The maximum length allowed is 255",
   }

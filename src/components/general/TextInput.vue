@@ -16,7 +16,7 @@ import { ref } from 'vue'
 
 const props = defineProps<{
   modelValue: string
-  v?: {
+  v: {
     $invalid: boolean
     $dirty: boolean
     $touch: Function
@@ -34,12 +34,12 @@ const userInfo = ref(props.modelValue)
 const handleInput = (event: any) => {
   if (!event.target) return
   userInfo.value = event.target.value
+  console.log(event.target.value)
   emit('update:modelValue', event.target.value)
 }
 
 const { UsernameOrPasswordWrong, EmailInUse, EmailIsNotValid, UsernameInUse } = ErrorMessageEnum
 const isInfoInvalid = () => {
-  if (!props.v) return
   return (
     (props.v.$invalid && props.v.$dirty) ||
     ((props.error === EmailInUse || props.error === EmailIsNotValid) && props.type === 'Email') ||

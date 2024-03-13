@@ -1,8 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{ class?: string; rounded?: boolean; icon?: string; text?: string }>()
-defineEmits<{
-  (e: '@click'): void
-}>()
+defineProps<{ class?: string; rounded?: boolean; icon?: string; text?: string }>()
 
 const getImage = (item: string) => {
   const st = new URL(`../../assets/pictures/icons/${item}.svg`, import.meta.url)
@@ -10,8 +7,12 @@ const getImage = (item: string) => {
 }
 </script>
 <template>
-  <button :class="props.class">
+  <button :class="class">
     <img v-if="icon" :src="getImage(icon)" alt="" />
-    {{ props.text }}
+    {{ text }}
   </button>
 </template>
+<style scoped lang="scss">
+@use '@/assets/scss/index';
+@include index.buttons-container;
+</style>

@@ -121,7 +121,7 @@ const getName = () => {
         </div>
       </div>
     </div>
-    <div class="secion-wapper">
+    <div class="section-wapper">
       <div class="section-relative">
         <section>
           <div v-for="n in 880" :key="n">
