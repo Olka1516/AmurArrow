@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, type Ref } from 'vue'
 
+defineProps<{ isPostsPage?: boolean }>()
 const dropArea: Ref<null | Element> = ref(null)
 const isImageChoosen = ref(false)
 const props = defineProps<{url?: string}>()
@@ -121,7 +122,7 @@ onMounted(() => {
       <input type="file" id="fileElem" accept="image/*" @change="handleFileInput" />
       <label class="button fill-pink-button" for="fileElem">Choose image</label>
     </form>
-    <div id="gallery"></div>
+    <div id="gallery" :class="{gallery: isPostsPage}"></div>
   </div>
 </template>
 
