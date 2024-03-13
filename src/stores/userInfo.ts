@@ -1,19 +1,21 @@
-import type { UserInfo } from '@/types'
+import type { UserInfo, User, Media } from '@/types'
 import { defineStore } from 'pinia'
 import { reactive, ref, toRefs, type Ref } from 'vue'
-import { getUserInfoByUsername } from '@/services'
+import { getUserInfoByUsername, updateUserInfo, setUserImage } from '@/services'
 
 export const userStore = defineStore('userInfo', () => {
   const state: UserInfo = reactive({
     username: '',
-    firstName: null,
-    lastName: null,
+    firstName: '',
+    lastName: '',
     email: '',
-    description: null,
-    age: 0,
-    gender: null,
-    location: null,
-    userType: ''
+    description: '',
+    age: undefined,
+    gender: '',
+    location: '',
+    userType: '',
+    profileImage: '',
+    blankImage: '',
   })
 
   const media: Ref<{ name: string; link: string }[] | []> = ref([])
@@ -32,11 +34,22 @@ export const userStore = defineStore('userInfo', () => {
     state.location = data.location
     state.username = data.username
     state.userType = data.userType
+    state.profileImage = data.profileImage
+    state.blankImage = data.blankImage
 
     ownerPhotos.value = data.ownerPhotos
     favouritePhotos.value = data.favouritePhotos
     media.value = data.media
+
   }
 
-  return { ...toRefs(state), ownerPhotos, favouritePhotos, media, getUserInfo }
+  const updateUser = async (user: User, media: Media) => {
+   return await updateUserInfo(user, media)
+  }
+
+  const setImage = async (image: File, name: string) => {
+   return await setUserImage(image, name)
+  }
+
+  return { ...toRefs(state), ownerPhotos, favouritePhotos, media, getUserInfo, updateUser, setImage }
 })

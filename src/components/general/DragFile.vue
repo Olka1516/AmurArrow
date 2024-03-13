@@ -4,6 +4,8 @@ import { ref, onMounted, type Ref } from 'vue'
 defineProps<{ isPostsPage?: boolean }>()
 const dropArea: Ref<null | Element> = ref(null)
 const isImageChoosen = ref(false)
+const props = defineProps<{url?: string}>()
+const emit = defineEmits<{ (e: 'update', value: File): void }>()
 
 const handleDragEnter = (e: DragEvent) => {
   preventDefaults(e)
@@ -60,8 +62,7 @@ const handleFiles = (files: FileList) => {
 }
 
 const uploadFile = (file: File) => {
-  const formData = new FormData()
-  formData.append('file', file)
+  emit('update', file)
 }
 
 const previewFile = (file: File) => {
@@ -91,6 +92,16 @@ const clearGallery = () => {
 
 onMounted(() => {
   dropArea.value = document.querySelector('.drop-area')
+  if (!props.url) return
+  isImageChoosen.value = true
+  let img = document.createElement('img')
+      img.src = props.url
+      img.style.width = '100%'
+      img.style.height = '180px'
+      img.style.verticalAlign = 'middle'
+      img.style.borderRadius = '16px'
+      img.style.objectFit = 'cover'
+      document.getElementById('gallery')?.appendChild(img)
 })
 </script>
 
