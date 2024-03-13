@@ -148,12 +148,25 @@
     border-color: $pink;
   }
 
+  .gallery {
+    height: 100%;
+    display: flex;
+    & :first-child {
+      height: 100% !important;
+    }
+  }
+
   p {
     margin-bottom: 20px;
   }
   .my-form {
     margin: 20px;
     margin-bottom: 30px;
+    display: flex;
+    height: 80%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   #fileElem {

@@ -7,6 +7,10 @@ const back = async () => {
 }
 </script>
 <template>
+  <section>
+    <div v-for="n in 261" :key="n">
+      <span></span>
+    </div>
   <div class="not-found-profile">
     <div class="container">
       <div class="not-found-content">
@@ -16,6 +20,7 @@ const back = async () => {
       </div>
     </div>
   </div>
+</section>
 </template>
 <style scoped lang="scss">
 @use '@/assets/scss/index';
