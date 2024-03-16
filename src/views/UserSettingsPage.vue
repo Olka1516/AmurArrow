@@ -75,10 +75,10 @@ const setBlank = (item: File) => {
 
 onMounted(() => {
   if (store.media.length) {
-    ;(media.instagram = store.media[0].link),
-      (media.telegram = store.media[1].link),
-      (media.facebook = store.media[2].link),
-      (media.pinterest = store.media[3].link)
+    media.instagram = store.media[0].link
+    media.telegram = store.media[1].link
+    media.facebook = store.media[2].link
+    media.pinterest = store.media[3].link
   }
 })
 </script>
