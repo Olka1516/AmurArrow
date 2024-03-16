@@ -1,15 +1,26 @@
 @mixin user-posts-container {
+  .section-wapper {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+  }
+  .section-relative {
+    position: relative;
+  }
+
   section {
+    overflow: hidden;
     background: $pink;
     position: absolute;
+    bottom: 0;
+    left: 0;
+    max-height: calc(100vh + 64px);
     width: 100vw;
-    height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
     gap: 2px;
     flex-wrap: wrap;
-    overflow: hidden;
+    z-index: 1001;
   }
 
   span {
@@ -25,32 +36,51 @@
       transition: 0s;
     }
   }
+  .warpper-form {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
 
   .user-posts {
-    position: absolute;
-    z-index: 100;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    @media screen and (max-width: 1024px) {
-      width: 90%;
-    }
+    position: relative;
+    margin: auto;
+    padding: 32px;
+    z-index: 1002;
   }
 
   .user-posts-content {
-    background-color: $white;
-    height: 500px;
-    border-radius: 10px;
+    width: 70vw;
+    margin: auto;
     box-shadow: 0 2px 4px $grey;
+    border-radius: 12px;
+    background: $white;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 20px 40px;
-    gap: 26px;
+    padding: 40px;
+    & hr {
+      margin-inline: 40px;
+      height: 510px;
+    }
+    @media screen and (max-width: 1024px) {
+      width: 83vw;
+    }
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      & hr {
+        margin: 30px 0 10px;
+        height: 0;
+        width: 100%;
+      }
+    }
+    @media screen and (max-width: 540px) {
+      padding: 45px 20px;
+    }
     & .rounded {
-      top: 0;
-      right: 0;
+      top: 30px;
+      right: 30px;
       position: absolute;
       border: 0;
       padding: 5px;
@@ -58,40 +88,25 @@
       border-radius: 50px;
       display: flex;
     }
-    @media screen and (max-width: 1024px) {
-      flex-direction: column;
-      padding: 45px 30px 30px;
-      width: 100%;
-      height: 600px;
-      & hr {
-        width: 100%;
-        height: 1px;
-      }
-      & .rounded {
-        margin: 6px;
-      }
-    }
   }
 
-  #drop-area {
-    height: 270px !important;
-    width: 500px !important;
-    @media screen and (max-width: 1024px) {
-      width: 100% !important;
-    }
+  .form-input {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .user-content-inputs {
+    margin: auto;
+    padding: 20px 5px;
     width: 50%;
-    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 26px;
-    @media screen and (max-width: 1024px) {
+    gap: 28px;
+    @media screen and (max-width: 767px) {
       width: 100%;
     }
-  }
-  hr {
-    height: 430px;
   }
 }

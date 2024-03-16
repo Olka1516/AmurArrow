@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Button from '@/components/general/ComponentButton.vue'
-const props = defineProps<{ photos: string[] | []; text: string; isMyProfile?: boolean }>()
+import router from '@/router'
+const props = defineProps<{ photos: string[] | []; text: string; isMyProfile?: boolean; username?: string }>()
 
 const photos = ref(props.photos)
 const gridLength = ref(Math.ceil(props.photos.length / 3))
@@ -10,6 +11,10 @@ const gridPhoneLength = ref(Math.ceil(props.photos.length / 2))
 const getImage = (item: string) => {
   const st = new URL(item, import.meta.url)
   return st.pathname
+}
+
+const addPosts = async () => {
+  await router.push('/user-posts/' + props.username)
 }
 </script>
 <template>
@@ -31,6 +36,7 @@ const getImage = (item: string) => {
       v-if="isMyProfile"
       class="no-background-no-contour-button"
       icon="camera-plus"
+      @click="addPosts"
     />
   </div>
 </template>

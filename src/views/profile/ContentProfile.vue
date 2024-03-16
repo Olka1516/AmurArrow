@@ -113,6 +113,7 @@ const getImage = (url: string) => {
             :photos="store.ownerPhotos"
             :text="getText(OwnerPhotos, UserPhotos)"
             :isMyProfile="store.userType == 'OWNER'"
+            :username="store.username"
           />
           <ContentPhotos
             v-if="getContent('favourite') && store.userType === 'OWNER'"

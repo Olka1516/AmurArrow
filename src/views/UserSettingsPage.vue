@@ -8,7 +8,7 @@ import DescriptionInput from '@/components/general/DescriptionInput.vue'
 import LocationSelector from '@/components/general/locationSelector.vue'
 import LinkInput from '@/components/general/LinkInput.vue'
 import DragFile from '@/components/general/DragFile.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import SelectorInput from '@/components/general/SelectorInput.vue'
@@ -29,10 +29,10 @@ const user = reactive({
 })
 
 const media = reactive({
-  instagram: store.media[0].link,
-  telegram: store.media[1].link,
-  facebook: store.media[2].link,
-  pinterest: store.media[3].link
+  instagram: '',
+  telegram: '',
+  facebook: '',
+  pinterest: ''
 })
 
 const profile = ref()
@@ -72,12 +72,26 @@ const setImage = (item: File) => {
 const setBlank = (item: File) => {
   blank.value = item
 }
+
+onMounted(() => {
+  if (store.media.length) {
+    media.instagram = store.media[0].link
+    media.telegram = store.media[1].link
+    media.facebook = store.media[2].link
+    media.pinterest = store.media[3].link
+  }
+})
 </script>
 <template>
   <div class="warpper-form">
     <div class="user-content">
       <div class="user-settings">
-        <Avatar :name="getName()" type="settings" @update="(item) => setImage(item)" :url="store.profileImage" />
+        <Avatar
+          :name="getName()"
+          type="settings"
+          @update="(item) => setImage(item)"
+          :url="store.profileImage"
+        />
         <hr />
         <div class="form">
           <DragFile @update="(item) => setBlank(item)" :url="store.blankImage" />
@@ -135,7 +149,7 @@ const setBlank = (item: File) => {
         </div>
       </div>
     </div>
-    <div class="secion-wapper">
+    <div class="section-wapper">
       <div class="section-relative">
         <section>
           <div v-for="n in 880" :key="n">

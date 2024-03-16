@@ -27,7 +27,9 @@ const {
   PasswordMinLength,
   PasswordIsEqual,
   UsernameInUse,
-  UsernameOrPasswordWrong
+  UsernameOrPasswordWrong,
+  MaxLength50,
+  MaxLength255,
 } = ErrorMessageEnum
 
 const getError = () => {
@@ -70,6 +72,11 @@ const getError = () => {
       break
     case 'description':
       if (message === IsRequired) return 'Description is required'
+      if (message === MaxLength255) return MaxLength255
+      break
+    case 'title':
+      if (message === IsRequired) return 'Title is required'
+      if (message === MaxLength50) return MaxLength50
       break
   }
 }
