@@ -31,14 +31,16 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/user-settings',
+      path: '/user-settings/:username',
       name: 'user-settings',
-      component: () => import('../views/UserSettingsPage.vue')
+      component: () => import('../views/UserSettingsPage.vue'),
+      meta: { requiresAuth: true }
     },
     {
-      path: '/user-posts',
+      path: '/user-posts/:username',
       name: 'user-posts',
-      component: () => import('../views/UserAddPosts.vue')
+      component: () => import('../views/UserAddPosts.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })
@@ -47,14 +49,17 @@ router.beforeEach(async (to, from, next) => {
   const store = userStore()
   try {
     if (to.params.username) await store.getUserInfo(String(to.params.username))
+    if ((to.fullPath.includes('user-settings') || to.fullPath.includes('user-posts')) && store.userType !== 'OWNER') {
+      next(from.path)
+      return
+    }
     next()
   } catch (e: any) {
-    if (e.response.status === 404) {
+    if (e.response && e.response.status === 404) {
       next('/:pathMatch(.*)')
     } else {
       next('/')
     }
-    return
   }
 })
 

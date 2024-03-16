@@ -34,7 +34,6 @@ const {
 
 const getError = () => {
   const { $message: message } = props.v.$errors?.[0] ?? { $message: null }
-  console.log(message)
   switch (props.v.$path) {
     case 'email':
       if (message === EmailIsNotValid) return 'Value is not a valid email address.'

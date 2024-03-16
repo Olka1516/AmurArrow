@@ -17,7 +17,7 @@ const changeContent = (name: string) => {
 }
 
 const getGender = () => {
-  return store.gender == 'male' ? 'Male' : 'Female'
+  return store.gender == 'Male' ? 'male' : 'female'
 }
 
 const getContent = (item: string) => {
@@ -35,14 +35,23 @@ const getText = (text1: string, text2: string) => {
 }
 
 const routeToSettings = async () => {
-  await router.push('/user-settings')
+  await router.push('/user-settings/' + store.username)
+}
+
+const getImage = (url: string) => {
+  if (!url) {
+    const st = new URL(`../../assets/pictures/blank.jpg`, import.meta.url)
+    return st.pathname
+  }
+  const st = new URL(url);
+  return st.href;
 }
 </script>
 <template>
   <div class="profile">
     <div class="container">
       <div class="profile-contents">
-        <img class="profile-content-img" src="@/assets/pictures/white-blank.jpg" alt="" />
+        <img class="profile-content-img" :src="getImage(store.blankImage)" alt="" />
         <Button
           v-if="store.userType === 'OWNER'"
           class="fill-pink-button settings"
@@ -50,7 +59,7 @@ const routeToSettings = async () => {
           @click="routeToSettings"
         />
 
-        <Avatar :name="getName()" class="profile-avatar" @click="routeToSettings" />
+        <Avatar :type="store.userType" :name="getName()" class="profile-avatar" @click="routeToSettings" :url="store.profileImage" />
         <div class="profile-content">
           <h1>{{ store.username }}</h1>
           <div class="profile-content-inner info">
@@ -63,22 +72,21 @@ const routeToSettings = async () => {
         <div class="profile-about-info">
           <div class="profile-info-inner">
             <h1>About</h1>
-            <div class="profile-content-inner">
-              <Item v-if="store.gender" :name="store.gender" :text="getGender()" />
-              <Item v-if="store.age" name="person" :text="`${store.age} years`" />
-            </div>
-            <p>{{ store.description }}</p>
-            <nav class="profile-content-inner links" v-if="store.media.length">
-              <div v-for="item in store.media" :key="item.name">
-                <a :href="item.link" class="profile-content-item link">
-                  <Item :name="item.name" :text="item.link" additionalImage="copy" />
-                </a>
+            <div v-if="store.gender || store.age || store.description" class="content">
+              <div class="profile-content-inner">
+                <Item v-if="store.gender" :name="getGender()" :text="store.gender" />
+                <Item v-if="store.age" name="person" :text="`${store.age} years`" />
               </div>
-            </nav>
-            <div
-              v-if="!store.gender && !store.age && !store.description && !store.media.length"
-              class="profile-no-content"
-            >
+              <p>{{ store.description }}</p>
+              <nav class="profile-content-inner links" v-if="store.media.length">
+                <div v-for="item in store.media" :key="item.name">
+                  <a v-if="item.link" :href="item.link" class="profile-content-item link">
+                    <Item :name="item.name" :text="item.link" additionalImage="copy" />
+                  </a>
+                </div>
+              </nav>
+            </div>
+            <div v-else class="profile-no-content">
               <h1>{{ getText(OwnerAbout, UserAbout) }}</h1>
             </div>
           </div>
@@ -105,6 +113,7 @@ const routeToSettings = async () => {
             :photos="store.ownerPhotos"
             :text="getText(OwnerPhotos, UserPhotos)"
             :isMyProfile="store.userType == 'OWNER'"
+            :username="store.username"
           />
           <ContentPhotos
             v-if="getContent('favourite') && store.userType === 'OWNER'"

@@ -64,7 +64,10 @@
       margin-inline: 40px;
       height: 510px;
     }
-    @media (max-width: 1280px) {
+    @media screen and (max-width: 1024px) {
+      width: 83vw;
+    }
+    @media screen and (max-width: 767px) {
       flex-direction: column;
       & hr {
         margin: 30px 0 10px;
@@ -72,11 +75,8 @@
         width: 100%;
       }
     }
-    @media screen and (max-width: 767px) {
-      width: 83vw;
-    }
     @media screen and (max-width: 540px) {
-      padding: 15px;
+      padding: 45px 20px;
     }
     & .rounded {
       top: 30px;
@@ -88,19 +88,6 @@
       border-radius: 50px;
       display: flex;
     }
-    @media screen and (max-width: 1024px) {
-      flex-direction: column;
-      padding: 45px 30px 30px;
-      width: 100%;
-      height: 670px;
-      & hr {
-        width: 100%;
-        height: 1px;
-      }
-      & .rounded {
-        margin: 6px;
-      }
-    }
   }
 
   .form-input {
@@ -111,35 +98,15 @@
     gap: 10px;
   }
 
-  #drop-area {
-    height: 270px !important;
-    width: 500px !important;
-    @media screen and (max-width: 1024px) {
-      width: 100% !important;
-    }
-  }
-
   .user-content-inputs {
+    margin: auto;
+    padding: 20px 5px;
     width: 50%;
-    position: relative;
     display: flex;
     flex-direction: column;
     gap: 28px;
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 767px) {
       width: 100%;
-    }
-     @media screen and (min-width: 1280px) {
-      overflow-x: hidden;
-      overflow-y: auto;
-      &::-webkit-scrollbar {
-        width: 6px;
-        background-color: $white;
-      }
-      &::-webkit-scrollbar-thumb {
-        height: 60px;
-        background-color: $grey_lighter;
-        border-radius: 11px;
-      }
     }
   }
 }

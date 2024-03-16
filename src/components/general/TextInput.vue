@@ -34,7 +34,6 @@ const userInfo = ref(props.modelValue)
 const handleInput = (event: any) => {
   if (!event.target) return
   userInfo.value = event.target.value
-  console.log(event.target.value)
   emit('update:modelValue', event.target.value)
 }
 

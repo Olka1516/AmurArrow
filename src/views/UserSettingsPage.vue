@@ -8,23 +8,24 @@ import DescriptionInput from '@/components/general/DescriptionInput.vue'
 import LocationSelector from '@/components/general/locationSelector.vue'
 import LinkInput from '@/components/general/LinkInput.vue'
 import DragFile from '@/components/general/DragFile.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import SelectorInput from '@/components/general/SelectorInput.vue'
 import { userStore } from '@/stores'
+import router from '@/router'
 
 const store = userStore()
 const error = ref('')
 const user = reactive({
-  username: '',
-  email: '',
-  firstName: '',
-  lastName: '',
-  description: '',
-  age: undefined,
-  gender: '',
-  location: ''
+  username: store.username,
+  email: store.email,
+  firstName: store.firstName,
+  lastName: store.lastName,
+  description: store.description,
+  age: store.age,
+  gender: store.gender,
+  location: store.location
 })
 
 const media = reactive({
@@ -33,6 +34,9 @@ const media = reactive({
   facebook: '',
   pinterest: ''
 })
+
+const profile = ref()
+const blank = ref()
 
 const rules = {
   username: { required },
@@ -45,9 +49,11 @@ const v$ = useVuelidate(rules, user)
 const submit = async () => {
   const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) return
-
   try {
-    // router.push('/user-profile')
+    await store.updateUser(user, media)
+    if (profile.value) await store.setImage(profile.value, 'profile')
+    if (blank.value) await store.setImage(blank.value, 'blank')
+    router.push('/user-profile/' + store.username)
   } catch (err: any) {
     error.value = err.response.data.message
   }
@@ -58,15 +64,37 @@ const getName = () => {
     ? store.firstName.charAt(0) + store.lastName!.charAt(0)
     : store.username.charAt(0)
 }
+
+const setImage = (item: File) => {
+  profile.value = item
+}
+
+const setBlank = (item: File) => {
+  blank.value = item
+}
+
+onMounted(() => {
+  if (store.media.length) {
+    ;(media.instagram = store.media[0].link),
+      (media.telegram = store.media[1].link),
+      (media.facebook = store.media[2].link),
+      (media.pinterest = store.media[3].link)
+  }
+})
 </script>
 <template>
   <div class="warpper-form">
     <div class="user-content">
       <div class="user-settings">
-        <Avatar :name="getName" type="settings" />
+        <Avatar
+          :name="getName()"
+          type="settings"
+          @update="(item) => setImage(item)"
+          :url="store.profileImage"
+        />
         <hr />
         <div class="form">
-          <DragFile />
+          <DragFile @update="(item) => setBlank(item)" :url="store.blankImage" />
           <div class="form-column">
             <div class="form-input">
               <TextInput v-model="user.username" :v="v$.username" type="Username" :error="error" />

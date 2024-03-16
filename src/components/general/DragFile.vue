@@ -6,7 +6,8 @@ const props = defineProps<{
   v?: {
     $invalid: boolean
     $dirty: boolean
-  }
+  },
+  url?: string
 }>()
 
 const text = ref(
@@ -14,6 +15,7 @@ const text = ref(
 )
 const dropArea: Ref<null | Element> = ref(null)
 const isImageChoosen = ref(false)
+const emit = defineEmits<{ (e: 'update', value: File): void }>()
 const isHeavy = ref(false)
 
 const handleDragEnter = (e: DragEvent) => {
@@ -64,10 +66,14 @@ const unhighlight = () => {
 
 const handleFiles = (files: FileList) => {
   clearGallery()
-  console.log(files[0].size)
   if (10485760 < files[0].size) {
     isHeavy.value = true
     text.value = 'The image size is too large, please choose an image less than 10 MB'
+    return
+  }
+  if (!files[0].type.includes("image")) {
+    isHeavy.value = true
+    text.value = 'This is not a photo, please upload a picture'
     return
   }
   uploadFile(files[0])
@@ -75,8 +81,7 @@ const handleFiles = (files: FileList) => {
 }
 
 const uploadFile = (file: File) => {
-  const formData = new FormData()
-  formData.append('file', file)
+  emit('update', file)
 }
 
 const previewFile = (file: File) => {
@@ -106,11 +111,22 @@ const clearGallery = () => {
 
 onMounted(() => {
   dropArea.value = document.querySelector('.drop-area')
+  if (!props.url) return
+  isImageChoosen.value = true
+  let img = document.createElement('img')
+      img.src = props.url
+      img.style.width = '100%'
+      img.style.height = '180px'
+      img.style.verticalAlign = 'middle'
+      img.style.borderRadius = '16px'
+      img.style.objectFit = 'cover'
+      document.getElementById('gallery')?.appendChild(img)
 })
 
 const isInfoInvalid = () => {
+  if(isHeavy.value) return  isHeavy.value
   if (!props.v) return
-  return (props.v.$invalid && props.v.$dirty && !isImageChoosen.value) || isHeavy.value
+  return (props.v.$invalid && props.v.$dirty && !isImageChoosen.value)
 }
 </script>
 
@@ -122,12 +138,12 @@ const isInfoInvalid = () => {
     @dragleave="handleDragLeave"
     @drop="handleDrop"
     class="drop-area"
-    :class="{ invalid: isInfoInvalid() }"
+    :class="{ invalid: isInfoInvalid(), addPost: props.v }"
   >
-    <form class="my-form" v-if="!isImageChoosen">
-      <p>{{ text }}</p>
-      <input type="file" id="fileElem" accept="image/*" @change="handleFileInput" />
-      <label class="button fill-pink-button" for="fileElem">Choose image</label>
+    <form class="my-form" v-if="!isImageChoosen" :class="{addPost: props.v}">
+        <p>{{ text }}</p>
+        <input type="file" id="fileElem" accept="image/*" @change="handleFileInput" />
+        <label class="button fill-pink-button" for="fileElem">Choose image</label>
     </form>
     <div id="gallery" :class="{ gallery: isPostsPage }"></div>
   </div>
