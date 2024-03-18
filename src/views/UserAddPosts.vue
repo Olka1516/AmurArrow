@@ -4,17 +4,17 @@ import TextInput from '@/components/general/TextInput.vue'
 import DescriptionInput from '@/components/general/DescriptionInput.vue'
 import Button from '@/components/general/ComponentButton.vue'
 import ErrorMessage from '@/components/errors/ErrorMessage.vue'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { required, maxLength } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { userStore } from '@/stores'
 import { useRouter } from 'vue-router'
+import type { Post, TRequestError } from '@/types'
 const router = useRouter()
+const store = userStore()
+const error = ref("")
 
-const info = reactive<{
-  image: File | null
-  description: string
-  title: string
-}>({
+const info = reactive<Post>({
   image: null,
   description: '',
   title: ''
@@ -38,6 +38,12 @@ const setImage = (item: File) => {
 const submit = async () => {
   const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) return
+  try {
+    store.addPost(info)
+  } catch (err) {
+    const message = err as TRequestError
+    error.value = message.response?.data.message || ""
+  }
 }
 </script>
 <template>

@@ -13,6 +13,7 @@ import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import SelectorInput from '@/components/general/SelectorInput.vue'
 import { userStore } from '@/stores'
+import { TRequestError } from '@/types'
 import router from '@/router'
 
 const store = userStore()
@@ -54,8 +55,9 @@ const submit = async () => {
     if (profile.value) await store.setImage(profile.value, 'profile')
     if (blank.value) await store.setImage(blank.value, 'blank')
     router.push('/user-profile/' + store.username)
-  } catch (err: any) {
-    error.value = err.response.data.message
+  } catch (err) {
+    const message = err as TRequestError
+    error.value = message.response?.data.message || ""
   }
 }
 
