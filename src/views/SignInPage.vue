@@ -8,6 +8,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { reactive, ref } from 'vue'
 import { authStore } from '@/stores'
 import { useRouter } from 'vue-router'
+import type { TRequestError } from '@/types'
 
 const authS = authStore()
 const router = useRouter()
@@ -30,8 +31,9 @@ const signIn = async () => {
   try {
     await authS.signIn({ username: user.username, password: user.password })
     router.push('/user-profile/' + user.username)
-  } catch (err: any) {
-    error.value = err.response.data.message
+  } catch (err) {
+    const message = err as TRequestError
+    error.value = message.response?.data.message || ""
   }
 }
 

@@ -1,7 +1,7 @@
-import type { UserInfo, User, Media } from '@/types'
+import type { UserInfo, User, Media, Post } from '@/types'
 import { defineStore } from 'pinia'
 import { reactive, ref, toRefs, type Ref } from 'vue'
-import { getUserInfoByUsername, updateUserInfo, setUserImage } from '@/services'
+import { getUserInfoByUsername, updateUserInfo, setUserImage, addUserPost } from '@/services'
 
 export const userStore = defineStore('userInfo', () => {
   const state: UserInfo = reactive({
@@ -51,5 +51,9 @@ export const userStore = defineStore('userInfo', () => {
    return await setUserImage(image, name)
   }
 
-  return { ...toRefs(state), ownerPhotos, favouritePhotos, media, getUserInfo, updateUser, setImage }
+  const addPost = async (data: Post) => {
+   return await addUserPost(data)
+  }
+
+  return { ...toRefs(state), ownerPhotos, favouritePhotos, media, getUserInfo, updateUser, setImage, addPost }
 })

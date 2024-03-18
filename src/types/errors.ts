@@ -1,3 +1,5 @@
+import type { AxiosError } from "axios";
+
 export enum ErrorMessageEnum {
     IsRequired = "Value is required",
     EmailIsNotValid = "Value is not a valid email address",
@@ -9,3 +11,5 @@ export enum ErrorMessageEnum {
     MaxLength50 = "The maximum length allowed is 50",
     MaxLength255 = "The maximum length allowed is 255",
   }
+
+  export type TRequestError = AxiosError<{message: string}>

@@ -39,3 +39,9 @@ export interface Media {
   facebook: string
   pinterest: string
 }
+
+export interface Post {
+  image: File | null
+  title: string
+  description: string
+}

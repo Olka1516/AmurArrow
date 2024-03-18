@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { userStore } from '@/stores'
+import type { TRequestError } from '@/types'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,8 +55,10 @@ router.beforeEach(async (to, from, next) => {
       return
     }
     next()
-  } catch (e: any) {
-    if (e.response && e.response.status === 404) {
+  } catch (err) {
+      const message = err as TRequestError
+      const error = message.response
+    if (error && error.status === 404) {
       next('/:pathMatch(.*)')
     } else {
       next('/')

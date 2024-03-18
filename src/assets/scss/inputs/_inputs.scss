@@ -159,7 +159,7 @@
   .gallery {
     height: 100%;
     & :first-child {
-      height: 100% !important;
+      min-height: 190px !important;
     }
   }
 
@@ -180,6 +180,11 @@
     min-height: 500px;
     &#drop-area {
       width: 50%;
+    }
+    & .gallery {
+      & :first-child {
+        min-height: 500px !important;
+      }
     }
     @media screen and (max-width: 767px) {
       height: 50vh;
