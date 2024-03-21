@@ -13,7 +13,7 @@ import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import SelectorInput from '@/components/general/SelectorInput.vue'
 import { userStore } from '@/stores'
-import { TRequestError } from '@/types'
+import type { TRequestError } from '@/types'
 import router from '@/router'
 
 const store = userStore()
