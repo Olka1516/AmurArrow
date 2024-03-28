@@ -2,16 +2,12 @@
 import { ref } from 'vue'
 import Button from '@/components/general/ComponentButton.vue'
 import router from '@/router'
-const props = defineProps<{ photos: string[] | []; text: string; isMyProfile?: boolean; username?: string }>()
+import type { ReqPost } from '@/types';
+const props = defineProps<{ posts: ReqPost[] | []; text: string; isMyProfile?: boolean; username?: string }>()
 
-const photos = ref(props.photos)
-const gridLength = ref(Math.ceil(props.photos.length / 3))
-const gridPhoneLength = ref(Math.ceil(props.photos.length / 2))
-
-const getImage = (item: string) => {
-  const st = new URL(item, import.meta.url)
-  return st.pathname
-}
+const photos = ref(props.posts)
+const gridLength = ref(Math.ceil(props.posts.length / 3))
+const gridPhoneLength = ref(Math.ceil(props.posts.length / 2))
 
 const addPosts = async () => {
   await router.push('/user-posts/' + props.username)
@@ -26,15 +22,15 @@ const addPosts = async () => {
       '--grid-phone-length': gridPhoneLength
     }"
   >
-    <div v-for="name in props.photos" :key="name" class="profile-about-photo-inner">
-      <img :src="getImage(name)" alt="" />
+    <div v-for="post in props.posts" :key="post.id" class="profile-about-photo-inner">
+      <img :src="post.image" alt="" />
     </div>
   </div>
-  <div v-else class="profile-about-empty">
-    <h1>{{ props.text }}</h1>
+  <div class="profile-about-empty">
+    <h1 v-if="!photos.length">{{ props.text }}</h1>
     <Button
       v-if="isMyProfile"
-      class="no-background-no-contour-button"
+      class="contour-no-background-button"
       icon="camera-plus"
       @click="addPosts"
     />

@@ -110,14 +110,14 @@ const getImage = (url: string) => {
           </div>
           <ContentPhotos
             v-if="getContent('posts')"
-            :photos="store.ownerPhotos"
+            :posts="store.ownerPhotos"
             :text="getText(OwnerPhotos, UserPhotos)"
             :isMyProfile="store.userType == 'OWNER'"
             :username="store.username"
           />
           <ContentPhotos
             v-if="getContent('favourite') && store.userType === 'OWNER'"
-            :photos="store.favouritePhotos"
+            :posts="store.favouritePhotos"
             text="You don't have favorites, use the platform and find them"
           />
         </div>

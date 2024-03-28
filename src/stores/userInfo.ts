@@ -1,7 +1,7 @@
-import type { UserInfo, User, Media, Post } from '@/types'
+import type { UserInfo, User, Media, Post, ReqPost } from '@/types'
 import { defineStore } from 'pinia'
 import { reactive, ref, toRefs, type Ref } from 'vue'
-import { getUserInfoByUsername, updateUserInfo, setUserImage, addUserPost } from '@/services'
+import { getUserInfoByUsername, updateUserInfo, setUserImage, addUserPost,getUserPostsByUsername } from '@/services'
 
 export const userStore = defineStore('userInfo', () => {
   const state: UserInfo = reactive({
@@ -20,11 +20,12 @@ export const userStore = defineStore('userInfo', () => {
 
   const media: Ref<{ name: string; link: string }[] | []> = ref([])
 
-  const ownerPhotos: Ref<string[] | []> = ref([])
-  const favouritePhotos: Ref<string[] | []> = ref([])
+  const ownerPhotos: Ref<ReqPost[] | []> = ref([])
+  const favouritePhotos: Ref<ReqPost[] | []> = ref([])
 
   const getUserInfo = async (username: string) => {
     const data = await getUserInfoByUsername(username)
+    const posts = await getUserPostsByUsername(username)
     state.age = data.age
     state.description = data.description
     state.email = data.email
@@ -37,10 +38,10 @@ export const userStore = defineStore('userInfo', () => {
     state.profileImage = data.profileImage
     state.blankImage = data.blankImage
 
-    ownerPhotos.value = data.ownerPhotos
+    ownerPhotos.value = posts
     favouritePhotos.value = data.favouritePhotos
     media.value = data.media
-
+    
   }
 
   const updateUser = async (user: User, media: Media) => {
