@@ -145,3 +145,8 @@
   @include container;
   @include user-posts-container;
 }
+
+@mixin component-user-post {
+  @include buttons-container;
+  @include component-post-container;
+}
