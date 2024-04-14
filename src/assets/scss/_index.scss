@@ -9,12 +9,16 @@
 @import './profile/notFound';
 @import './profile/user-settings';
 @import './profile/user-posts';
+@import './profile/find-lover';
+@import './profile/sidebar';
 @import './auth/signPages';
 @import './auth/signIn';
 @import './errors/errors';
 @import './inputs/inputs';
 @import './general';
 @import './theme';
+@import './repetitive/cubes';
+@import './repetitive/forms';
 
 @mixin header {
   @include header-container;
@@ -63,11 +67,14 @@
 }
 
 @mixin sign-up {
+  @include cubes;
+  @include forms;
   @include sign-container;
   @include buttons-container;
 }
 
 @mixin sign-in {
+  @include cubes;
   @include sign-in-container;
   @include sign-up;
 }
@@ -117,8 +124,8 @@
   @include buttons-container;
 }
 
-
 @mixin not-found-profile {
+  @include cubes;
   @include container;
   @include not-found-container;
   @include buttons-container;
@@ -133,15 +140,31 @@
   @include drag-file-container;
   @include buttons-container;
 }
+@mixin component-sidebar {
+  @include sidebar-container;
+  @include user-photos-container;
+}
 
 @mixin user-settings {
   @include buttons-container;
   @include container;
   @include user-settings-container;
+  @include cubes;
+  @include forms;
 }
 
 @mixin user-posts {
+  @include cubes;
+  @include forms;
   @include buttons-container;
   @include container;
   @include user-posts-container;
+}
+
+@mixin find-lover {
+  @include find-lover-container;
+}
+
+@mixin find-lover-page {
+  @include find-lover-content;
 }

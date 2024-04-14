@@ -42,6 +42,11 @@ const router = createRouter({
       name: 'user-posts',
       component: () => import('../views/UserAddPosts.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/find-lover',
+      name: 'find-lover',
+      component: () => import('../views/FindLoverPage.vue')
     }
   ]
 })
@@ -50,14 +55,17 @@ router.beforeEach(async (to, from, next) => {
   const store = userStore()
   try {
     if (to.params.username) await store.getUserInfo(String(to.params.username))
-    if ((to.fullPath.includes('user-settings') || to.fullPath.includes('user-posts')) && store.userType !== 'OWNER') {
+    if (
+      (to.fullPath.includes('user-settings') || to.fullPath.includes('user-posts')) &&
+      store.userType !== 'OWNER'
+    ) {
       next(from.path)
       return
     }
     next()
   } catch (err) {
-      const message = err as TRequestError
-      const error = message.response
+    const message = err as TRequestError
+    const error = message.response
     if (error && error.status === 404) {
       next('/:pathMatch(.*)')
     } else {

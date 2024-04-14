@@ -32,6 +32,7 @@
     "vue": "^3.4.21",
     "vue-cli": "^2.9.6",
     "vue-router": "^4.3.0",
+    "vue-tinder": "^3.0.0-alpha.2",
     "vue3-cookies": "^1.0.6",
     "vue3-country-region-select": "^1.0.0"
   },

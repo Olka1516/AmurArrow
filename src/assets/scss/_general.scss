@@ -46,4 +46,14 @@
     background-color: unset;
     border: none;
   }
+
+  .rounded {
+    display: flex;
+    padding: 10px;
+  }
+
+  .logo img {
+    width: 55px;
+    height: 50px;
+  }
 }
