@@ -142,7 +142,6 @@
 }
 @mixin component-sidebar {
   @include sidebar-container;
-  @include user-photos-container;
 }
 
 @mixin user-settings {
@@ -167,4 +166,8 @@
 
 @mixin find-lover-page {
   @include find-lover-content;
+}
+@mixin component-user-post {
+  @include buttons-container;
+  @include component-post-container;
 }

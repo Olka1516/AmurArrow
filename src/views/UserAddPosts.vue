@@ -12,12 +12,13 @@ import { useRouter } from 'vue-router'
 import type { Post, TRequestError } from '@/types'
 const router = useRouter()
 const store = userStore()
-const error = ref("")
+const error = ref('')
 
 const info = reactive<Post>({
   image: null,
   description: '',
-  title: ''
+  title: '',
+  date: null
 })
 
 const rules = {
@@ -39,10 +40,12 @@ const submit = async () => {
   const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) return
   try {
+    info.date = new Date()
     store.addPost(info)
+    router.push('/user-profile/' + store.username)
   } catch (err) {
     const message = err as TRequestError
-    error.value = message.response?.data.message || ""
+    error.value = message.response?.data.message || ''
   }
 }
 </script>

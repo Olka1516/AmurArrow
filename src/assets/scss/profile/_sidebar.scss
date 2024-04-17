@@ -9,18 +9,33 @@
       z-index: 3;
       width: 100%;
       height: 100%;
+      opacity: 1;
+      transition: opacity 300ms ease;
     }
   }
+
+  .fadeIn {
+    opacity: 0;
+    z-index: -1;
+  }
   .sidebar {
-    position: relative;
     height: 100%;
     width: 100%;
     background-color: $pink;
     border-bottom: $pink_to_light 1px solid;
     text-align: center;
     @media screen and (max-width: 767px) {
-      width: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      transition: transform 300ms ease-in;
+      transform: translateX(0);
+      width: 70%;
       overflow-y: auto;
+      z-index: 4;
+    }
+    @media screen and (max-width: 540px) {
+      width: 100%;
     }
     & .rounded {
       position: absolute;
@@ -29,11 +44,18 @@
     }
   }
 
+  .close {
+    transform: translateX(-100%);
+    transition: transform 300ms ease-out;
+  }
+
   .wrapper {
     padding: 2px 24px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 80%;
+    gap: 16px;
   }
 
   .no-background-no-contour-button {

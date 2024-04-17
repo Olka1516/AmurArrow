@@ -3,6 +3,8 @@
     position: relative;
     height: 100vh;
     width: 70%;
+    overflow: hidden;
+    min-height: 400px;
     @media screen and (max-width: 767px) {
       width: 100%;
     }
@@ -48,6 +50,37 @@
     @media screen and (max-width: 540px) {
       bottom: 55px;
     }
+  }
+
+  .nope-pointer,
+  .like-pointer {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    padding: 2px;
+  }
+
+  .nope-pointer {
+    background-color: $red;
+    right: 10px;
+  }
+
+  .like-pointer {
+    background-color: $green;
+    left: 10px;
+  }
+
+  span {
+    font-family: Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 40px;
+    text-transform: uppercase;
+    background: #000;
+    color: #fff;
+    mix-blend-mode: multiply;
+    padding: 1px 10px;
+    display: inline-block;
   }
 
   .swipper-empty {

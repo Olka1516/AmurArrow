@@ -2,39 +2,55 @@
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
 import Button from '../general/ComponentButton.vue'
 import router from '@/router'
-// import { userStore } from '@/stores'
-// const store = userStore()
-import { loverStore } from '@/stores'
-import { ref } from 'vue'
+import { userStore } from '@/stores'
+import { inject, onMounted, ref, watch, watchEffect } from 'vue'
+import type { FavoritesChange, FavoritesF } from '@/types'
+const store = userStore()
 
-const store = loverStore()
-const props = defineProps<{ isBtnBack: boolean }>()
-const gridLength = ref(Math.ceil(store.photos.slice(0, 6).length / 3))
-const gridPhoneLength = ref(Math.ceil(store.photos.slice(0, 6).length / 2))
-
+const props = defineProps<{ isOpen: boolean; isBtnDisplayed: boolean }>()
+const isClose = ref(true)
 const emit = defineEmits<{ (e: 'close'): void }>()
+const { isFavoritesChanged, updateFavoritesStatus }: FavoritesChange = inject('isFavoritesChanged')!
+
+const { allFavorites, getFromStorage }: FavoritesF = inject('favorites')!
+
 const back = async (name: string) => {
   await router.push('/' + name)
 }
+
 const closeSidebar = async () => {
+  isClose.value = false
   emit('close')
 }
 
-const getImage = (url: string) => {
-  const st = new URL(`../../assets/pictures/${url}`, import.meta.url)
-  return st.pathname
+const isEvalible = () => {
+  return isClose.value && !props.isBtnDisplayed
 }
 
-const toProfile = async (name: string) => {
-  await router.push('/user-profile/' + name)
-}
+watch(
+  () => props.isOpen,
+  () => {
+    isClose.value = !props.isOpen
+  }
+)
+
+watchEffect(() => {
+  if (isFavoritesChanged) {
+    getFromStorage()
+    updateFavoritesStatus()
+  }
+})
+
+onMounted(() => {
+  getFromStorage()
+})
 </script>
 
 <template>
-  <div class="container">
-    <div class="sidebar">
+  <div class="container" :class="{ fadeIn: isEvalible() }">
+    <div class="sidebar" :class="{ close: isEvalible() }">
       <Button
-        v-if="props.isBtnBack"
+        v-if="!isClose"
         icon="back"
         class="no-background-no-contour-button rounded"
         @click="closeSidebar()"
@@ -45,32 +61,16 @@ const toProfile = async (name: string) => {
           icon="arrow"
           text="Profile"
           class="no-background-no-contour-button"
-          @click="back('user-posts/')"
+          @click="back(`user-profile/${store.username}`)"
         />
       </div>
       <div class="wrapper">
-        <div
-          v-if="store.photos.length"
-          class="profile-about-photo"
-          :style="{
-            '--grid-length': gridLength,
-            '--grid-phone-length': gridPhoneLength
-          }"
-        >
-          <div
-            v-for="post in store.photos.slice(0, 6)"
-            :key="post"
-            class="profile-about-photo-inner"
-          >
-            <img :src="getImage(post)" alt="" @click="toProfile" />
-          </div>
-        </div>
-        <div class="profile-about-empty">
-          <h1 v-if="!store.photos.length">
-            You don't have favorites, use the platform and find them
-          </h1>
-        </div>
-        <Button text="More" @click="back('user-posts/')" />
+        <ContentPhotos
+          :posts="allFavorites"
+          :isOnlyClick="true"
+          textBtn="More"
+          text="You have no likes in the last 24 hours"
+        />
       </div>
     </div>
   </div>

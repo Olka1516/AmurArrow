@@ -44,6 +44,7 @@ export interface Post {
   image: File | null
   title: string
   description: string
+  date: Date | null
 }
 
 export interface ReqPost {
@@ -52,4 +53,20 @@ export interface ReqPost {
   image: string
   username: string
   id: string
+  date: Date
+}
+
+export interface FavoritePost extends ReqPost {
+  dateCreate?: Date
+}
+
+export interface FavoritesF {
+  allFavorites: FavoritePost[]
+  getFromStorage: () => void
+  updateStorage: (temp: FavoritePost) => void
+}
+
+export interface FavoritesChange {
+  isFavoritesChanged: boolean
+  updateFavoritesStatus: () => void
 }
