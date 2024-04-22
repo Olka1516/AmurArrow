@@ -19,7 +19,7 @@ const mock = (count = 5) => {
   const list: { id: string }[] = []
   for (let i = 0; i < count; i++) {
     if (offset.value != store.photos.length) {
-      list.push({ id: store.photos[offset.value] })
+      list.push(store.photos[offset.value])
       offset.value++
     } else {
       break
@@ -28,22 +28,18 @@ const mock = (count = 5) => {
   queue.value = queue.value.concat(list)
 }
 
-const onSubmit = (type: { type: string; key: string; item: ReqPost }) => {
+const onSubmit = (type: { type: string; key: string; item: FavoritePost }) => {
   if (type.type === 'like') {
     const temp: FavoritePost = type.item
     temp.dateCreate = new Date()
     updateStorage(temp)
     updateFavoritesStatus()
     getFromStorage()
+    store.addFavoritePost(temp)
   }
   if (queue.value.length < 3) {
     mock()
   }
-}
-
-const getPhoto = (img: string) => {
-  const st = new URL(`../../assets/pictures/${img}`, import.meta.url)
-  return st.pathname
 }
 
 const decide = (choice: string) => {
@@ -67,7 +63,7 @@ onMounted(() => {
       @submit="onSubmit"
     >
       <template v-slot="{ data }">
-        <img class="swipper-image" :src="getPhoto(data.id)" alt="" />
+        <img class="swipper-image" :src="data.image" alt="" />
       </template>
       <template #like>
         <h1 class="like-pointer"><span>Like</span></h1>

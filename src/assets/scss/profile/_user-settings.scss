@@ -29,6 +29,7 @@
   }
 
   .user-settings {
+    position: relative;
     width: 70vw;
     margin: auto;
     box-shadow: 0 2px 4px $grey;
@@ -54,6 +55,12 @@
     }
     @media screen and (max-width: 540px) {
       padding: 15px;
+    }
+    & .rounded {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      padding: 5px;
     }
   }
 

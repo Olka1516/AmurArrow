@@ -1,18 +1,19 @@
+import { addFavoitePostForUser, getAllLovers } from '@/services'
+import type { FavoritePost, ReqPost } from '@/types'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 
 export const loverStore = defineStore('findLover', () => {
-  const photos: Ref<string[]> = ref([
-    '1.jpg',
-    '2.jpg',
-    '3.jpg',
-    'blank.jpg',
-    'hands.jpg',
-    'hands2.webp',
-    '1.jpg',
-    '2.jpg',
-    'white-blank.jpg'
-  ])
+  const photos: Ref<ReqPost[]> = ref([])
 
-  return { photos }
+  const getAll = async (username: string) => {
+    const data = await getAllLovers(username)
+    photos.value = data
+  }
+
+  const addFavoritePost = async (data: FavoritePost) => {
+    return await addFavoitePostForUser(data)
+  }
+
+  return { photos, getAll, addFavoritePost }
 })

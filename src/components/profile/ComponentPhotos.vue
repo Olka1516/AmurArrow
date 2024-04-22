@@ -22,13 +22,13 @@ const gridLength = ref(Math.ceil(props.posts.length / 3))
 const gridPhoneLength = ref(Math.ceil(props.posts.length / 2))
 
 const addPosts = async () => {
-  if (props.isOnlyClick) await router.push('/user-profie/' + props.username)
+  if (props.isOnlyClick) await router.push('/user-profile/' + props.username)
   else await router.push('/user-posts/' + props.username)
 }
 
 const modalPost = async (isClose: boolean, post?: ReqPost) => {
   if (props.isOnlyClick) {
-    await router.push('/user-profie/' + post?.username)
+    await router.push('/user-profile/' + post?.username)
   } else {
     tempPost.value = post
     isCliked.value = isClose
@@ -43,13 +43,7 @@ watch(
 )
 </script>
 <template>
-  <ComponentPost
-    v-if="isCliked"
-    @close="modalPost(false)"
-    :post="tempPost"
-    :usermane="username"
-    :url="url"
-  />
+  <ComponentPost v-if="isCliked" @close="modalPost(false)" :post="tempPost" />
   <div
     v-if="photos.length"
     class="profile-about-photo"

@@ -31,6 +31,7 @@
   }
 
   .user-posts-content {
+    position: relative;
     width: 70vw;
     margin: auto;
     box-shadow: 0 2px 4px $grey;
@@ -58,14 +59,10 @@
       padding: 45px 20px;
     }
     & .rounded {
-      top: 30px;
-      right: 30px;
       position: absolute;
-      border: 0;
+      top: 5px;
+      right: 5px;
       padding: 5px;
-      margin: 10px;
-      border-radius: 50px;
-      display: flex;
     }
   }
 
@@ -123,6 +120,7 @@
     }
   }
   .post-modal-avatar {
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -140,6 +138,13 @@
     height: 40px;
     object-fit: cover;
     border: 2px solid $pink;
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: $milky;
   }
 
   .post {

@@ -28,8 +28,8 @@ const rules = {
 }
 const v$ = useVuelidate(rules, info)
 
-const back = () => {
-  router.back()
+const back = async () => {
+  await router.push('/user-profile/' + store.username)
 }
 
 const setImage = (item: File) => {
@@ -41,8 +41,8 @@ const submit = async () => {
   if (!isFormCorrect) return
   try {
     info.date = new Date()
-    store.addPost(info)
-    router.push('/user-profile/' + store.username)
+    await store.addPost(info)
+    await router.push('/user-profile/' + store.username)
   } catch (err) {
     const message = err as TRequestError
     error.value = message.response?.data.message || ''

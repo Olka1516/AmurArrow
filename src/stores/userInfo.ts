@@ -1,7 +1,13 @@
 import type { UserInfo, User, Media, Post, ReqPost } from '@/types'
 import { defineStore } from 'pinia'
 import { reactive, ref, toRefs, type Ref } from 'vue'
-import { getUserInfoByUsername, updateUserInfo, setUserImage, addUserPost,getUserPostsByUsername } from '@/services'
+import {
+  getUserInfoByUsername,
+  updateUserInfo,
+  setUserImage,
+  addUserPost,
+  getUserPostsByUsername
+} from '@/services'
 
 export const userStore = defineStore('userInfo', () => {
   const state: UserInfo = reactive({
@@ -15,7 +21,7 @@ export const userStore = defineStore('userInfo', () => {
     location: '',
     userType: '',
     profileImage: '',
-    blankImage: '',
+    blankImage: ''
   })
 
   const media: Ref<{ name: string; link: string }[] | []> = ref([])
@@ -25,7 +31,7 @@ export const userStore = defineStore('userInfo', () => {
 
   const getUserInfo = async (username: string) => {
     const data = await getUserInfoByUsername(username)
-    const posts = await getUserPostsByUsername(username)
+    ownerPhotos.value = await getUserPostsByUsername(username, 'OWN')
     state.age = data.age
     state.description = data.description
     state.email = data.email
@@ -37,24 +43,37 @@ export const userStore = defineStore('userInfo', () => {
     state.userType = data.userType
     state.profileImage = data.profileImage
     state.blankImage = data.blankImage
-
-    ownerPhotos.value = posts
-    favouritePhotos.value = data.favouritePhotos
     media.value = data.media
-    
+
+    if (state.userType === 'OWNER')
+      favouritePhotos.value = await getUserPostsByUsername(username, 'FAVORITE')
+  }
+
+  const getOnlyUserInfo = async (username: string) => {
+    return await getUserInfoByUsername(username)
   }
 
   const updateUser = async (user: User, media: Media) => {
-   return await updateUserInfo(user, media)
+    return await updateUserInfo(user, media)
   }
 
   const setImage = async (image: File, name: string) => {
-   return await setUserImage(image, name)
+    return await setUserImage(image, name)
   }
 
   const addPost = async (data: Post) => {
-   return await addUserPost(data)
+    return await addUserPost(data)
   }
 
-  return { ...toRefs(state), ownerPhotos, favouritePhotos, media, getUserInfo, updateUser, setImage, addPost }
+  return {
+    ...toRefs(state),
+    ownerPhotos,
+    favouritePhotos,
+    media,
+    getUserInfo,
+    updateUser,
+    setImage,
+    addPost,
+    getOnlyUserInfo
+  }
 })

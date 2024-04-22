@@ -52,11 +52,20 @@ export interface ReqPost {
   description: string
   image: string
   username: string
+  ownUsername?: string
   id: string
   date: Date
+  type: string
 }
 
-export interface FavoritePost extends ReqPost {
+export interface FavoritePost {
+  type: string
+  title: string
+  description: string
+  image: string
+  username: string
+  id: string
+  date: string
   dateCreate?: Date
 }
 
