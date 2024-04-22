@@ -54,10 +54,10 @@ const submit = async () => {
     await store.updateUser(user, media)
     if (profile.value) await store.setImage(profile.value, 'profile')
     if (blank.value) await store.setImage(blank.value, 'blank')
-    router.push('/user-profile/' + store.username)
+    await router.push('/user-profile/' + user.username)
   } catch (err) {
     const message = err as TRequestError
-    error.value = message.response?.data.message || ""
+    error.value = message.response?.data.message || ''
   }
 }
 
@@ -75,6 +75,10 @@ const setBlank = (item: File) => {
   blank.value = item
 }
 
+const back = async () => {
+  await router.push('/user-profile/' + store.username)
+}
+
 onMounted(() => {
   if (store.media.length) {
     media.instagram = store.media[0].link
@@ -88,6 +92,7 @@ onMounted(() => {
   <div class="warpper-form">
     <div class="user-content">
       <div class="user-settings">
+        <Button icon="back" class="fill-pink-button rounded" @click="back()" />
         <Avatar
           :name="getName()"
           type="settings"

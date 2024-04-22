@@ -1,31 +1,4 @@
 @mixin not-found-container {
-  section {
-    background: $pink;
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-    flex-wrap: wrap;
-    overflow: hidden;
-  }
-
-  span {
-    position: relative;
-    display: block;
-    width: calc(6.25vw - 2px);
-    height: calc(6.25vw - 2px);
-    background: $pink;
-    z-index: 2;
-    transition: 1.5s;
-    &:hover {
-      background: $white;
-      transition: 0s;
-    }
-  }
-
   .not-found-profile {
     position: absolute;
     z-index: 10;

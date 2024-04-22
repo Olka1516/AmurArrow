@@ -3,11 +3,13 @@ import Item from '@/components/profile/ComponentItem.vue'
 import Button from '@/components/general/ComponentButton.vue'
 import Avatar from '@/components/general/AvatarComponent.vue'
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
-import { ref } from 'vue'
-import { userStore } from '@/stores'
+import { ref, watch } from 'vue'
 import { TextEnum } from '@/types'
 import router from '@/router'
+import { userStore } from '@/stores'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const store = userStore()
 const content = ref('posts')
 const { OwnerAbout, UserAbout, OwnerPhotos, UserPhotos } = TextEnum
@@ -43,9 +45,16 @@ const getImage = (url: string) => {
     const st = new URL(`../../assets/pictures/blank.jpg`, import.meta.url)
     return st.pathname
   }
-  const st = new URL(url);
-  return st.href;
+  const st = new URL(url)
+  return st.href
 }
+
+watch(
+  () => route.params.username,
+  async () => {
+    content.value = 'posts'
+  }
+)
 </script>
 <template>
   <div class="profile">
@@ -59,7 +68,13 @@ const getImage = (url: string) => {
           @click="routeToSettings"
         />
 
-        <Avatar :type="store.userType" :name="getName()" class="profile-avatar" @click="routeToSettings" :url="store.profileImage" />
+        <Avatar
+          :type="store.userType"
+          :name="getName()"
+          class="profile-avatar"
+          @click="routeToSettings"
+          :url="store.profileImage"
+        />
         <div class="profile-content">
           <h1>{{ store.username }}</h1>
           <div class="profile-content-inner info">
@@ -115,6 +130,8 @@ const getImage = (url: string) => {
             :isMyProfile="store.userType == 'OWNER'"
             :username="store.username"
             :url="store.profileImage"
+            icon="camera-plus"
+            classBtn="contour-no-background-button"
           />
           <ContentPhotos
             v-if="getContent('favourite') && store.userType === 'OWNER'"
