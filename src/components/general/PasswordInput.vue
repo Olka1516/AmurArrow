@@ -10,18 +10,23 @@
       props.v.$touch()
     "
     :class="{
-      'invalid': isPasswordInvalid()
+      invalid: isPasswordInvalid()
     }"
   />
-  <i>{{ props.type }} </i>
+  <i>{{ t(props.type) }} </i>
   <Button class="no-background-no-contour-button" @click="isVisible" :icon="newUrl()" />
-  <div v-if="$props.type == 'Password' && isFocused() && typeof props.error !== 'string'" class="password-suggestion">
-    <h4><b>Suggestions</b></h4>
+  <div
+    v-if="$props.type == 'Password' && isFocused() && typeof props.error !== 'string'"
+    class="password-suggestion"
+  >
+    <h4>
+      <b>{{ t('suggestions') }}</b>
+    </h4>
     <ul>
-      <li>At least one uppercase</li>
-      <li>At least one lowercase</li>
-      <li>At least one numeric</li>
-      <li>Minimum 8 characters</li>
+      <li>{{ tm('suggestionsText[0]') }}</li>
+      <li>{{ tm('suggestionsText[1]') }}</li>
+      <li>{{ tm('suggestionsText[2]') }}</li>
+      <li>{{ tm('suggestionsText[3]') }}</li>
     </ul>
   </div>
 </template>
@@ -30,7 +35,9 @@
 import Button from '@/components/general/ComponentButton.vue'
 import { ErrorMessageEnum } from '@/types'
 import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t, tm } = useI18n()
 const bloke = ref('password')
 const props = defineProps<{
   modelValue: string
@@ -54,7 +61,7 @@ const handleInput = (event: any) => {
   if (!event.target) return
   emit('update:modelValue', event.target.value)
 }
-const {UsernameOrPasswordWrong, PasswordMinLength, PasswordIsEqual } = ErrorMessageEnum
+const { UsernameOrPasswordWrong, PasswordMinLength, PasswordIsEqual } = ErrorMessageEnum
 const isPasswordInvalid = () => {
   return (
     (props.v.$invalid && props.v.$dirty) ||

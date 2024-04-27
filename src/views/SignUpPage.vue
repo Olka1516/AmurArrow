@@ -10,7 +10,9 @@ import { authStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import type { TRequestError } from '@/types'
 const router = useRouter()
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const authS = authStore()
 const error = ref('')
 const user = reactive({
@@ -40,7 +42,7 @@ const signUp = async () => {
     router.push('/user-profile/' + user.username)
   } catch (err) {
     const message = err as TRequestError
-    error.value = message.response?.data.message || ""
+    error.value = message.response?.data.message || ''
   }
 }
 
@@ -56,7 +58,7 @@ const signIn = async () => {
 
     <div class="sign-page">
       <div class="sign-page-content">
-        <h2>Sign up</h2>
+        <h2>{{ t('signUp') }}</h2>
         <div class="form">
           <div class="form-input">
             <TextInput v-model="user.username" :v="v$.username" type="Username" :error="error" />
@@ -74,13 +76,13 @@ const signIn = async () => {
             <PasswordInput
               v-model="user.confirmPassword"
               :v="v$.confirmPassword"
-              type="Confirm password"
+              type="Confirm"
             />
             <ErrorMessage :v="v$.confirmPassword" />
           </div>
           <div class="form-input">
-            <Button class="fill-pink-button" @click="signUp" text="Submit" />
-            <Button class="contour-button" @click="signIn" text="Sign in" />
+            <Button class="fill-pink-button" @click="signUp" :text="t('submit')" />
+            <Button class="contour-button" @click="signIn" :text="t('signIn')" />
           </div>
         </div>
       </div>

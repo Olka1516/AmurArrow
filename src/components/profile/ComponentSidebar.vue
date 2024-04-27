@@ -5,6 +5,9 @@ import router from '@/router'
 import { userStore } from '@/stores'
 import { inject, onMounted, ref, watch, watchEffect } from 'vue'
 import type { FavoritesChange, FavoritesF } from '@/types'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const store = userStore()
 
 const props = defineProps<{ isOpen: boolean; isBtnDisplayed: boolean }>()
@@ -59,7 +62,7 @@ onMounted(() => {
         <Button icon="logo" class="no-background-no-contour-button logo" @click="back('')" />
         <Button
           icon="arrow"
-          text="Profile"
+          :text="t('profile')"
           class="no-background-no-contour-button"
           @click="back(`user-profile/${store.username}`)"
         />
@@ -68,8 +71,9 @@ onMounted(() => {
         <ContentPhotos
           :posts="allFavorites"
           :isOnlyClick="true"
-          textBtn="More"
-          text="You have no likes in the last 24 hours"
+          :textBtn="t('more')"
+          :text="t('noLikes')"
+          :username="store.username"
         />
       </div>
     </div>

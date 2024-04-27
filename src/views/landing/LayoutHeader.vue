@@ -2,11 +2,26 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from '@/components/general/ComponentButton.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const emit = defineEmits<{ (e: 'logOut'): void }>()
 
 const props = defineProps<{ limit: number }>()
-const emit = defineEmits<{ (e: 'logOut'): void }>()
 const router = useRouter()
 const istest = ref(true)
+
+const options = {
+  root: document.querySelector('#scrollArea'),
+  rootMargin: '0px',
+  threshold: 1.0
+}
+
+const callback: IntersectionObserverCallback = () => {
+  istest.value = !istest.value
+}
+const observer = new IntersectionObserver(callback, options)
+
 const signIn = async () => {
   await router.push('/sign-in')
 }
@@ -20,16 +35,6 @@ const logOut = async () => {
   await router.push('/')
 }
 
-const options = {
-  root: document.querySelector('#scrollArea'),
-  rootMargin: '0px',
-  threshold: 1.0
-}
-
-const callback: IntersectionObserverCallback = () => {
-  istest.value = !istest.value
-}
-const observer = new IntersectionObserver(callback, options)
 onMounted(() => {
   const target = document.querySelector('#scrollArea')
   if (target) {
@@ -43,11 +48,11 @@ onMounted(() => {
     <div class="container">
       <img class="logo" src="@/assets/pictures/logo.png" alt="Logo" />
       <div v-if="limit !== 1" class="account-buttons">
-        <Button class="contour-button" @click="signIn" text="Sign In" />
-        <Button class="contour-no-background-button" @click="signUp" text="Sign Up" />
+        <Button class="contour-button" @click="signIn" :text="t('signIn')" />
+        <Button class="contour-no-background-button" @click="signUp" :text="t('signUp')" />
       </div>
       <div v-else>
-        <Button class="contour-button" @click="logOut" text="Log out" />
+        <Button class="contour-button" @click="logOut" :text="t('logOut')" />
       </div>
     </div>
   </header>

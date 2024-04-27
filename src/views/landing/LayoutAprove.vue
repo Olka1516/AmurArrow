@@ -1,32 +1,29 @@
 <script setup lang="ts">
 import Button from '@/components/general/ComponentButton.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t, tm } = useI18n()
 </script>
 <template>
   <div class="aprove">
     <div class="aprove-message">
       <p>
-        Undefeated in pool? You've met<br />
-        your match!
+        {{ tm('aproveMessage[0]') }}<br />
+        {{ tm('aproveMessage[1]') }}
       </p>
-      <p>Challenge. Accepted.</p>
-      <p>Ever played at The Cave?</p>
+      <p>{{ tm('aproveMessage[2]') }}</p>
+      <p>{{ tm('aproveMessage[3]') }}</p>
       <p>
-        Yes! We should go this<br />
-        weekend!
+        {{ tm('aproveMessage[4]') }}<br />
+        {{ tm('aproveMessage[5]') }}
       </p>
     </div>
     <div class="aprove-block">
-      <h1>Why this site?</h1>
+      <h1>{{ t('whySite') }}</h1>
       <p>
-        This site is an ideal choice for those who are looking for interesting and suitable
-        interlocutors. Thanks to the variety of profiles, you will be able to find people who share
-        your interests and values. Our primary concern is the safety of our users, and we use
-        advanced technologies to ensure the privacy and protection of personal information. In
-        addition, our site is constantly updated with innovative features that make the dating
-        process exciting and productive. Our responsive support is ready to help at any time,
-        building a positive community and keeping your dating experience safe.
+        {{ t('becauseSite') }}
       </p>
-      <Button class="contour-button" text="Learn More" />
+      <Button class="contour-button" :text="t('learnMore')" />
     </div>
   </div>
 </template>

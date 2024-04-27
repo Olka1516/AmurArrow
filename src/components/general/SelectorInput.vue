@@ -1,18 +1,17 @@
 <template>
   <div id="select">
-    <input
-      required
-      @keydown="handleKeyDown"
-      v-model="userInfo"
-      @click="isVisible = !isVisible"
-    />
-    <i>{{ props.type }}</i>
+    <input required @keydown="handleKeyDown" v-model="userInfo" @click="isVisible = !isVisible" />
+    <i>{{ i18n.global.t(props.type) }}</i>
     <div v-if="isVisible" class="selector-dropdown">
-      <Button class="no-background-no-contour-button" text="Male" @click="handleInput('Male')" />
+      <Button
+        class="no-background-no-contour-button"
+        :text="i18n.global.t('Male')"
+        @click="handleInput('Male')"
+      />
       <hr />
       <Button
         class="no-background-no-contour-button"
-        text="Female"
+        :text="i18n.global.t('Female')"
         @click="handleInput('Female')"
       />
     </div>
@@ -21,6 +20,7 @@
 <script setup lang="ts">
 import Button from '@/components/general/ComponentButton.vue'
 import { ref, onMounted, onBeforeUnmount, type Ref } from 'vue'
+import { i18n } from '@/lang'
 
 const isVisible = ref(false)
 const selectRef: Ref<HTMLElement | null> = ref(null)
@@ -33,10 +33,14 @@ const emit = defineEmits<{
   (e: 'update:modelValue', val: string): void
 }>()
 
-const userInfo = ref(props.modelValue)
+const getGender = (name: string) => {
+  return i18n.global.t(name)
+}
+const userInfo = ref('')
 
 const handleInput = (type: string) => {
-  userInfo.value = type
+  userInfo.value = i18n.global.t(type)
+  isVisible.value = false
   emit('update:modelValue', type)
 }
 
@@ -52,6 +56,9 @@ const handleClickOutside = (event: any) => {
 }
 
 onMounted(() => {
+  if (props.modelValue) {
+    userInfo.value = getGender(props.modelValue)
+  }
   selectRef.value = document.getElementById('select')
   document.addEventListener('mousedown', handleClickOutside)
   document.addEventListener('touchstart', handleClickOutside)

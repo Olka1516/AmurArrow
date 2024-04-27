@@ -1,13 +1,6 @@
-export interface UserSignIn {
-  username: string
-  password: string
-}
+import type { ReqMedia } from './media'
 
-export interface UserSignUp extends UserSignIn {
-  email: string
-}
-
-export interface UserInfo {
+export interface UserSettings {
   username: string
   email: string
   gender: string
@@ -16,66 +9,14 @@ export interface UserInfo {
   description: string
   age?: number
   location: string
+}
+
+export interface UserInfo extends UserSettings {
   userType: string
   profileImage: string
   blankImage: string
 }
 
-export interface User {
-  media?: { name: string; link: string }[]
-  username: string
-  email: string
-  gender: string
-  firstName: string
-  lastName: string
-  description: string
-  age?: number
-  location: string
-}
-
-export interface Media {
-  instagram: string
-  telegram: string
-  facebook: string
-  pinterest: string
-}
-
-export interface Post {
-  image: File | null
-  title: string
-  description: string
-  date: Date | null
-}
-
-export interface ReqPost {
-  title: string
-  description: string
-  image: string
-  username: string
-  ownUsername?: string
-  id: string
-  date: Date
-  type: string
-}
-
-export interface FavoritePost {
-  type: string
-  title: string
-  description: string
-  image: string
-  username: string
-  id: string
-  date: string
-  dateCreate?: Date
-}
-
-export interface FavoritesF {
-  allFavorites: FavoritePost[]
-  getFromStorage: () => void
-  updateStorage: (temp: FavoritePost) => void
-}
-
-export interface FavoritesChange {
-  isFavoritesChanged: boolean
-  updateFavoritesStatus: () => void
+export interface User extends UserSettings {
+  media?: ReqMedia[]
 }

@@ -12,14 +12,31 @@ const handleFileInput = (files: Event) => {
 
 const handleFiles = (files: FileList) => {
   clearGallery()
-  Array.from(files).forEach((file) => {
-    uploadFile(file)
-    previewFile(file)
-  })
+  if (10485760 < files[0].size) {
+    return
+  }
+  if (!files[0].type.includes('image')) {
+    return
+  }
+  uploadFile(files[0])
+  previewFile(files[0])
 }
 
 const uploadFile = (file: File) => {
   emit('update', file)
+}
+
+const createImg = (result: string) => {
+  let img = document.createElement('img')
+  img.src = result
+  img.style.cssText = `
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    border-radius: 100px;
+    object-fit: cover;
+  `
+  return img
 }
 
 const previewFile = (file: File) => {
@@ -28,15 +45,7 @@ const previewFile = (file: File) => {
   reader.readAsDataURL(file)
   reader.onloadend = () => {
     if (typeof reader.result === 'string') {
-      let img = document.createElement('img')
-      img.src = reader.result
-      img.style.cssText = `
-        width: 138px;
-        height: 138px;
-        vertical-align: middle;
-        border-radius: 100px;
-        object-fit: cover;
-      `
+      const img = createImg(reader.result)
       document.getElementById('roundedProfile')?.appendChild(img)
     }
   }
@@ -56,15 +65,7 @@ const clearGallery = () => {
 onMounted(() => {
   if (!props.url) return
   isImage.value = true
-  let img = document.createElement('img')
-  img.src = props.url
-  img.style.cssText = `
-        width: 138px;
-        height: 138px;
-        vertical-align: middle;
-        border-radius: 100px;
-        object-fit: cover;
-      `
+  const img = createImg(props.url)
   document.getElementById('roundedProfile')?.appendChild(img)
 })
 </script>

@@ -9,11 +9,13 @@
     rows="4"
     :class="{ invalid: isInfoInvalid() }"
   />
-  <i>{{ props.type }}</i>
+  <i>{{ t(props.type) }}</i>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const props = defineProps<{
   modelValue: string
   type: string
