@@ -22,21 +22,26 @@ const uploadFile = (file: File) => {
   emit('update', file)
 }
 
+const createImg = (result: string) => {
+  let img = document.createElement('img')
+  img.src = result
+  img.style.cssText = `
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    border-radius: 100px;
+    object-fit: cover;
+  `
+  return img
+}
+
 const previewFile = (file: File) => {
   isImage.value = true
   let reader = new FileReader()
   reader.readAsDataURL(file)
   reader.onloadend = () => {
     if (typeof reader.result === 'string') {
-      let img = document.createElement('img')
-      img.src = reader.result
-      img.style.cssText = `
-        width: 138px;
-        height: 138px;
-        vertical-align: middle;
-        border-radius: 100px;
-        object-fit: cover;
-      `
+      const img = createImg(reader.result)
       document.getElementById('roundedProfile')?.appendChild(img)
     }
   }
@@ -56,15 +61,7 @@ const clearGallery = () => {
 onMounted(() => {
   if (!props.url) return
   isImage.value = true
-  let img = document.createElement('img')
-  img.src = props.url
-  img.style.cssText = `
-        width: 138px;
-        height: 138px;
-        vertical-align: middle;
-        border-radius: 100px;
-        object-fit: cover;
-      `
+  const img = createImg(props.url)
   document.getElementById('roundedProfile')?.appendChild(img)
 })
 </script>

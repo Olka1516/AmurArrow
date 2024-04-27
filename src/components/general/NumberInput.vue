@@ -1,10 +1,13 @@
 <template>
   <input required v-model="userInfo" @input="handleInput($event)" />
-  <i>{{ props.type }}</i>
+  <i>{{ t(props.type) }}</i>
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const props = defineProps<{
   modelValue: number | undefined
   type: string

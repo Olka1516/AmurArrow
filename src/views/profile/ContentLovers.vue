@@ -4,8 +4,10 @@ import 'vue-tinder/lib/style.css'
 import Button from '@/components/general/ComponentButton.vue'
 import { loverStore } from '@/stores'
 import { inject, onMounted, ref, type Ref } from 'vue'
-import type { FavoritePost, FavoritesChange, FavoritesF, ReqPost } from '@/types'
+import type { FavoritePost, FavoritesChange, FavoritesF } from '@/types'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const store = loverStore()
 
 const { updateFavoritesStatus }: FavoritesChange = inject('isFavoritesChanged')!
@@ -66,10 +68,14 @@ onMounted(() => {
         <img class="swipper-image" :src="data.image" alt="" />
       </template>
       <template #like>
-        <h1 class="like-pointer"><span>Like</span></h1>
+        <h1 class="like-pointer">
+          <span>{{ t('like') }}</span>
+        </h1>
       </template>
       <template #nope>
-        <h1 class="nope-pointer"><span>Nope</span></h1>
+        <h1 class="nope-pointer">
+          <span>{{ t('nope') }}</span>
+        </h1>
       </template>
     </Tinder>
     <div class="swipper-btns">
@@ -78,7 +84,7 @@ onMounted(() => {
     </div>
   </div>
   <div v-else class="swipper-empty">
-    <h1>Opss, looks like there are no more images</h1>
+    <h1>{{ t('opss') }}</h1>
   </div>
 </template>
 

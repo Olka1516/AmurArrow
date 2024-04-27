@@ -9,6 +9,7 @@
 <script setup lang="ts">
 import { ErrorMessageEnum } from '@/types'
 import type { ErrorObject } from '@vuelidate/core'
+import { i18n } from '../../lang'
 
 const props = defineProps<{
   v: {
@@ -36,47 +37,47 @@ const getError = () => {
   const { $message: message } = props.v.$errors?.[0] ?? { $message: null }
   switch (props.v.$path) {
     case 'email':
-      if (message === EmailIsNotValid) return 'Value is not a valid email address.'
-      else if (message === IsRequired) return 'Email is required'
-      else if (props.error === EmailInUse) return 'This account already exists.'
+      if (message === EmailIsNotValid) return i18n.global.t('emailIsNotValid')
+      else if (message === IsRequired) return i18n.global.t('emailIsRequired')
+      else if (props.error === EmailInUse) return i18n.global.t('emailInUse')
       break
     case 'password':
-      if (message === IsRequired) return 'Password is required'
+      if (message === IsRequired) return i18n.global.t('passwordIsRequired')
       else if (message === PasswordMinLength)
-        return 'This field should be at least 6 characters long'
-      else if (props.error === UsernameOrPasswordWrong) return 'Username or password is incorrect.'
+        return i18n.global.t('passwordMinLength')
+      else if (props.error === UsernameOrPasswordWrong) return i18n.global.t('usernameOrPasswordWrong')
       break
     case 'confirmPassword':
-      if (message === IsRequired) return 'Password is required'
+      if (message === IsRequired) return i18n.global.t('passwordIsRequired')
       else if (message === PasswordIsEqual)
-        return 'The password must be equal to the other password'
+        return i18n.global.t('passwordIsEqual')
       break
     case 'username':
-      if (message === IsRequired) return 'Username is required'
-      else if (props.error === UsernameInUse) return 'This account already exists.'
+      if (message === IsRequired) return i18n.global.t('usernameIsRequired')
+      else if (props.error === UsernameInUse) return i18n.global.t('usernameInUse')
       break
     case 'age':
-      if (message === IsRequired) return 'Age is required'
+      if (message === IsRequired) return i18n.global.t('ageIsRequired')
       break
     case 'firstName':
-      if (message === IsRequired) return 'First name is required'
+      if (message === IsRequired) return i18n.global.t('firstNameIsRequired')
       break
     case 'lastName':
-      if (message === IsRequired) return 'Last name is required'
+      if (message === IsRequired) return i18n.global.t('lastNameIsRequired')
       break
     case 'gender':
-      if (message === IsRequired) return 'Gender is required'
+      if (message === IsRequired) return i18n.global.t('genderIsRequired')
       break
     case 'location':
-      if (message === IsRequired) return 'Location is required'
+      if (message === IsRequired) return i18n.global.t('locationIsRequired')
       break
     case 'description':
-      if (message === IsRequired) return 'Description is required'
-      if (message === MaxLength255) return MaxLength255
+      if (message === IsRequired) return i18n.global.t('descriptionIsRequired')
+      if (message === MaxLength255) return i18n.global.t('maxLength', {num: 255})
       break
     case 'title':
-      if (message === IsRequired) return 'Title is required'
-      if (message === MaxLength50) return MaxLength50
+      if (message === IsRequired) return i18n.global.t('titleIsRequired')
+      if (message === MaxLength50) return i18n.global.t('maxLength', {num: 50})
       break
   }
 }

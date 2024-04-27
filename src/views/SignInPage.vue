@@ -9,7 +9,9 @@ import { reactive, ref } from 'vue'
 import { authStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import type { TRequestError } from '@/types'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const authS = authStore()
 const router = useRouter()
 const error = ref('')
@@ -22,6 +24,7 @@ const rules = {
   username: { required },
   password: { required }
 }
+
 const v$ = useVuelidate(rules, user)
 const signIn = async () => {
   const isFormCorrect = await v$.value.$validate()
@@ -33,7 +36,7 @@ const signIn = async () => {
     router.push('/user-profile/' + user.username)
   } catch (err) {
     const message = err as TRequestError
-    error.value = message.response?.data.message || ""
+    error.value = message.response?.data.message || ''
   }
 }
 
@@ -49,7 +52,7 @@ const signUp = async () => {
 
     <div class="sign-page">
       <div class="sign-page-content">
-        <h2>Sign in</h2>
+        <h2>{{ t('signIn') }}</h2>
         <div class="form">
           <div class="form-input">
             <TextInput v-model="user.username" :v="v$.username" type="Username" :error="error" />
@@ -65,11 +68,11 @@ const signUp = async () => {
             <ErrorMessage :v="v$.password" :error="error" />
           </div>
           <div class="form-links">
-            <a href="#">Forgot Password</a>
+            <a href="#">{{ t('forgotPas') }}</a>
           </div>
           <div class="form-input">
-            <Button class="fill-pink-button" @click="signIn" text="Submit" />
-            <Button class="contour-button" @click="signUp" text="Sign up" />
+            <Button class="fill-pink-button" @click="signIn" :text="t('submit')" />
+            <Button class="contour-button" @click="signUp" :text="t('signUp')" />
           </div>
         </div>
       </div>

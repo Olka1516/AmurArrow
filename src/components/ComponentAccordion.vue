@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 const state = defineProps<{
-  title: string
-  text: string
+  title: string | string[] | Record<string, string[]>
+  text: string | string[] | Record<string, string[]>
   id: number
   isShow: boolean
   prevId: number

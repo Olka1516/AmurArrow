@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const info = defineProps<{ title: string; text: string; id: number }>()
+const info = defineProps<{
+  title: string | string[] | Record<string, string[]>
+  text: string | string[] | Record<string, string[]>
+  id: number
+}>()
 const test = (id: number) => {
   const st = new URL(`../assets/pictures/${id}.jpg`, import.meta.url)
   return st.pathname

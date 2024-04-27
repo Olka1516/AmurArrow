@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref, type Ref } from 'vue'
 import { useInfoStore } from '@/stores'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const reviewStore = useInfoStore()
 const index = ref(0)
 
@@ -31,7 +34,8 @@ const resetProgressBarStyle = () => {
 }
 
 const startProgress = async () => {
-  while (true) {
+  let isTrue = true
+  while (isTrue) {
     progressBar.value = progressBars.value[index.value]
     await animateProgressBar(progressBars.value[index.value])
     index.value = (index.value + 1) % progressBars.value.length
@@ -46,31 +50,6 @@ onMounted(() => {
   ]
   startProgress()
 })
-
-// var options = {
-//   root: document.querySelector('#scrollArea1'),
-//   rootMargin: '0px',
-//   threshold: 1.0
-// }
-
-// const isAnimating = ref(false)
-// const isOne = ref(1)
-// const callback: IntersectionObserverCallback = () => {
-//   if (isOne.value != 1) {
-//     isAnimating.value = !isAnimating.value
-//     if (isOne.value == 2) startProgress()
-//     if (isAnimating.value) animateProgressBar(progressBar.value)
-//   }
-//   isOne.value++
-// }
-
-// var observer = new IntersectionObserver(callback, options)
-// onMounted(() => {
-//   const target = document.querySelector('#scrollArea1')
-//   if (target) {
-//     observer.observe(target)
-//   }
-// })
 </script>
 
 <template>
@@ -78,7 +57,7 @@ onMounted(() => {
   <div class="review">
     <div class="container">
       <div class="review_text">
-        <h2>What our users say</h2>
+        <h2>{{ t('usersTexts') }}</h2>
         <p>" <br />{{ reviewStore.review[index].text }}</p>
       </div>
       <div class="test" id="carousel">

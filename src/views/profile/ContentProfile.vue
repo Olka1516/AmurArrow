@@ -4,15 +4,15 @@ import Button from '@/components/general/ComponentButton.vue'
 import Avatar from '@/components/general/AvatarComponent.vue'
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
 import { ref, watch } from 'vue'
-import { TextEnum } from '@/types'
 import router from '@/router'
 import { userStore } from '@/stores'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const store = userStore()
 const content = ref('posts')
-const { OwnerAbout, UserAbout, OwnerPhotos, UserPhotos } = TextEnum
 
 const changeContent = (name: string) => {
   content.value = name
@@ -78,7 +78,7 @@ watch(
         <div class="profile-content">
           <h1>{{ store.username }}</h1>
           <div class="profile-content-inner info">
-            <Item v-if="store.location" name="location" :text="store.location" />
+            <Item v-if="store.location" name="location" :text="`${t(store.location.split(' ')[0])} ${t(store.location.split(' ')[1])}`" />
             <Item v-if="store.email" name="email" :text="store.email" />
           </div>
         </div>
@@ -86,11 +86,11 @@ watch(
       <div class="profile-about">
         <div class="profile-about-info">
           <div class="profile-info-inner">
-            <h1>About</h1>
+            <h1>{{ t('about') }}</h1>
             <div v-if="store.gender || store.age || store.description" class="content">
               <div class="profile-content-inner">
-                <Item v-if="store.gender" :name="getGender()" :text="store.gender" />
-                <Item v-if="store.age" name="person" :text="`${store.age} years`" />
+                <Item v-if="store.gender" :name="getGender()" :text="t(store.gender)" />
+                <Item v-if="store.age" name="person" :text="t('years', store.age)" />
               </div>
               <p>{{ store.description }}</p>
               <nav class="profile-content-inner links" v-if="store.media.length">
@@ -102,7 +102,7 @@ watch(
               </nav>
             </div>
             <div v-else class="profile-no-content">
-              <h1>{{ getText(OwnerAbout, UserAbout) }}</h1>
+              <h1>{{ getText(t('OwnerAbout'), t('UserAbout')) }}</h1>
             </div>
           </div>
         </div>
@@ -112,21 +112,21 @@ watch(
               class="contour-no-background-button"
               icon="grid"
               @click="changeContent('posts')"
-              text="Posts"
+              :text="t('posts')"
               :class="{ isActive: getContent('posts') }"
             />
             <Button
               class="contour-no-background-button"
               icon="favourite"
               @click="changeContent('favourite')"
-              text="Favorite"
+              :text="t('favorite')"
               :class="{ isActive: getContent('favourite') }"
             />
           </div>
           <ContentPhotos
             v-if="getContent('posts')"
             :posts="store.ownerPhotos"
-            :text="getText(OwnerPhotos, UserPhotos)"
+            :text="getText(t('OwnerPhotos'), t('UserPhotos'))"
             :isMyProfile="store.userType == 'OWNER'"
             :username="store.username"
             :url="store.profileImage"
@@ -136,7 +136,7 @@ watch(
           <ContentPhotos
             v-if="getContent('favourite') && store.userType === 'OWNER'"
             :posts="store.favouritePhotos"
-            text="You don't have favorites, use the platform and find them"
+            :text="t('favoriteText')"
           />
         </div>
       </div>

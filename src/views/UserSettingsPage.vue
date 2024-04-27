@@ -13,18 +13,18 @@ import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import SelectorInput from '@/components/general/SelectorInput.vue'
 import { userStore } from '@/stores'
-import type { TRequestError } from '@/types'
+import type { ReqMedia, TRequestError, UserSettings } from '@/types'
 import router from '@/router'
 
 const store = userStore()
 const error = ref('')
-const user = reactive({
+const user: UserSettings = reactive({
   username: store.username,
   email: store.email,
   firstName: store.firstName,
   lastName: store.lastName,
   description: store.description,
-  age: store.age,
+  age: undefined,
   gender: store.gender,
   location: store.location
 })
@@ -79,13 +79,17 @@ const back = async () => {
   await router.push('/user-profile/' + store.username)
 }
 
+const getMedia = (media: ReqMedia) => {
+  return media ? media.link : ''
+}
+
 onMounted(() => {
-  if (store.media.length) {
-    media.instagram = store.media[0].link
-    media.telegram = store.media[1].link
-    media.facebook = store.media[2].link
-    media.pinterest = store.media[3].link
-  }
+  media.instagram = getMedia(store.media[0])
+  media.telegram = getMedia(store.media[1])
+  media.facebook = getMedia(store.media[2])
+  media.pinterest = getMedia(store.media[3])
+
+  if (store.age) user.age = store.age
 })
 </script>
 <template>
@@ -114,11 +118,11 @@ onMounted(() => {
           </div>
           <div class="form-column">
             <div class="form-input">
-              <TextInput v-model="user.firstName" :v="v$.firstName" type="First name" />
+              <TextInput v-model="user.firstName" :v="v$.firstName" type="first" />
               <ErrorMessage :v="v$.firstName" />
             </div>
             <div class="form-input">
-              <TextInput v-model="user.lastName" :v="v$.lastName" type="Last name" />
+              <TextInput v-model="user.lastName" :v="v$.lastName" type="last" />
               <ErrorMessage :v="v$.lastName" />
             </div>
           </div>
