@@ -12,7 +12,7 @@ const emit = defineEmits<{
 const locations = ref(props.modelValue.split(' '))
 const country = ref('')
 const region = ref('')
-const countryt = ref(locations.value[0])
+const countryRef = ref(locations.value[0])
 
 const getEnglishWord = (ukrainianWord: string) => {
   for (const englishWord in i18n.global.messages.ua) {
@@ -28,14 +28,14 @@ const getEnglishWord = (ukrainianWord: string) => {
 watch(
   () => country.value,
   () => {
-    countryt.value = getEnglishWord(country.value)
-    emit('update:modelValue', countryt.value + ' ' + getEnglishWord(region.value))
+    countryRef.value = getEnglishWord(country.value)
+    emit('update:modelValue', countryRef.value + ' ' + getEnglishWord(region.value))
   }
 )
 watch(
   () => region.value,
   () => {
-    emit('update:modelValue', countryt.value + ' ' + getEnglishWord(region.value))
+    emit('update:modelValue', countryRef.value + ' ' + getEnglishWord(region.value))
   }
 )
 
@@ -53,18 +53,18 @@ onMounted(() => {
         v-model="country"
         :country="country"
         :countryName="true"
-        :placeholder="i18n.global.t('selectC')"
+        :placeholder="i18n.global.t('selectCountry')"
       />
       <i>{{ t('country') }}</i>
     </div>
     <div>
       <region-select
         v-model="region"
-        :country="countryt"
+        :country="countryRef"
         :region="region"
         :countryName="true"
         :regionName="true"
-        :placeholder="i18n.global.t('selectR')"
+        :placeholder="i18n.global.t('selectRegion')"
       />
       <i>{{ t('region') }}</i>
     </div>

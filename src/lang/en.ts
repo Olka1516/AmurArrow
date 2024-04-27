@@ -118,8 +118,8 @@ export default {
   Age: 'Age',
   country: 'Country',
   region: 'Region',
-  selectC: 'Select country',
-  selectR: 'select region',
+  selectCountry: 'Select country',
+  selectRegion: 'select region',
   defUploadImage:
     'Upload images using the file selection dialog or by dragging the desired images into the highlighted area',
   imageTooLarge: 'The image size is too large, please choose an image less than 10 MB',

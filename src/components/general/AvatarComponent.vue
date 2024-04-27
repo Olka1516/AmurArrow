@@ -12,10 +12,14 @@ const handleFileInput = (files: Event) => {
 
 const handleFiles = (files: FileList) => {
   clearGallery()
-  Array.from(files).forEach((file) => {
-    uploadFile(file)
-    previewFile(file)
-  })
+  if (10485760 < files[0].size) {
+    return
+  }
+  if (!files[0].type.includes('image')) {
+    return
+  }
+  uploadFile(files[0])
+  previewFile(files[0])
 }
 
 const uploadFile = (file: File) => {
