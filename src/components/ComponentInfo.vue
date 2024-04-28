@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { tm } = useI18n()
 const info = defineProps<{
-  title: string | string[] | Record<string, string[]>
-  text: string | string[] | Record<string, string[]>
+  title: string 
+  text: string
   id: number
 }>()
 const test = (id: number) => {
@@ -17,8 +20,8 @@ const test = (id: number) => {
       <div class="info-circle">{{ info.id }}</div>
       <hr />
     </div>
-    <h1 class="info-title">{{ info.title }}</h1>
-    <p class="info-text">{{ info.text }}</p>
+    <h1 class="info-title">{{ tm(info.title) }}</h1>
+    <p class="info-text">{{ tm(info.text) }}</p>
   </div>
 </template>
 

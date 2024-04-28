@@ -96,6 +96,50 @@
   }
 }
 
+@mixin language-select-container {
+  #select {
+    cursor: pointer;
+    position: relative;
+    margin-right: 15px;
+  }
+
+  .select-field {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+
+  .select-img {
+    width: 24px;
+    height: 24px;
+  }
+
+  input {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    width: 30px;
+    font-size: 20px;
+    color: $white;
+  }
+  .selector-dropdown {
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    min-width: 180%;
+    background-color: $white;
+    border: 1px solid $grey;
+    border-radius: 8px;
+    padding: 0 10px;
+    box-shadow: 0 2px 3px $grey;
+    & button {
+      text-align: center;
+      width: 100%;
+      padding: 10px 5px;
+    }
+  }
+}
+
 @mixin avatar-container {
   .profile-circle {
     position: relative;

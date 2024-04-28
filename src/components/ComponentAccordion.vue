@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { tm } = useI18n()
 const state = defineProps<{
-  title: string | string[] | Record<string, string[]>
-  text: string | string[] | Record<string, string[]>
+  title: string
+  text: string
   id: number
   isShow: boolean
   prevId: number
@@ -41,11 +44,11 @@ watch(
   <div @click="isOpen(state.id)">
     <div class="accordion-title" :class="{ isOpen: isShow }">
       <h1>
-        {{ state.title }}
+        {{ tm(state.title) }}
       </h1>
     </div>
     <div class="accordion-text" :id="'accordion-text' + state.id">
-      <p>{{ state.text }}</p>
+      <p>{{ tm(state.text) }}</p>
     </div>
   </div>
 </template>

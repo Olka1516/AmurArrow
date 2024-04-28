@@ -9,7 +9,7 @@
     animation: changeToDefault 1s both;
   }
 
-  .istest {
+  .isLimit {
     animation: changeColor 1s both;
   }
 
@@ -40,6 +40,16 @@
     align-items: center;
   }
 
+  .nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    & button {
+      color: $white;
+    }
+  }
+
   .logo {
     object-fit: contain;
     height: 100%;
@@ -48,6 +58,7 @@
   .account-buttons {
     display: flex;
     gap: 10px;
+    align-items: center;
   }
 
   #scrollArea {

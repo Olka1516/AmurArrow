@@ -9,7 +9,7 @@ export default {
   UserAbout: 'There is no information about user here',
   OwnerPhotos: "You don't have any photos, click the button below to add one",
   UserPhotos: "User don't have any photos",
-  years: 'years',
+  years: '{n} years',
   posts: 'Posts',
   favorite: 'Favorite',
   like: 'Like',
@@ -145,5 +145,12 @@ export default {
   titleIsRequired: 'Title is required',
   maxLength: 'The maximum length allowed is {num}',
   submit: 'Submit',
-  back: 'Back'
+  back: 'Back',
+  home: 'Home',
+  find: 'Find Lover',
+  AboutUs: 'About us',
+  AboutCompany: 'About company',
+  moreAboutUs: 'We are creators of digital experiences aimed at your success and satisfaction. Our team is committed to changing your online experience forever.',
+  welcomeAbout1: "Our company is a leader in the field of innovative solutions and technologies. We are committed to creating products that exceed our customers' expectations and contribute to their success. Our team consists of highly qualified professionals who work to provide the highest quality innovative solutions for our customers around the world.",
+  welcomeAbout2: "Our mission is to create products that change the world, advance industries and improve people's lives. We are constantly looking for new opportunities and innovative ways to succeed, building long-term relationships with our customers based on mutual trust, growing value and mutual benefit. Our company is always committed to its goals and objectives, working hard to be better tomorrow than we were today.",
 }
