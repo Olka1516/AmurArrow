@@ -33,7 +33,8 @@ const signIn = async () => {
   }
   try {
     await authS.signIn({ username: user.username, password: user.password })
-    router.push('/user-profile/' + user.username)
+    localStorage.setItem('username', user.username)
+    await router.push('/user-profile/' + user.username)
   } catch (err) {
     const message = err as TRequestError
     error.value = message.response?.data.message || ''

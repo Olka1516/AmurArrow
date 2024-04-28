@@ -3,7 +3,7 @@ import { onMounted, ref, type Ref } from 'vue'
 import { useInfoStore } from '@/stores'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 const reviewStore = useInfoStore()
 const index = ref(0)
 
@@ -58,9 +58,9 @@ onMounted(() => {
     <div class="container">
       <div class="review_text">
         <h2>{{ t('usersTexts') }}</h2>
-        <p>" <br />{{ reviewStore.review[index].text }}</p>
+        <p>" <br />{{ tm(reviewStore.review[index].text) }}</p>
       </div>
-      <div class="test" id="carousel">
+      <div class="all-progres" id="carousel">
         <div class="progres">
           <div class="progres-bar" id="progressBar1"></div>
         </div>

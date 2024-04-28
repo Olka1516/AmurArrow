@@ -5,6 +5,7 @@
 @import './landing/reviews';
 @import './landing/accordion';
 @import './landing/footer';
+@import './landing/aboutUs';
 @import './profile/user';
 @import './profile/notFound';
 @import './profile/user-settings';
@@ -83,6 +84,10 @@
   @include inputs-container;
 }
 
+@mixin about-us {
+  @include about-us-container;
+}
+
 @mixin description {
   @include inputs-container;
   @include description-container;
@@ -102,6 +107,11 @@
 @mixin password-inputs {
   @include inputs-container;
   @include password-container;
+  @include buttons-container;
+}
+
+@mixin language-select {
+  @include language-select-container;
   @include buttons-container;
 }
 

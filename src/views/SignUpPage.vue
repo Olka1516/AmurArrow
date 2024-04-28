@@ -39,7 +39,8 @@ const signUp = async () => {
 
   try {
     await authS.signUp({ username: user.username, email: user.email, password: user.password })
-    router.push('/user-profile/' + user.username)
+    localStorage.setItem('username', user.username)
+    await router.push('/user-profile/' + user.username)
   } catch (err) {
     const message = err as TRequestError
     error.value = message.response?.data.message || ''
