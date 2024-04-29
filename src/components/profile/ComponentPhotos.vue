@@ -39,6 +39,8 @@ watch(
   () => props.posts,
   () => {
     photos.value = props.posts
+    gridLength.value = Math.ceil(props.posts.length / 3)
+    gridPhoneLength.value = Math.ceil(props.posts.length / 2)
   }
 )
 </script>

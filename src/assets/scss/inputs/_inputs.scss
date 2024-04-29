@@ -97,6 +97,7 @@
 }
 
 @mixin language-select-container {
+  #select_1,
   #select {
     cursor: pointer;
     position: relative;
@@ -137,6 +138,10 @@
       width: 100%;
       padding: 10px 5px;
     }
+  }
+
+  .isPosLeft {
+    left: 0;
   }
 }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import Button from './ComponentButton.vue'
 const props = defineProps<{ name: string; type?: string; url?: string }>()
 const emit = defineEmits<{ (e: 'update', value: File): void }>()
@@ -61,6 +61,20 @@ const clearGallery = () => {
     })
   }
 }
+
+watch(
+  () => props.url,
+  () => {
+    if (props.url === '' || props.url === undefined) {
+      isImage.value = false
+      clearGallery()
+    } else {
+      isImage.value = true
+      const img = createImg(props.url)
+      document.getElementById('roundedProfile')?.appendChild(img)
+    }
+  }
+)
 
 onMounted(() => {
   if (!props.url) return

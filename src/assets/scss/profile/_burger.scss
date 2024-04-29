@@ -1,0 +1,50 @@
+@mixin burger-container {
+  .logo {
+    height: 50px;
+    width: 50px;
+  }
+
+  .sidebar-links {
+    padding: 7px 24px;
+    height: 61px;
+    & .back {
+      right: 14px;
+    }
+  }
+  .wrapper {
+    padding: 24px;
+    gap: 25px;
+    align-items: flex-start;
+  }
+
+  .account-buttons {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+  }
+
+  .profile {
+    justify-content: space-between;
+  }
+
+  .navs {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+
+  .navs-child {
+    border-bottom: 1px $pink_light solid;
+    padding-bottom: 15px;
+    width: 100%;
+  }
+
+  .media {
+    border-top: 1px $pink_light solid;
+    padding-top: 15px;
+    margin-top: 15px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+}

@@ -55,7 +55,7 @@ onMounted(() => {
       <Button
         v-if="!isClose"
         icon="back"
-        class="no-background-no-contour-button rounded"
+        class="no-background-no-contour-button rounded back"
         @click="closeSidebar()"
       />
       <div class="sidebar-links">

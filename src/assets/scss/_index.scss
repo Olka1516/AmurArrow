@@ -12,6 +12,7 @@
 @import './profile/user-posts';
 @import './profile/find-lover';
 @import './profile/sidebar';
+@import './profile/burger';
 @import './auth/signPages';
 @import './auth/signIn';
 @import './errors/errors';
@@ -22,9 +23,10 @@
 @import './repetitive/forms';
 
 @mixin header {
-  @include header-container;
+  @include find-lover-content;
   @include buttons-container;
   @include container;
+  @include header-container;
 }
 
 @mixin content {
@@ -150,8 +152,14 @@
   @include drag-file-container;
   @include buttons-container;
 }
+
 @mixin component-sidebar {
   @include sidebar-container;
+}
+
+@mixin component-burger {
+  @include sidebar-container;
+  @include burger-container;
 }
 
 @mixin user-settings {
