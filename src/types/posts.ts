@@ -10,7 +10,7 @@ export interface ReqPost {
   title: string
   description: string
   image: string
-  date: Date
+  date: string
   username: string
   id: string
   ownUsername?: string

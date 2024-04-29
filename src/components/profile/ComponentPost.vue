@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ReqPost, UserInfo } from '@/types'
+import type { FavoritePost, ReqPost, UserInfo } from '@/types'
 import Button from '../general/ComponentButton.vue'
 import { onMounted, ref, type Ref } from 'vue'
 import { userStore } from '@/stores'
@@ -7,7 +7,7 @@ import router from '@/router'
 
 const store = userStore()
 const data: Ref<UserInfo | undefined> = ref()
-const props = defineProps<{ post: ReqPost | undefined }>()
+const props = defineProps<{ post: FavoritePost | ReqPost | undefined }>()
 const emit = defineEmits<{ (e: 'close'): void }>()
 const close = () => {
   emit('close')

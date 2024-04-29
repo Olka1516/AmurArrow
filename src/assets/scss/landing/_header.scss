@@ -60,9 +60,28 @@
     gap: 10px;
     align-items: center;
   }
+  .navs {
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
+  }
 
   #scrollArea {
     position: relative;
     top: var(--limit-length) px;
+  }
+
+  #content {
+    padding: 0;
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  .sidebar {
+    position: fixed;
+    z-index: 2;
+    top: 12px;
+    right: 0;
   }
 }

@@ -1,10 +1,10 @@
 <template>
-  <div id="select">
+  <div :id="getSelect()">
     <div class="select-field" @click="isVisible = !isVisible">
       <img class="select-img" :src="getImage(lang)" alt="" />
       <input @keydown="handleKeyDown" v-model="lang" type="button" />
     </div>
-    <div v-if="isVisible" class="selector-dropdown">
+    <div v-if="isVisible" class="selector-dropdown" :class="{ isPosLeft: isPosLeft }">
       <div class="select-field">
         <img class="select-img" src="../../assets/pictures/icons/UA.svg" alt="" />
         <Button class="no-background-no-contour-button" text="UA" @click="handleInput('UA')" />
@@ -25,6 +25,7 @@ const isVisible = ref(false)
 const selectRef: Ref<HTMLElement | null> = ref(null)
 const props = defineProps<{
   modelValue: string
+  isPosLeft?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -55,11 +56,16 @@ const getImage = (item: string) => {
   return st.pathname
 }
 
+const getSelect = () => {
+  if(props.isPosLeft) return 'select_1'
+  return 'select'
+}
+
 onMounted(() => {
   if (props.modelValue) {
     lang.value = props.modelValue.toUpperCase()
   }
-  selectRef.value = document.getElementById('select')
+  selectRef.value = document.getElementById('select_lang')
   document.addEventListener('mousedown', handleClickOutside)
   document.addEventListener('touchstart', handleClickOutside)
 })
