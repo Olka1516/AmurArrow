@@ -3,9 +3,9 @@ import { ref, watch, type Ref } from 'vue'
 import Button from '@/components/general/ComponentButton.vue'
 import ComponentPost from '@/components/profile/ComponentPost.vue'
 import router from '@/router'
-import type { ReqPost } from '@/types'
+import type { FavoritePost, ReqPost } from '@/types'
 const props = defineProps<{
-  posts: ReqPost[] | []
+  posts: FavoritePost[] | ReqPost[] | []
   text: string
   textBtn?: string
   isMyProfile?: boolean
@@ -15,7 +15,7 @@ const props = defineProps<{
   icon?: string
   classBtn?: string
 }>()
-const tempPost: Ref<ReqPost | undefined> = ref()
+const tempPost: Ref<FavoritePost | undefined> = ref()
 const isCliked = ref(false)
 const photos = ref(props.posts)
 const gridLength = ref(Math.ceil(props.posts.length / 3))
@@ -26,7 +26,7 @@ const addPosts = async () => {
   else await router.push('/user-posts/' + props.username)
 }
 
-const modalPost = async (isClose: boolean, post?: ReqPost) => {
+const modalPost = async (isClose: boolean, post?: FavoritePost) => {
   if (props.isOnlyClick) {
     await router.push('/user-profile/' + post?.username)
   } else {

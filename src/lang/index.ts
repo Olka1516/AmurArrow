@@ -28,7 +28,7 @@ const messages = {
 export const i18n = createI18n({
   locale: 'ua',
   allowComposition: true,
-  fallbackLocale: 'en' || process.env.VUE_APP_I18N_LOCALE,
+  fallbackLocale: 'en',
   messages,
   pluralizationRules: {
     ua: customRule

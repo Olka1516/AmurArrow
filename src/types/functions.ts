@@ -1,4 +1,4 @@
-import type { FavoritePost } from "./user"
+import type { FavoritePost } from "./posts"
 
 export interface FavoritesF {
   allFavorites: FavoritePost[]
