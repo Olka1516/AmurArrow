@@ -10,6 +10,9 @@ import { useVuelidate } from '@vuelidate/core'
 import { userStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import type { Post, TRequestError } from '@/types'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const router = useRouter()
 const store = userStore()
 const error = ref('')
@@ -65,7 +68,7 @@ const submit = async () => {
             <DescriptionInput v-model="info.description" :v="v$.description" type="Description" />
             <ErrorMessage :v="v$.description" />
           </div>
-          <Button text="Submit" class="fill-pink-button" @click="submit" />
+          <Button :text="t('submit')" class="fill-pink-button" @click="submit" />
         </div>
       </div>
     </div>

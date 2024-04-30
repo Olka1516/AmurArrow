@@ -11,6 +11,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  optimizeDeps: {
+    include: ['@assets/**/*.svg']
+  },
   define: {
     __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'true'
   }

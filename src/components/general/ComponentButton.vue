@@ -1,13 +1,13 @@
 <script setup lang="ts">
-defineProps<{ class?: string; rounded?: boolean; icon?: string; text?: string }>()
+import { SvgUrls } from '../../assets/pictures/icons/allSvg'
+defineProps<{ class?: string; rounded?: boolean; icon?: keyof typeof SvgUrls | "logo"; text?: string }>()
 
-const getImage = (item: string) => {
+const getImage = (item: keyof typeof SvgUrls | "logo") => {
   if ('logo' === item) {
     const st = new URL(`../../assets/pictures/${item}.png`, import.meta.url)
     return st.pathname
   }
-  const st = new URL(`../../assets/pictures/icons/${item}.svg`, import.meta.url)
-  return st.pathname
+  return SvgUrls[item]
 }
 </script>
 <template>

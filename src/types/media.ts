@@ -1,5 +1,5 @@
 export interface ReqMedia {
-  name: string
+  name: 'instagram' | 'telegram' | 'facebook' | 'pinterest'
   link: string
 }
 
