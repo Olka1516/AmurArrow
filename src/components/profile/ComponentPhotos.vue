@@ -4,6 +4,7 @@ import Button from '@/components/general/ComponentButton.vue'
 import ComponentPost from '@/components/profile/ComponentPost.vue'
 import router from '@/router'
 import type { FavoritePost, ReqPost } from '@/types'
+import type { SvgUrls } from '@/assets/pictures/icons/allSvg'
 const props = defineProps<{
   posts: FavoritePost[] | ReqPost[] | []
   text: string
@@ -12,7 +13,7 @@ const props = defineProps<{
   username?: string
   url?: string
   isOnlyClick?: boolean
-  icon?: string
+  icon?: keyof typeof SvgUrls
   classBtn?: string
 }>()
 const tempPost: Ref<FavoritePost | undefined> = ref()

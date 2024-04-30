@@ -1,4 +1,4 @@
-import type { UserInfo, User, Media, Post, ReqPost } from '@/types'
+import type { UserInfo, User, Media, Post, ReqPost, ReqMedia } from '@/types'
 import { defineStore } from 'pinia'
 import { reactive, ref, toRefs, type Ref } from 'vue'
 import {
@@ -24,7 +24,7 @@ export const userStore = defineStore('userInfo', () => {
     blankImage: ''
   })
 
-  const media: Ref<{ name: string; link: string }[] | []> = ref([])
+  const media: Ref<ReqMedia[] | []> = ref([])
 
   const ownerPhotos: Ref<ReqPost[] | []> = ref([])
   const favouritePhotos: Ref<ReqPost[] | []> = ref([])

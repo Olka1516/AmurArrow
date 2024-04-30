@@ -7,7 +7,7 @@ const info = defineProps<{
   text: string
   id: number
 }>()
-const test = (id: number) => {
+const getImage = (id: number) => {
   const st = new URL(`../assets/pictures/${id}.jpg`, import.meta.url)
   return st.pathname
 }
@@ -15,7 +15,7 @@ const test = (id: number) => {
 
 <template>
   <div class="info">
-    <img class="info-image" :src="test(info.id)" alt="" />
+    <img class="info-image" :src="getImage(info.id)" alt="" />
     <div class="info-line">
       <div class="info-circle">{{ info.id }}</div>
       <hr />

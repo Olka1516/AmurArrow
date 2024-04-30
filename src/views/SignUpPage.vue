@@ -9,9 +9,9 @@ import { useVuelidate } from '@vuelidate/core'
 import { authStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import type { TRequestError } from '@/types'
-const router = useRouter()
 import { useI18n } from 'vue-i18n'
 
+const router = useRouter()
 const { t } = useI18n()
 const authS = authStore()
 const error = ref('')

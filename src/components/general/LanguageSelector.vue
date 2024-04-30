@@ -19,6 +19,8 @@
 </template>
 <script setup lang="ts">
 import Button from './ComponentButton.vue'
+import svgUA from '../../assets/pictures/icons/UA.svg';
+import svgEN from '../../assets/pictures/icons/EN.svg';
 import { ref, onMounted, onBeforeUnmount, type Ref } from 'vue'
 
 const isVisible = ref(false)
@@ -52,8 +54,7 @@ const handleClickOutside = (event: any) => {
 }
 
 const getImage = (item: string) => {
-  const st = new URL(`../../assets/pictures/icons/${item}.svg`, import.meta.url)
-  return st.pathname
+  return item === 'UA' ? svgUA : svgEN
 }
 
 const getSelect = () => {

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const props = defineProps<{ name: string; text: string; additionalImage?: string }>()
+import { SvgUrls } from '../../assets/pictures/icons/allSvg'
+const props = defineProps<{ name: keyof typeof SvgUrls; text: string; additionalImage?: keyof typeof SvgUrls }>()
 
-const getImage = (item: string) => {
-  const st = new URL(`../../assets/pictures/icons/${item}.svg`, import.meta.url)
-  return st.pathname
+const getImage = (item: keyof typeof SvgUrls) => {
+  return SvgUrls[item]
 }
 </script>
 <template>

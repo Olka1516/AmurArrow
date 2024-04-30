@@ -15,7 +15,9 @@ import SelectorInput from '@/components/general/SelectorInput.vue'
 import { userStore } from '@/stores'
 import type { ReqMedia, TRequestError, UserSettings } from '@/types'
 import router from '@/router'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const store = userStore()
 const error = ref('')
 const user: UserSettings = reactive({
@@ -156,7 +158,7 @@ onMounted(() => {
               <LinkInput v-model="media.telegram" type="Telegram" />
             </div>
           </div>
-          <Button class="fill-pink-button" text="Submit" @click="submit" />
+          <Button class="fill-pink-button" :text="t('submit')" @click="submit" />
         </div>
       </div>
     </div>
