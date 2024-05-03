@@ -71,9 +71,9 @@
 
 @mixin sign-up {
   @include cubes;
+  @include buttons-container;
   @include forms;
   @include sign-container;
-  @include buttons-container;
 }
 
 @mixin sign-in {

@@ -50,6 +50,10 @@ const signUp = async () => {
 const signIn = async () => {
   await router.push('/sign-in')
 }
+
+const back = async () => {
+  await router.push('/')
+}
 </script>
 <template>
   <section>
@@ -58,6 +62,7 @@ const signIn = async () => {
     </div>
 
     <div class="sign-page">
+      <Button icon="back" class="fill-pink-button rounded" @click="back()" />
       <div class="sign-page-content">
         <h2>{{ t('signUp') }}</h2>
         <div class="form">
