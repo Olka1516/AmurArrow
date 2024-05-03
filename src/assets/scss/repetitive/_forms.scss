@@ -1,9 +1,17 @@
 @mixin forms {
-    .form-input {
-        position: relative;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
+  .form-input {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+   .rounded {
+    width: auto;
+    padding: 1px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px;
+  }
 }
