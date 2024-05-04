@@ -30,14 +30,15 @@ const mock = (count = 5) => {
   queue.value = queue.value.concat(list)
 }
 
-const onSubmit = (type: { type: string; key: string; item: FavoritePost }) => {
+const onSubmit = async (type: { type: string; key: string; item: FavoritePost }) => {
+  const temp: FavoritePost = type.item
   if (type.type === 'like') {
-    const temp: FavoritePost = type.item
     temp.dateCreate = new Date()
     updateStorage(temp)
     updateFavoritesStatus()
     getFromStorage()
-    store.addFavoritePost(temp)
+    await store.addFavoritePost(temp)
+    await store.sendMessage(type.type, temp.username)
   }
   if (queue.value.length < 3) {
     mock()
