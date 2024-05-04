@@ -17,3 +17,10 @@ export const addFavoitePostForUser = async (data: FavoritePost) => {
   formData.append('username', data.username)
   return await axiosFileInstance.post('/api/lovers/add', formData)
 }
+
+export const sendUserMessage = async (type: string, username: string) => {
+  const formData = new FormData()
+  formData.append('type', type)
+  formData.append('username', username)
+  await axiosFileInstance.post('/api/sender/send', formData)
+}
