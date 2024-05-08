@@ -8,7 +8,7 @@ import DescriptionInput from '@/components/general/DescriptionInput.vue'
 import LocationSelector from '@/components/general/locationSelector.vue'
 import LinkInput from '@/components/general/LinkInput.vue'
 import DragFile from '@/components/general/DragFile.vue'
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive } from 'vue'
 import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import SelectorInput from '@/components/general/SelectorInput.vue'
@@ -20,22 +20,31 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const store = userStore()
 const error = ref('')
+
+const getAge = () => {
+  return store.age ? store.age : undefined
+}
+
 const user: UserSettings = reactive({
   username: store.username,
   email: store.email,
   firstName: store.firstName,
   lastName: store.lastName,
   description: store.description,
-  age: undefined,
+  age: getAge(),
   gender: store.gender,
   location: store.location
 })
 
+const getMedia = (media: ReqMedia) => {
+  return media ? media.link : ''
+}
+
 const media = reactive({
-  instagram: '',
-  telegram: '',
-  facebook: '',
-  pinterest: ''
+  instagram: getMedia(store.media[0]),
+  telegram: getMedia(store.media[1]),
+  facebook: getMedia(store.media[2]),
+  pinterest: getMedia(store.media[3])
 })
 
 const profile = ref()
@@ -80,19 +89,6 @@ const setBlank = (item: File) => {
 const back = async () => {
   await router.push('/user-profile/' + store.username)
 }
-
-const getMedia = (media: ReqMedia) => {
-  return media ? media.link : ''
-}
-
-onMounted(() => {
-  media.instagram = getMedia(store.media[0])
-  media.telegram = getMedia(store.media[1])
-  media.facebook = getMedia(store.media[2])
-  media.pinterest = getMedia(store.media[3])
-
-  if (store.age) user.age = store.age
-})
 </script>
 <template>
   <div class="warpper-form">

@@ -14,6 +14,9 @@ export interface ReqPost {
   username: string
   id: string
   ownUsername?: string
+  gender: string
+  location: string
+  age: number
 }
 
 export interface FavoritePost extends ReqPost {

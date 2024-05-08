@@ -22,6 +22,7 @@ import SvgCopy from './copy.svg'
 import SvgFemale from './female.svg'
 import SvgMale from './male.svg'
 import SvgPerson from './person.svg'
+import SvgFilter from './filter.svg'
 
 export const SvgUrls = {
   lines: SvgLines,
@@ -47,5 +48,6 @@ export const SvgUrls = {
   copy: SvgCopy,
   male: SvgMale,
   female: SvgFemale,
-  person: SvgPerson
+  person: SvgPerson,
+  filter: SvgFilter
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
 import Button from '../general/ComponentButton.vue'
+import ComponentFiltres from './ComponentFiltres.vue'
 import router from '@/router'
 import { userStore } from '@/stores'
 import { inject, onMounted, ref, watch, watchEffect } from 'vue'
@@ -11,10 +12,10 @@ const { t } = useI18n()
 const store = userStore()
 
 const props = defineProps<{ isOpen: boolean; isBtnDisplayed: boolean }>()
+
 const isClose = ref(true)
 const emit = defineEmits<{ (e: 'close'): void }>()
 const { isFavoritesChanged, updateFavoritesStatus }: FavoritesChange = inject('isFavoritesChanged')!
-
 const { allFavorites, getFromStorage }: FavoritesF = inject('favorites')!
 
 const back = async (name: string) => {
@@ -60,13 +61,17 @@ onMounted(() => {
       />
       <div class="sidebar-links">
         <Button icon="logo" class="no-background-no-contour-button logo" @click="back('')" />
-        <Button
-          icon="arrow"
-          :text="t('profile')"
-          class="no-background-no-contour-button"
-          @click="back(`user-profile/${store.username}`)"
-        />
+        <div class="sidebar-links-group">
+          <Button
+            icon="arrow"
+            :text="t('profile')"
+            class="no-background-no-contour-button"
+            @click="back(`user-profile/${store.username}`)"
+          />
+          <ComponentFiltres :userData='{gender: store.gender, age: store.age, location: store.location}' />
+        </div>
       </div>
+
       <div class="wrapper">
         <ContentPhotos
           :posts="allFavorites"
@@ -77,6 +82,7 @@ onMounted(() => {
         />
       </div>
     </div>
+    <div></div>
   </div>
 </template>
 

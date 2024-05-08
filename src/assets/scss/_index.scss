@@ -86,6 +86,11 @@
   @include inputs-container;
 }
 
+@mixin number-inputs {
+  @include inputs-container;
+  @include number-container;
+}
+
 @mixin about-us {
   @include about-us-container;
 }
@@ -146,6 +151,10 @@
 @mixin component-avatar {
   @include avatar-container;
   @include buttons-container;
+}
+
+@mixin component-filtres {
+  @include filtres-container;
 }
 
 @mixin component-drag-file {

@@ -3,7 +3,7 @@ import Tinder from 'vue-tinder'
 import 'vue-tinder/lib/style.css'
 import Button from '@/components/general/ComponentButton.vue'
 import { loverStore } from '@/stores'
-import { inject, onMounted, ref, type Ref } from 'vue'
+import { inject, onMounted, ref, watch, type Ref } from 'vue'
 import type { FavoritePost, FavoritesChange, FavoritesF } from '@/types'
 import { useI18n } from 'vue-i18n'
 
@@ -18,7 +18,7 @@ const queue: Ref<{ id: string }[]> = ref([])
 const offset = ref(0)
 
 const mock = (count = 5) => {
-  const list: { id: string }[] = []
+  const list = []
   for (let i = 0; i < count; i++) {
     if (offset.value != store.photos.length) {
       list.push(store.photos[offset.value])
@@ -53,6 +53,15 @@ onMounted(() => {
   getFromStorage()
   mock()
 })
+
+watch(
+  () => store.photos,
+  () => {
+    queue.value = []
+    offset.value = 0
+    mock()
+  }
+)
 </script>
 
 <template>
