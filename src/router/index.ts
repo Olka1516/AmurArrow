@@ -53,6 +53,12 @@ const router = createRouter({
       name: 'find-lover',
       component: () => import('../views/FindLoverPage.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/chats',
+      name: 'chats',
+      component: () => import('../views/ChatsPage.vue'),
+      // meta: { requiresAuth: true }
     }
   ]
 })

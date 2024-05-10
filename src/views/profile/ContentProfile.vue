@@ -77,13 +77,16 @@ watch(
         />
         <div class="profile-content">
           <h1>{{ store.username }}</h1>
-          <div class="profile-content-inner info">
-            <Item
-              v-if="store.location"
-              name="location"
-              :text="`${t(store.location.split(' ')[0])} ${t(store.location.split(' ')[1])}`"
-            />
-            <Item v-if="store.email" name="email" :text="store.email" />
+          <div class="profile-content-wrapper">
+            <div class="profile-content-inner info">
+              <Item
+                v-if="store.location"
+                name="location"
+                :text="`${t(store.location.split(' ')[0])} ${t(store.location.split(' ')[1])}`"
+              />
+              <Item v-if="store.email" name="email" :text="store.email" />
+            </div>
+            <Button v-if="store.userType !== 'OWNER'" class="contour-no-background-button" :text="t('write')" />
           </div>
         </div>
       </div>

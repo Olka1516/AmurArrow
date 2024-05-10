@@ -23,9 +23,11 @@ import SvgFemale from './female.svg'
 import SvgMale from './male.svg'
 import SvgPerson from './person.svg'
 import SvgFilter from './filter.svg'
+import SvgPaperPlane from './paper-plane.svg'
 
 export const SvgUrls = {
   lines: SvgLines,
+  'paper-plane': SvgPaperPlane,
   facebook: SvgFacebook,
   instagram: SvgInstagram,
   linkedin: SvgLinkedIn,

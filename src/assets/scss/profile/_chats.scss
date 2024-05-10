@@ -1,0 +1,235 @@
+@mixin avatar {
+  .avatar {
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border: 2px solid $pink;
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: $milky;
+    cursor: pointer;
+  }
+}
+@mixin chats-container {
+  .chats {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+  }
+
+  .chat-links {
+    background-color: $pink;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 -5px 8px $black;
+  }
+
+  .chats-container {
+    background-color: $chats_conteiner;
+    overflow-y: auto;
+    width: 30%;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-color: $transparent_pink_light;
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: $white;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 60px;
+      background-color: $grey_lighter;
+      border-radius: 11px;
+    }
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
+  .chat-container {
+    width: 70%;
+    height: 100%;
+    background-color: $white;
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    z-index: 2;
+    position: fixed;
+      top: 0;
+      right: 0;
+      transition: transform 300ms ease-in;
+      transform: translateX(0);
+    }
+  }
+
+  .isSelected {
+    @media screen and (max-width: 767px) {
+      transform: translateX(100%);
+      transition: transform 300ms ease-out;
+    }
+  }
+
+  .not-selected-chat {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  h1 {
+    color: $pink;
+  }
+
+  .no-background-no-contour-button {
+    color: $white;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .chat-component {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+@mixin users-chats-container {
+  @include avatar;
+  .container-avatar {
+    background-color: $chat_container;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: $chat_border;
+  }
+
+  .isActive {
+    background-color: $active;
+  }
+
+  h2 {
+    color: $white;
+    font-weight: 700;
+  }
+
+  p {
+    color: $grey_lighter;
+    font-size: 14px;
+  }
+}
+
+@mixin users-chat-container {
+  @include avatar;
+  .chat {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  .chat-input {
+    position: relative;
+    width: 100%;
+    & input {
+      padding: 0 15px;
+      height: 40px;
+      width: 100%;
+      border: none;
+      box-shadow: 0 5px 8px $black;
+    }
+    & input:focus-visible {
+      outline: none;
+    }
+
+    & .rounded {
+      padding: 0;
+      top: 8px;
+      right: 15px;
+      position: absolute;
+    }
+  }
+
+  .chat-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    height: 75px;
+    box-shadow: 0 -5px 8px $black;
+  }
+
+  .chat-header-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .chat-content {
+    padding: 24px 16px;
+    overflow-y: auto;
+    height: 100%;
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: $white;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 60px;
+      background-color: $grey_lighter;
+      border-radius: 11px;
+    }
+  }
+
+  .chat-content-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  h3 {
+    text-align: center;
+    color: $grey;
+  }
+
+  .chat-texts {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .chatOwner {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: $pink;
+    max-width: 300px;
+    min-width: 150px;
+    margin-left: auto;
+    padding: 5px 10px;
+    color: $white;
+  }
+
+  .chatLover {
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: $grey_lighter;
+    max-width: 300px;
+    min-width: 150px;
+    margin-right: auto;
+    padding: 5px 10px;
+  }
+
+  .chat-username {
+    cursor: pointer;
+  }
+}
