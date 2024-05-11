@@ -1,17 +1,18 @@
 // import SockJS from 'sockjs-client';
-import Stomp from 'stompjs'
-import SockJS from 'sockjs-client/dist/sockjs'
 import { useMessageStore } from '@/stores'
 import { EventBus } from 'quasar'
+import SockJS from 'sockjs-client/dist/sockjs'
+import Stomp from 'stompjs'
+import type { Chat } from './types'
 
 const store = useMessageStore()
-const URL = process.env.VITE_BASE_URL + '/ws'
+const URL = import.meta.env.VITE_BASE_URL + '/ws'
 
 export const bus = new EventBus()
 
 const header = {}
 
-let stompCLient: Stomp.client
+let stompCLient = Stomp.client
 
 let connectionStatus = false
 
@@ -29,7 +30,8 @@ export const con = () => {
     header,
     () => {
       connectionStatus = true
-      stompCLient.subscribe('/topic/chat', onMessageRecieved, header)
+      const test = stompCLient.subscribe('/topic/public', onMessageRecieved, header)
+      console.log('test :', test)
     },
     (err: any) => {
       console.log('error is=>', err)
@@ -46,15 +48,20 @@ export const close = () => {
   }
 }
 
-export const send = (username: string, message: string) => {
+export const send = (chat: Chat) => {
   const chatMessage = {
-    sender: username,
-    content: message,
+    username: chat.username,
+    loverUsername: chat.loverUsername,
+    firstName: chat.firstName,
+    lastName: chat.lastName,
+    image: chat.image,
+    chats: chat.chats,
     type: 'CHAT'
   }
   if (connectionStatus) {
+    console.log('here')
     try {
-      stompCLient.send('/app/chat.sendMessage', header, JSON.stringify(chatMessage))
+      stompCLient.send('/app/public.sendMessage', header, JSON.stringify(chatMessage))
     } catch (error) {
       con()
     }
@@ -65,7 +72,7 @@ export const enterToChat = (username: string) => {
   if (connectionStatus) {
     try {
       stompCLient.send(
-        '/app/chat.addUser',
+        '/app/public.addUser',
         header,
         JSON.stringify({ sender: username, type: 'JOIN' })
       )

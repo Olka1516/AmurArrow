@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import Button from '@/components/general/ComponentButton.vue'
-import Avatar from '@/components/general/AvatarComponent.vue'
 import ErrorMessage from '@/components/errors/ErrorMessage.vue'
-import TextInput from '@/components/general/TextInput.vue'
-import NumberInput from '@/components/general/NumberInput.vue'
+import Avatar from '@/components/general/AvatarComponent.vue'
+import Button from '@/components/general/ComponentButton.vue'
 import DescriptionInput from '@/components/general/DescriptionInput.vue'
-import LocationSelector from '@/components/general/locationSelector.vue'
-import LinkInput from '@/components/general/LinkInput.vue'
 import DragFile from '@/components/general/DragFile.vue'
-import { ref, reactive } from 'vue'
-import { email, required } from '@vuelidate/validators'
-import { useVuelidate } from '@vuelidate/core'
+import LinkInput from '@/components/general/LinkInput.vue'
+import NumberInput from '@/components/general/NumberInput.vue'
 import SelectorInput from '@/components/general/SelectorInput.vue'
+import TextInput from '@/components/general/TextInput.vue'
+import LocationSelector from '@/components/general/locationSelector.vue'
+import router from '@/router'
 import { userStore } from '@/stores'
 import type { ReqMedia, TRequestError, UserSettings } from '@/types'
-import router from '@/router'
+import { useVuelidate } from '@vuelidate/core'
+import { email, required } from '@vuelidate/validators'
+import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -65,6 +65,7 @@ const submit = async () => {
     await store.updateUser(user, media)
     if (profile.value) await store.setImage(profile.value, 'profile')
     if (blank.value) await store.setImage(blank.value, 'blank')
+    localStorage.setItem('username', user.username)
     await router.push('/user-profile/' + user.username)
   } catch (err) {
     const message = err as TRequestError

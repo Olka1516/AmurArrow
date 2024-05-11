@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import Button from '../general/ComponentButton.vue'
-import type { Chat } from '@/types'
-import { useI18n } from 'vue-i18n'
 import router from '@/router'
-import { ref } from 'vue'
+import type { Chat } from '@/types'
+import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import Button from '../general/ComponentButton.vue'
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const props = defineProps<{ chat: Chat }>()
 const emit = defineEmits<{ (e: 'closeChat'): void; (e: 'sendMessage', val: string): void }>()
-const tempDate = ref(props.chat.chats[0].date)
+const tempDate = ref(props.chat.chats[0]?.date)
 const message = ref('')
 
 const getName = () => {
@@ -45,6 +45,13 @@ const sendMessage = () => {
   emit('sendMessage', message.value)
   message.value = ''
 }
+
+watch(
+  () => props.chat.chats[0],
+  () => {
+    if (props.chat.chats[0].date) tempDate.value = props.chat.chats[0].date
+  }
+)
 </script>
 
 <template>
@@ -66,7 +73,7 @@ const sendMessage = () => {
       </div>
       <Button icon="back_pink" class="rounded" @click="closeChat()" />
     </div>
-    <div class="chat-content">
+    <div v-if="chat.chats.length" class="chat-content">
       <div
         class="chat-content-inner"
         v-for="k_chat in props.chat.chats"
@@ -86,6 +93,11 @@ const sendMessage = () => {
           </p>
         </div>
       </div>
+    </div>
+    <div v-else class="chat-empty">
+      <h1>
+        {{ t('none') }}
+      </h1>
     </div>
 
     <div class="chat-input">

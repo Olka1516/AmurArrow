@@ -1,39 +1,21 @@
 <script setup lang="ts">
-import ComponentChatItem from '@/components/profile/ComponentChatItem.vue'
-import ComponentChat from '@/components/profile/ComponentChat.vue'
 import Button from '@/components/general/ComponentButton.vue'
-import type { Chat } from '@/types'
-import { ref, type Ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import ComponentChat from '@/components/profile/ComponentChat.vue'
+import ComponentChatItem from '@/components/profile/ComponentChatItem.vue'
 import router from '@/router'
-import { userStore } from '@/stores'
-import { send } from '@/socket';
-import { useMessageStore } from '@/stores';
-import { useQuasar } from 'quasar';
-import { bus } from '@/socket';
+import { initSocket, send } from '@/socket'
+import { useMessageStore, userStore } from '@/stores'
+import type { Chat } from '@/types'
+import { useQuasar } from 'quasar'
+import { onMounted, ref, type Ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const storeMessage = useMessageStore();
-const $q = useQuasar();
+const { t } = useI18n()
+const storeMessage = useMessageStore()
+const $q = useQuasar()
 
 const store = userStore()
-const { t } = useI18n()
-const chats: Ref<Chat[]> = ref([
-  {
-    username: 'olka',
-    loverUsername: 'Nina',
-    chats: [
-      { text: 'lala', date: new Date('05 09 2024 00:00:00 GMT'), username: 'olka' },
-      { text: 'Hello', date: new Date('05 09 2024 12:00:00 GMT'), username: 'Nina' },
-      { text: 'Hello', date: new Date('05 10 2024 00:00:00 GMT'), username: 'olka' },
-      { text: 'Hello', date: new Date('05 10 2024 03:00:00 GMT'), username: 'Nina' }
-    ]
-  },
-  {
-    username: 'olka',
-    loverUsername: 'Oleksa',
-    chats: [{ text: 'lyly', date: new Date(), username: 'oleksa' }]
-  }
-])
+const chats: Ref<Chat[]> = ref([])
 const selectedChat: Ref<Chat | undefined> = ref(undefined)
 
 const back = async (name: string) => {
@@ -62,8 +44,21 @@ const sendMessage = (message: string) => {
   //   });
   //   return;
   // }
-  send(store.username, message);
+  storeMessage.addToContent(message)
+  selectedChat.value = storeMessage.allMessages[0]
+  console.log(storeMessage.allMessages)
+  send(selectedChat.value!)
 }
+
+onMounted(() => {
+  initSocket()
+  console.log('initSocket :')
+  storeMessage.getAllChats()
+  if (storeMessage.username) {
+    selectedChat.value = storeMessage.allMessages[0]
+  }
+  chats.value = storeMessage.allMessages
+})
 </script>
 
 <template>
@@ -78,13 +73,20 @@ const sendMessage = (message: string) => {
           @click="back(`user-profile/${store.username}`)"
         />
       </div>
-      <div v-for="k_chat in chats" :key="k_chat.loverUsername">
-        <ComponentChatItem
-          :username="k_chat.loverUsername"
-          :text="k_chat.chats[k_chat.chats.length - 1].text"
-          @click="chooseChat(k_chat)"
-          :isActive="isActive(k_chat.loverUsername)"
-        />
+      <div v-if="chats.length">
+        <div v-for="k_chat in chats" :key="k_chat.loverUsername">
+          <ComponentChatItem
+            :username="k_chat.loverUsername"
+            :text="k_chat.chats[k_chat.chats.length - 1]?.text"
+            @click="chooseChat(k_chat)"
+            :isActive="isActive(k_chat.loverUsername)"
+          />
+        </div>
+      </div>
+      <div v-else class="not-chats">
+        <h1>
+          {{ t('notChats') }}
+        </h1>
       </div>
     </div>
     <div class="chat-container" :class="{ isSelected: !selectedChat }">
@@ -94,7 +96,11 @@ const sendMessage = (message: string) => {
         </h1>
       </div>
       <div v-else class="chat-component">
-        <ComponentChat :chat="selectedChat" @closeChat="closeChat" @sendMessage='(val) => sendMessage(val)' />
+        <ComponentChat
+          :chat="selectedChat"
+          @closeChat="closeChat"
+          @sendMessage="(val) => sendMessage(val)"
+        />
       </div>
     </div>
   </div>

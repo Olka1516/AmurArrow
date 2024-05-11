@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import Item from '@/components/profile/ComponentItem.vue'
-import Button from '@/components/general/ComponentButton.vue'
 import Avatar from '@/components/general/AvatarComponent.vue'
+import Button from '@/components/general/ComponentButton.vue'
+import Item from '@/components/profile/ComponentItem.vue'
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
-import { ref, watch } from 'vue'
 import router from '@/router'
-import { userStore } from '@/stores'
-import { useRoute } from 'vue-router'
+import { useMessageStore, userStore } from '@/stores'
+import type { Chat } from '@/types'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n()
 const route = useRoute()
 const store = userStore()
+const storeMessage = useMessageStore()
 const content = ref('posts')
 
 const changeContent = (name: string) => {
@@ -47,6 +49,20 @@ const getImage = (url: string) => {
   }
   const st = new URL(url)
   return st.href
+}
+
+const writeMessage = async () => {
+  const username = localStorage.getItem('username')
+  const chat: Chat = {
+    loverUsername: store.username,
+    username: username!,
+    firstName: store.firstName,
+    lastName: store.lastName,
+    image: store.profileImage,
+    chats: []
+  }
+  storeMessage.setActive(chat)
+  await router.push('/chats')
 }
 
 watch(
@@ -86,7 +102,12 @@ watch(
               />
               <Item v-if="store.email" name="email" :text="store.email" />
             </div>
-            <Button v-if="store.userType !== 'OWNER'" class="contour-no-background-button" :text="t('write')" />
+            <Button
+              v-if="store.userType !== 'OWNER'"
+              class="contour-no-background-button"
+              :text="t('write')"
+              @click="writeMessage"
+            />
           </div>
         </div>
       </div>

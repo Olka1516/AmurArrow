@@ -1,4 +1,5 @@
 export * from './authService'
-export * from './userInfo'
+export * from './chats'
 export * from './lovers'
 export * from './posts'
+export * from './userInfo'
