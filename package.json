@@ -38,9 +38,11 @@
     "vue-router": "^4.3.0",
     "vue-tinder": "^3.0.0-alpha.2",
     "vue3-cookies": "^1.0.6",
-    "vue3-country-region-select": "^1.0.0"
+    "vue3-country-region-select": "^1.0.0",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
+    "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-vue": "^5.0.4",
     "sass": "^1.71.1",
     "typescript": "^5.3.3",
