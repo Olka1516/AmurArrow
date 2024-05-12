@@ -45,8 +45,13 @@ export const userStore = defineStore('userInfo', () => {
     state.blankImage = data.blankImage
     media.value = data.media
 
-    if (state.userType === 'OWNER')
+    if (state.userType === 'OWNER') {
       favouritePhotos.value = await getUserPostsByUsername(username, 'FAVORITE')
+      localStorage.setItem('username', data.username)
+      localStorage.setItem('image', data.profileImage)
+      localStorage.setItem('firstName', data.firstName)
+      localStorage.setItem('lastName', data.lastName)
+    }
   }
 
   const getOnlyUserInfo = async (username: string) => {

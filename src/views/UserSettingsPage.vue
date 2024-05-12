@@ -65,7 +65,6 @@ const submit = async () => {
     await store.updateUser(user, media)
     if (profile.value) await store.setImage(profile.value, 'profile')
     if (blank.value) await store.setImage(blank.value, 'blank')
-    localStorage.setItem('username', user.username)
     await router.push('/user-profile/' + user.username)
   } catch (err) {
     const message = err as TRequestError

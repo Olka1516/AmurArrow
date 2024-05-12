@@ -24,10 +24,12 @@ import SvgMale from './male.svg'
 import SvgPerson from './person.svg'
 import SvgFilter from './filter.svg'
 import SvgPaperPlane from './paper-plane.svg'
+import SvgPaperPlaneWhite from './paper-plane-white.svg'
 
 export const SvgUrls = {
   lines: SvgLines,
   'paper-plane': SvgPaperPlane,
+  'paper-plane-white': SvgPaperPlaneWhite,
   facebook: SvgFacebook,
   instagram: SvgInstagram,
   linkedin: SvgLinkedIn,

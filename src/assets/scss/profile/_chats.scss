@@ -125,12 +125,22 @@
     background-color: $active;
   }
 
+  .texts {
+    width: 76%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
   h2 {
+    text-overflow: ellipsis;
+    overflow: hidden;
     color: $white;
     font-weight: 700;
   }
 
   p {
+    text-overflow: ellipsis;
+    overflow: hidden;
     color: $grey_lighter;
     font-size: 14px;
   }

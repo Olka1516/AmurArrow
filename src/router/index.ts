@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { loverStore, userStore } from '@/stores'
+import { userStore } from '@/stores'
 import type { TRequestError } from '@/types'
 
 const router = createRouter({
@@ -55,25 +55,29 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/chats',
+      path: '/chats/:username',
       name: 'chats',
       component: () => import('../views/ChatsPage.vue'),
-      // meta: { requiresAuth: true }
+      meta: { requiresAuth: true }
     }
   ]
 })
 
 router.beforeEach(async (to, from, next) => {
+  const username = localStorage.getItem('username') || ''
   const store = userStore()
-  const LoverStore = loverStore()
   try {
+    if (username && to.fullPath.includes('chats')) {
+      next()
+      return
+    }
     if (to.params.username) {
       await store.getUserInfo(String(to.params.username))
-      if (store.userType === 'OWNER') await LoverStore.getAll(String(to.params.username))
     }
     if (
       (to.fullPath.includes('find-lover') ||
         to.fullPath.includes('user-settings') ||
+        to.fullPath.includes('chats') ||
         to.fullPath.includes('user-posts')) &&
       store.userType !== 'OWNER'
     ) {

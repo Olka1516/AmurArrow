@@ -4,6 +4,7 @@ import Button from '@/components/general/ComponentButton.vue'
 import Item from '@/components/profile/ComponentItem.vue'
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
 import router from '@/router'
+import { initSocket } from '@/socket'
 import { useMessageStore, userStore } from '@/stores'
 import type { Chat } from '@/types'
 import { ref, watch } from 'vue'
@@ -51,18 +52,38 @@ const getImage = (url: string) => {
   return st.href
 }
 
+const generateRoomName = (user1: string, user2: string) => {
+  const sortedUsernames = [user1, user2].sort()
+  return `room_${sortedUsernames.join('_')}`
+}
+
 const writeMessage = async () => {
   const username = localStorage.getItem('username')
+  await router.push('/chats/' + username)
+  const image = localStorage.getItem('image') || ''
+  const firstName = localStorage.getItem('firstName') || ''
+  const lastName = localStorage.getItem('lastName') || ''
+  const room = generateRoomName(username!, store.username)
+  initSocket(room)
   const chat: Chat = {
-    loverUsername: store.username,
-    username: username!,
-    firstName: store.firstName,
-    lastName: store.lastName,
-    image: store.profileImage,
+    room: room,
+    members: [
+      {
+        username: username!,
+        image: image,
+        firstName: firstName,
+        lastName: lastName
+      },
+      {
+        username: store.username,
+        image: store.profileImage,
+        firstName: store.firstName,
+        lastName: store.lastName
+      }
+    ],
     chats: []
   }
   storeMessage.setActive(chat)
-  await router.push('/chats')
 }
 
 watch(
@@ -106,7 +127,7 @@ watch(
               v-if="store.userType !== 'OWNER'"
               class="contour-no-background-button"
               :text="t('write')"
-              @click="writeMessage"
+              @click="writeMessage()"
             />
           </div>
         </div>

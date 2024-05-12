@@ -3,55 +3,58 @@ import type { Chat } from '@/types'
 import { defineStore } from 'pinia'
 import { reactive, ref, toRefs, type Ref } from 'vue'
 
-export const useMessageStore = defineStore('info', () => {
+export const useMessageStore = defineStore('chats', () => {
   const state: Chat = reactive({
-    username: '',
-    loverUsername: '',
-    firstName: '',
-    lastName: '',
-    image: '',
+    id: '',
+    room: '',
+    members: [],
     chats: []
   })
 
-  const allMessages: Ref<Chat[]> = ref([
-    // {
-    //   username: 'olka',
-    //   loverUsername: 'Nina',
-    //   chats: [
-    //     { text: 'lala', date: new Date('05 09 2024 00:00:00 GMT'), username: 'olka' },
-    //     { text: 'Hello', date: new Date('05 09 2024 12:00:00 GMT'), username: 'Nina' },
-    //     { text: 'Hello', date: new Date('05 10 2024 00:00:00 GMT'), username: 'olka' },
-    //     { text: 'Hello', date: new Date('05 10 2024 03:00:00 GMT'), username: 'Nina' }
-    //   ]
-    // },
-    // {
-    //   username: 'olka',
-    //   loverUsername: 'Oleksa',
-    //   chats: [{ text: 'lyly', date: new Date(), username: 'oleksa' }]
-    // }
-  ])
+  const allMessages: Ref<Chat[]> = ref([])
 
   const addToContent = (message: string) => {
-    state.chats.push({ text: message, username: state.username, date: new Date() })
-    allMessages.value = [state, ...allMessages.value]
+    const username = localStorage.getItem('username')
+    state.chats.push({ text: message, username: username!, date: new Date().toJSON() })
   }
 
-  const setActive = (chat: Chat) => {
-    allMessages.value = [chat, ...allMessages.value]
-    state.username = chat.username
-    state.lastName = chat.lastName
-    state.firstName = chat.firstName
-    state.loverUsername = chat.loverUsername
-    state.image = chat.image
+  const setStateDefault = () => {
+    ;(state.id = ''), (state.room = ''), (state.members = []), (state.chats = [])
+  }
 
-    //Запит
+  const setState = (chat: Chat) => {
+    state.room = chat.room
+    state.id = chat.id
+    state.members = chat.members
     state.chats = chat.chats
+  }
+
+  const setActive = async (chat: Chat) => {
+    allMessages.value = [chat, ...allMessages.value]
+    state.room = chat.room
+    state.id = chat.id
+    state.members = chat.members
+
+    await getAllChats()
+    const chatIndex = allMessages.value.findIndex((item) => item.room === chat.room)
+    if (chatIndex !== -1) state.chats = allMessages.value[chatIndex].chats
+    else state.chats = chat.chats
+    console.log(state.chats)
   }
 
   const getAllChats = async () => {
     const username = localStorage.getItem('username')
-    allMessages.value = await getAllChatsByUsername(username!)
+    const chats = await getAllChatsByUsername(username!)
+    allMessages.value = chats
   }
 
-  return { ...toRefs(state), addToContent, allMessages, setActive, getAllChats }
+  return {
+    ...toRefs(state),
+    addToContent,
+    allMessages,
+    setActive,
+    getAllChats,
+    setState,
+    setStateDefault
+  }
 })

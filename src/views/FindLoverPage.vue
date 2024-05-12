@@ -5,7 +5,11 @@ import Sidebar from '@/components/profile/ComponentSidebar.vue'
 import Button from '@/components/general/ComponentButton.vue'
 import { onMounted, ref, type Ref, provide } from 'vue'
 import type { FavoritePost } from '@/types'
+import { loverStore } from '@/stores'
+import { useRoute } from 'vue-router'
 
+const LoverStore = loverStore()
+const route = useRoute()
 const isOpen = ref(false)
 const btnElement: Ref<HTMLElement | null> = ref(null)
 const computedStyle: Ref<CSSStyleDeclaration | null> = ref(null)
@@ -52,7 +56,8 @@ const updateStorage = (temp: FavoritePost) => {
 provide('isFavoritesChanged', { isFavoritesChanged, updateFavoritesStatus })
 provide('favorites', { allFavorites, getFromStorage, updateStorage })
 
-onMounted(() => {
+onMounted(async () => {
+  await LoverStore.getAll(route.params.username.toString())
   btnElement.value = document.getElementById('sidebarBtn')
   if (btnElement.value) {
     computedStyle.value = window.getComputedStyle(btnElement.value)

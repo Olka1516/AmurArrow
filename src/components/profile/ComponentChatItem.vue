@@ -19,7 +19,7 @@ const getName = () => {
   <div class="container-avatar" :class="{isActive: isActive}">
     <img v-if="props.image" :src="props.image" class="avatar" />
     <h1 v-else class="avatar">{{ getName() }}</h1>
-    <div>
+    <div class="texts">
       <h2>{{ username }}</h2>
       <p>{{ text }}</p>
     </div>
