@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import Item from '@/components/profile/ComponentItem.vue'
-import Button from '@/components/general/ComponentButton.vue'
 import Avatar from '@/components/general/AvatarComponent.vue'
+import Button from '@/components/general/ComponentButton.vue'
+import Item from '@/components/profile/ComponentItem.vue'
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
-import { ref, watch } from 'vue'
 import router from '@/router'
-import { userStore } from '@/stores'
-import { useRoute } from 'vue-router'
+import { initSocket } from '@/socket'
+import { useMessageStore, userStore } from '@/stores'
+import type { Chat } from '@/types'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n()
 const route = useRoute()
 const store = userStore()
+const storeMessage = useMessageStore()
 const content = ref('posts')
 
 const changeContent = (name: string) => {
@@ -49,6 +52,40 @@ const getImage = (url: string) => {
   return st.href
 }
 
+const generateRoomName = (user1: string, user2: string) => {
+  const sortedUsernames = [user1, user2].sort()
+  return `room_${sortedUsernames.join('_')}`
+}
+
+const writeMessage = async () => {
+  const username = localStorage.getItem('username')
+  await router.push('/chats/' + username)
+  const image = localStorage.getItem('image') || ''
+  const firstName = localStorage.getItem('firstName') || ''
+  const lastName = localStorage.getItem('lastName') || ''
+  const room = generateRoomName(username!, store.username)
+  initSocket(room)
+  const chat: Chat = {
+    room: room,
+    members: [
+      {
+        username: username!,
+        image: image,
+        firstName: firstName,
+        lastName: lastName
+      },
+      {
+        username: store.username,
+        image: store.profileImage,
+        firstName: store.firstName,
+        lastName: store.lastName
+      }
+    ],
+    chats: []
+  }
+  storeMessage.setActive(chat)
+}
+
 watch(
   () => route.params.username,
   async () => {
@@ -77,13 +114,21 @@ watch(
         />
         <div class="profile-content">
           <h1>{{ store.username }}</h1>
-          <div class="profile-content-inner info">
-            <Item
-              v-if="store.location"
-              name="location"
-              :text="`${t(store.location.split(' ')[0])} ${t(store.location.split(' ')[1])}`"
+          <div class="profile-content-wrapper">
+            <div class="profile-content-inner info">
+              <Item
+                v-if="store.location"
+                name="location"
+                :text="`${t(store.location.split(' ')[0])} ${t(store.location.split(' ')[1])}`"
+              />
+              <Item v-if="store.email" name="email" :text="store.email" />
+            </div>
+            <Button
+              v-if="store.userType !== 'OWNER'"
+              class="contour-no-background-button"
+              :text="t('write')"
+              @click="writeMessage()"
             />
-            <Item v-if="store.email" name="email" :text="store.email" />
           </div>
         </div>
       </div>

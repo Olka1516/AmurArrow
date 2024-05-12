@@ -1,4 +1,8 @@
 export default {
+  New: "Нова",
+  Zealand: "Зеландія",
+  United: "Об'єднане",
+  Kingdom: "Королівство",
   Zakarpattia: 'Закарпаття',
   Afghanistan: 'Афганістан',
   'Åland Islands': 'Оландські острови',

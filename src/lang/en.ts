@@ -4,6 +4,9 @@ export default {
   forgotPas: 'Forgot Password?',
   nonPage: 'This page does not exist, please return to the main page',
   about: 'About',
+  write: 'Write',
+  none: 'There are no messages in this chat yet',
+  notChats: "Oops, you don't have chats with other users",
   favoriteText: "You don't have favorites, use the platform and find them",
   OwnerAbout: 'There is no information about you here, use the platform to add',
   UserAbout: 'There is no information about user here',
@@ -150,7 +153,13 @@ export default {
   find: 'Find Lover',
   AboutUs: 'About us',
   AboutCompany: 'About company',
-  moreAboutUs: 'We are creators of digital experiences aimed at your success and satisfaction. Our team is committed to changing your online experience forever.',
-  welcomeAbout1: "Our company is a leader in the field of innovative solutions and technologies. We are committed to creating products that exceed our customers' expectations and contribute to their success. Our team consists of highly qualified professionals who work to provide the highest quality innovative solutions for our customers around the world.",
-  welcomeAbout2: "Our mission is to create products that change the world, advance industries and improve people's lives. We are constantly looking for new opportunities and innovative ways to succeed, building long-term relationships with our customers based on mutual trust, growing value and mutual benefit. Our company is always committed to its goals and objectives, working hard to be better tomorrow than we were today.",
+  moreAboutUs:
+    'We are creators of digital experiences aimed at your success and satisfaction. Our team is committed to changing your online experience forever.',
+  welcomeAbout1:
+    "Our company is a leader in the field of innovative solutions and technologies. We are committed to creating products that exceed our customers' expectations and contribute to their success. Our team consists of highly qualified professionals who work to provide the highest quality innovative solutions for our customers around the world.",
+  welcomeAbout2:
+    "Our mission is to create products that change the world, advance industries and improve people's lives. We are constantly looking for new opportunities and innovative ways to succeed, building long-term relationships with our customers based on mutual trust, growing value and mutual benefit. Our company is always committed to its goals and objectives, working hard to be better tomorrow than we were today.",
+  minAge: 'Min age',
+  maxAge: 'Max age',
+  selectChat: 'Select a chat to start a conversation'
 }

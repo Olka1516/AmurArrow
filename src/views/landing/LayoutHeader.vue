@@ -41,6 +41,9 @@ const signUp = async () => {
 const logOut = async () => {
   emit('logOut')
   localStorage.removeItem('username')
+  localStorage.removeItem('image')
+  localStorage.removeItem('firstName')
+  localStorage.removeItem('lastName')
   username.value = null
   await router.push('/')
   document.body.style.overflow = 'auto'
@@ -52,6 +55,8 @@ const back = async (name: string) => {
     else await router.push('/find-lover/' + username.value)
   } else if (name === 'user-profile') {
     await router.push('/user-profile/' + username.value)
+  } else if (name === 'chats') {
+    await router.push('/chats/' + username.value)
   } else {
     await router.push('/' + name)
   }
@@ -118,8 +123,8 @@ onMounted(() => {
       <div class="account-buttons">
         <LanguageSelector v-if="language !== null" v-model="language" class="navs" />
         <div v-if="username === null" class="account-buttons">
-          <Button class="contour-button navs" @click="signIn" :text="t('signIn')" />
-          <Button class="contour-no-background-button navs" @click="signUp" :text="t('signUp')" />
+          <Button class="contour-button navs" @click="signIn()" :text="t('signIn')" />
+          <Button class="contour-no-background-button navs" @click="signUp()" :text="t('signUp')" />
         </div>
         <div class="nav" v-else>
           <Button
@@ -127,7 +132,16 @@ onMounted(() => {
             @click="back('user-profile')"
             :text="t('profile')"
           />
-          <Button class="no-background-no-contour-button rounded navs" @click="logOut" icon="log-out" />
+          <Button
+            icon="paper-plane-white"
+            class="no-background-no-contour-button rounded"
+            @click="back('chats')"
+          />
+          <Button
+            class="no-background-no-contour-button rounded navs"
+            @click="logOut()"
+            icon="log-out"
+          />
         </div>
       </div>
     </div>

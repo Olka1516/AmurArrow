@@ -1,5 +1,5 @@
-import { addFavoitePostForUser, getAllLovers, sendUserMessage } from '@/services'
-import type { FavoritePost, ReqPost } from '@/types'
+import { addFavoitePostForUser, getAllLovers, sendUserMessage, getPostByFiltres } from '@/services'
+import type { FavoritePost, FilterItems, ReqPost } from '@/types'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 
@@ -19,5 +19,10 @@ export const loverStore = defineStore('findLover', () => {
     return await sendUserMessage(type, username)
   }
 
-  return { photos, getAll, addFavoritePost,sendMessage }
+  const filterPosts = async (filters: FilterItems) => {
+    const data = await getPostByFiltres(filters)
+    photos.value = data
+  }
+
+  return { photos, getAll, addFavoritePost, sendMessage, filterPosts }
 })

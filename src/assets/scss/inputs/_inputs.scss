@@ -70,7 +70,17 @@
     resize: none;
   }
 }
+
+@mixin number-container {
+  .number-input {
+    position: relative;
+  }
+}
+
 @mixin selector-container {
+  #select {
+    position: relative;
+  }
   .selector-dropdown {
     top: 59px;
     position: absolute;
@@ -89,7 +99,9 @@
   }
 }
 @mixin location-container {
+  
   .select {
+    position: relative;
     display: flex;
     gap: 26px;
     flex-direction: column;

@@ -103,6 +103,7 @@
 @mixin find-lover-content {
   #content {
     display: flex;
+    min-height: 100vh;
     @media screen and (max-width: 767px) {
       padding: 5px 0 0 5px;
       align-items: flex-start;

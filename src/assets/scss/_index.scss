@@ -13,6 +13,7 @@
 @import './profile/find-lover';
 @import './profile/sidebar';
 @import './profile/burger';
+@import './profile/chats';
 @import './auth/signPages';
 @import './auth/signIn';
 @import './errors/errors';
@@ -86,6 +87,11 @@
   @include inputs-container;
 }
 
+@mixin number-inputs {
+  @include inputs-container;
+  @include number-container;
+}
+
 @mixin about-us {
   @include about-us-container;
 }
@@ -148,6 +154,10 @@
   @include buttons-container;
 }
 
+@mixin component-filtres {
+  @include filtres-container;
+}
+
 @mixin component-drag-file {
   @include drag-file-container;
   @include buttons-container;
@@ -185,7 +195,20 @@
 @mixin find-lover-page {
   @include find-lover-content;
 }
+
 @mixin component-user-post {
   @include buttons-container;
   @include component-post-container;
+}
+
+@mixin chats-page {
+  @include chats-container;
+}
+
+@mixin chats-component {
+  @include users-chats-container;
+}
+
+@mixin chat-component {
+  @include users-chat-container;
 }

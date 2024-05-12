@@ -1,6 +1,8 @@
 <template>
-  <input required v-model="userInfo" @input="handleInput($event)" />
-  <i>{{ t(props.type) }}</i>
+  <div class="number-input">
+    <input required v-model="userInfo" @input="handleInput($event)" />
+    <i>{{ t(props.type) }}</i>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -32,5 +34,5 @@ const handleInput = (event: any) => {
 </script>
 <style scoped lang="scss">
 @use '@/assets/scss/index';
-@include index.inputs;
+@include index.number-inputs;
 </style>

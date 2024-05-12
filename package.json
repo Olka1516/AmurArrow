@@ -28,16 +28,21 @@
     "npm-run-all2": "^6.1.1",
     "pinia": "^2.1.7",
     "prettier": "^3.1.0",
+    "quasar": "^2.16.2",
     "scss": "^0.2.4",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "vue": "^3.4.21",
     "vue-cli": "^2.9.6",
     "vue-i18n": "9",
     "vue-router": "^4.3.0",
     "vue-tinder": "^3.0.0-alpha.2",
     "vue3-cookies": "^1.0.6",
-    "vue3-country-region-select": "^1.0.0"
+    "vue3-country-region-select": "^1.0.0",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
+    "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-vue": "^5.0.4",
     "sass": "^1.71.1",
     "typescript": "^5.3.3",

@@ -68,6 +68,11 @@
     display: flex;
     gap: 20px;
   }
+  .profile-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 25px;
+  }
 
   .profile-no-content {
     display: flex;
