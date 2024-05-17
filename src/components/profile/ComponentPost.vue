@@ -8,7 +8,7 @@ import router from '@/router'
 const store = userStore()
 const data: Ref<UserInfo | undefined> = ref()
 const props = defineProps<{ post: FavoritePost | ReqPost | undefined }>()
-const emit = defineEmits<{ (e: 'close'): void }>()
+const emit = defineEmits<{ (e: 'close'): void, (e: 'deletePost'): void }>()
 const close = () => {
   emit('close')
 }
@@ -28,6 +28,10 @@ const toProfile = async () => {
   await router.push('/user-profile/' + getOwnOrFavorite())
 }
 
+const deletePost = async () => {
+  emit('deletePost')
+}
+
 onMounted(async () => {
   data.value = await store.getOnlyUserInfo(getOwnOrFavorite())
 })
@@ -36,7 +40,7 @@ onMounted(async () => {
 <template>
   <div class="modal-wrapper">
     <div class="post-modal">
-      <Button @click="close" icon="back_pink" class="modal-button" :rounded="true" />
+      <Button @click="close" icon="back_pink" class="modal-button" />
       <div class="post-modal-inner">
         <img class="post" :src="post!.image" alt="" />
         <div class="post-modal-content">
@@ -49,6 +53,7 @@ onMounted(async () => {
             <h1>{{ post!.title }}</h1>
             <p>{{ post!.description }}</p>
           </div>
+          <Button v-if="store.userType === 'OWNER'" icon="trash-pink" class="modal-button trash" @click="deletePost" />
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import ComponentPost from '@/components/profile/ComponentPost.vue'
 import router from '@/router'
 import type { FavoritePost, ReqPost } from '@/types'
 import type { SvgUrls } from '@/assets/pictures/icons/allSvg'
+import { userStore } from '@/stores'
 const props = defineProps<{
   posts: FavoritePost[] | ReqPost[] | []
   text: string
@@ -16,6 +17,7 @@ const props = defineProps<{
   icon?: keyof typeof SvgUrls
   classBtn?: string
 }>()
+const store = userStore()
 const tempPost: Ref<FavoritePost | undefined> = ref()
 const isCliked = ref(false)
 const photos = ref(props.posts)
@@ -36,6 +38,10 @@ const modalPost = async (isClose: boolean, post?: FavoritePost) => {
   }
 }
 
+const deletePost = async () => {
+  await store.deletePost(tempPost.value!.id)
+  modalPost(false)
+}
 watch(
   () => props.posts,
   () => {
@@ -46,7 +52,12 @@ watch(
 )
 </script>
 <template>
-  <ComponentPost v-if="isCliked" @close="modalPost(false)" :post="tempPost" />
+  <ComponentPost
+    v-if="isCliked"
+    @close="modalPost(false)"
+    @deletePost="deletePost()"
+    :post="tempPost"
+  />
   <div
     v-if="photos.length"
     class="profile-about-photo"

@@ -25,6 +25,7 @@ import SvgPerson from './person.svg'
 import SvgFilter from './filter.svg'
 import SvgPaperPlane from './paper-plane.svg'
 import SvgPaperPlaneWhite from './paper-plane-white.svg'
+import SvgTrash from './trash-pink.svg'
 
 export const SvgUrls = {
   lines: SvgLines,
@@ -33,6 +34,7 @@ export const SvgUrls = {
   facebook: SvgFacebook,
   instagram: SvgInstagram,
   linkedin: SvgLinkedIn,
+  'trash-pink': SvgTrash,
   pinterest: SvgPinterest,
   telegram: SvgTelegram,
   youtube: SvgYoutube,

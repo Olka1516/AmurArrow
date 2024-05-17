@@ -1,77 +1,75 @@
-import { useMessageStore } from '@/stores'
-import SockJS from 'sockjs-client/dist/sockjs'
-import Stomp from 'stompjs'
-import type { Chat } from './types'
+import { useMessageStore } from '@/stores';
+import SockJS from 'sockjs-client/dist/sockjs';
+import Stomp from 'stompjs';
+import type { Chat } from './types';
 
-const store = useMessageStore()
-const URL = import.meta.env.VITE_BASE_URL + '/ws'
+const URL = import.meta.env.VITE_BASE_URL + '/ws';
 
-const header = {}
+export class Socket {
+  private stompClient = Stomp.Client;
+  private connectionStatus: boolean = false;
+  private store = useMessageStore();
+  private header = {};
 
-let stompCLient = Stomp.client
-
-let connectionStatus = false
-
-export const initSocket = (room: string) => {
-  return con(room)
-}
-
-export const con = (room: string) => {
-  const socket = new SockJS(URL)
-  stompCLient = Stomp.over(socket)
-
-  const header = {}
-
-  stompCLient.connect(
-    header,
-    () => {
-      connectionStatus = true
-      stompCLient.subscribe(`/topic/${room}`, onMessageRecieved, header)
-    },
-    (err: any) => {
-      console.log('error is=>', err)
-    }
-  )
-  return connectionStatus
-}
-
-export const close = () => {
-  if (stompCLient) {
-    stompCLient.disconnect(() => {
-      connectionStatus = false
-    })
+  public initSocket(room: string): boolean {
+    return this.connect(room);
   }
-}
 
-export const send = (chat: Chat) => {
-  if (connectionStatus) {
-    try {
-      stompCLient.send(`/app/chat.sendMessage.${chat.room}`, header, JSON.stringify(chat))
-    } catch (error) {
-      if (chat.room) con(chat.room)
+  private connect(room: string): boolean {
+    const socket = new SockJS(URL);
+    this.stompClient = Stomp.over(socket);
+
+    this.stompClient.connect(
+      this.header,
+      () => {
+        this.connectionStatus = true;
+        this.stompClient!.subscribe(`/topic/${room}`, this.onMessageReceived.bind(this), this.header);
+      },
+      (err: any) => {
+        console.log('error is=>', err);
+      }
+    );
+    return this.connectionStatus;
+  }
+
+  public close(): void {
+    if (this.stompClient) {
+      this.stompClient.disconnect(() => {
+        this.connectionStatus = false;
+      });
     }
   }
-}
 
-export const enterToChat = (chat: Chat) => {
-  if (connectionStatus) {
-    try {
-      stompCLient.send(`/app/public.addUser.${chat.room}`, header, JSON.stringify(chat))
-    } catch (error) {
-      if (chat.room) con(chat.room)
+  public send(chat: Chat): void {
+    if (this.connectionStatus && this.stompClient) {
+      try {
+        this.stompClient.send(`/app/chat.sendMessage.${chat.room}`, this.header, JSON.stringify(chat));
+      } catch (error) {
+        if (chat.room) this.connect(chat.room);
+      }
     }
   }
-  return connectionStatus
-}
 
-function onMessageRecieved(payload: any) {
-  const message = JSON.parse(payload.body)
-  const username = localStorage.getItem('username')
-  console.log('payload :', message)
-  const chatIndex = store.allMessages.findIndex((chat) => chat.room === message.room)
-  if (chatIndex !== -1 && username !== message.chats.at(-1).username) {
-    console.log("chats", store.allMessages[chatIndex].chats)
-    console.log("chats 2", message.chats)
-    store.allMessages[chatIndex].chats.push(message.chats.at(-1))
+  public enterToChat(chat: Chat): boolean {
+    if (this.connectionStatus && this.stompClient) {
+      try {
+        this.stompClient.send(`/app/public.addUser.${chat.room}`, this.header, JSON.stringify(chat));
+      } catch (error) {
+        if (chat.room) this.connect(chat.room);
+      }
+    }
+    return this.connectionStatus;
+  }
+
+  private onMessageReceived(payload: any): void {
+    const message = JSON.parse(payload.body);
+    const username = localStorage.getItem('username');
+    console.log('payload :', message);
+    const chatIndex = this.store.allMessages.findIndex((chat) => chat.room === message.room);
+    if (chatIndex !== -1 && username !== message.chats.at(-1).username) {
+      console.log("chats", this.store.allMessages[chatIndex].chats);
+      console.log("chats 2", message.chats);
+      this.store.allMessages[chatIndex].chats.push(message.chats.at(-1));
+    }
   }
 }
