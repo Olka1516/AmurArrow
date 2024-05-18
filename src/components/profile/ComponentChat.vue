@@ -2,7 +2,7 @@
 import Button from '../general/ComponentButton.vue'
 import router from '@/router'
 import type { Chat } from '@/types'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { close } from '@/socket'
 
@@ -67,6 +67,10 @@ watch(
     if (props.chat.chats[0].date) tempDate.value = props.chat.chats[0].date
   }
 )
+onMounted(() => {
+  let chatElement = document.getElementById('chat-content')
+  if (chatElement) chatElement.scrollTop = chatElement.scrollHeight
+})
 </script>
 
 <template>
@@ -116,7 +120,7 @@ watch(
       </div>
       <Button icon="back_pink" class="rounded" @click="closeChat()" />
     </div>
-    <div v-if="chat.chats.length" class="chat-content">
+    <div v-if="chat.chats.length" id="chat-content" class="chat-content">
       <div
         class="chat-content-inner"
         v-for="k_chat in props.chat.chats"

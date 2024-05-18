@@ -22,13 +22,14 @@ const selectedChat: Chat = reactive({
 
 const back = async (name: string) => {
   if (selectedChat.room) close()
+  storeMessage.setStateDefault()
   await router.push(name)
 }
 
 const chooseChat = (chat: Chat) => {
   if (selectedChat.room) close()
-  initSocket(chat.room)
-  enterToChat(chat)
+  //initSocket(chat.room)
+  // enterToChat(chat)
   selectedChat.chats = chat.chats
   selectedChat.id = chat.id
   selectedChat.members = chat.members
@@ -43,7 +44,7 @@ const isActive = (username: string) => {
 }
 
 const closeChat = () => {
-  close()
+  // close()
   selectedChat.chats = []
   selectedChat.id = ''
   selectedChat.members = []
@@ -73,6 +74,9 @@ watch(
 )
 onMounted(async () => {
   await storeMessage.getAllChats()
+  for(let i = 0; i<storeMessage.allMessages.length; i++ ) {
+    initSocket(storeMessage.allMessages[i].room)
+  }
   if (storeMessage.room) {
     selectedChat.chats = storeMessage.chats
     selectedChat.id = storeMessage.id

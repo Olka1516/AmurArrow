@@ -70,8 +70,6 @@ function onMessageRecieved(payload: any) {
   console.log('payload :', message)
   const chatIndex = store.allMessages.findIndex((chat) => chat.room === message.room)
   if (chatIndex !== -1 && username !== message.chats.at(-1).username) {
-    console.log("chats", store.allMessages[chatIndex].chats)
-    console.log("chats 2", message.chats)
     store.allMessages[chatIndex].chats.push(message.chats.at(-1))
   }
 }
