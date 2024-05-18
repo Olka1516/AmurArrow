@@ -6,11 +6,10 @@ import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Socket } from '@/socket'
 
-const { locale, t } = useI18n()
 const socket = new Socket()
+const { locale, t } = useI18n()
 const props = defineProps<{ chat: Chat }>()
 const emit = defineEmits<{ (e: 'closeChat'): void; (e: 'sendMessage', val: string): void }>()
-const tempDate = ref(props.chat.chats[0]?.date)
 const message = ref('')
 const options: Intl.DateTimeFormatOptions = {
   weekday: 'long',
@@ -51,14 +50,26 @@ const getImage = (memberOne: string) => {
   return username === memberOne ? props.chat.members[1].image : props.chat.members[0].image
 }
 
+const getId = () => {
+  return 'chat-content-' + props.chat.room
+}
+
+const getLocal = () => {
+  return locale.value === 'ua' ? 'uk-ua' : locale.value
+}
+
 watch(
-  () => props.chat.chats[0],
+  () => props.chat.room,
   () => {
-    if (props.chat.chats[0].date) tempDate.value = props.chat.chats[0].date
+    setTimeout(() => {
+      const chatElement = document.getElementById(getId())
+      if (chatElement) chatElement.scrollTop = chatElement.scrollHeight
+    }, 0.1)
   }
 )
+
 onMounted(() => {
-  let chatElement = document.getElementById('chat-content')
+  let chatElement = document.getElementById(getId())
   if (chatElement) chatElement.scrollTop = chatElement.scrollHeight
 })
 </script>
@@ -110,7 +121,7 @@ onMounted(() => {
       </div>
       <Button icon="back_pink" class="rounded" @click="closeChat()" />
     </div>
-    <div v-if="chat.chats.length" id="chat-content" class="chat-content">
+    <div v-if="chat.chats.length" :id="getId()" class="chat-content">
       <div
         class="chat-content-inner"
         v-for="k_chat in props.chat.chats"
@@ -139,8 +150,7 @@ onMounted(() => {
                 k_chat.username
             }"
           >
-            <!-- {{ new Date(k_chat.date).toLocaleString(locale, { timeZone: 'UTC' }) }} -->
-            {{ new Date(k_chat.date).toLocaleDateString('uk-ua', options) }}
+            {{ new Date(k_chat.date).toLocaleDateString(getLocal(), options) }}
           </h3>
         </div>
       </div>

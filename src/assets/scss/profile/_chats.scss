@@ -1,7 +1,7 @@
 @mixin avatar {
   .avatar {
     border-radius: 100px;
-    width: 40px;
+    min-width: 40px;
     height: 40px;
     object-fit: cover;
     border: 2px solid $pink;
@@ -143,6 +143,15 @@
     overflow: hidden;
     color: $grey_lighter;
     font-size: 14px;
+  }
+
+  h3 {
+    color: $white;
+    border-radius: 100px;
+    border: 1px solid $white;
+    padding: 4px 8px;
+    display: flex;
+    font-size: 12px;
   }
 }
 
