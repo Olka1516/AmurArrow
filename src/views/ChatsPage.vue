@@ -3,13 +3,14 @@ import Button from '@/components/general/ComponentButton.vue'
 import ComponentChat from '@/components/profile/ComponentChat.vue'
 import ComponentChatItem from '@/components/profile/ComponentChatItem.vue'
 import router from '@/router'
-import { initSocket, send, enterToChat, close } from '@/socket'
+import { Socket } from '@/socket'
 import { useMessageStore } from '@/stores'
 import type { Chat } from '@/types'
 import { onMounted, reactive, ref, watch, type Ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+const socket = new Socket()
 const storeMessage = useMessageStore()
 
 const allChats: Ref<Chat[]> = ref([])
@@ -21,14 +22,14 @@ const selectedChat: Chat = reactive({
 })
 
 const back = async (name: string) => {
-  if (selectedChat.room) close()
+  if (selectedChat.room) socket.close()
   await router.push(name)
 }
 
 const chooseChat = (chat: Chat) => {
-  if (selectedChat.room) close()
-  initSocket(chat.room)
-  enterToChat(chat)
+  if (selectedChat.room) socket.close()
+  socket.initSocket(chat.room)
+  socket.enterToChat(chat)
   selectedChat.chats = chat.chats
   selectedChat.id = chat.id
   selectedChat.members = chat.members
@@ -43,7 +44,7 @@ const isActive = (username: string) => {
 }
 
 const closeChat = () => {
-  close()
+  socket.close()
   selectedChat.chats = []
   selectedChat.id = ''
   selectedChat.members = []
@@ -52,8 +53,9 @@ const closeChat = () => {
 }
 
 const sendMessage = (message: string) => {
+  if(!message) return 
   storeMessage.addToContent(message)
-  send(selectedChat)
+  socket.send(selectedChat)
 }
 
 const getOwn = () => {

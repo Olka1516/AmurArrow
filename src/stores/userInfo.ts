@@ -1,15 +1,11 @@
 import type { UserInfo, User, Media, Post, ReqPost, ReqMedia } from '@/types'
 import { defineStore } from 'pinia'
 import { reactive, ref, toRefs, type Ref } from 'vue'
-import {
-  getUserInfoByUsername,
-  updateUserInfo,
-  setUserImage,
-  addUserPost,
-  getUserPostsByUsername
-} from '@/services'
+import { Client, Posts } from '@/services'
 
 export const userStore = defineStore('userInfo', () => {
+  const posts = new Posts()
+  const сlient = new Client()
   const state: UserInfo = reactive({
     username: '',
     firstName: '',
@@ -30,8 +26,8 @@ export const userStore = defineStore('userInfo', () => {
   const favouritePhotos: Ref<ReqPost[] | []> = ref([])
 
   const getUserInfo = async (username: string) => {
-    const data = await getUserInfoByUsername(username)
-    ownerPhotos.value = await getUserPostsByUsername(username, 'OWN')
+    const data = await сlient.getUserInfoByUsername(username)
+    ownerPhotos.value = await posts.getUserPostsByUsername(username, 'OWN')
     state.age = data.age
     state.description = data.description
     state.email = data.email
@@ -46,7 +42,7 @@ export const userStore = defineStore('userInfo', () => {
     media.value = data.media
 
     if (state.userType === 'OWNER') {
-      favouritePhotos.value = await getUserPostsByUsername(username, 'FAVORITE')
+      favouritePhotos.value = await posts.getUserPostsByUsername(username, 'FAVORITE')
       localStorage.setItem('username', data.username)
       localStorage.setItem('image', data.profileImage)
       localStorage.setItem('firstName', data.firstName)
@@ -55,19 +51,25 @@ export const userStore = defineStore('userInfo', () => {
   }
 
   const getOnlyUserInfo = async (username: string) => {
-    return await getUserInfoByUsername(username)
+    return await сlient.getUserInfoByUsername(username)
   }
 
   const updateUser = async (user: User, media: Media) => {
-    return await updateUserInfo(user, media)
+    return await сlient.updateUserInfo(user, media)
   }
 
   const setImage = async (image: File, name: string) => {
-    return await setUserImage(image, name)
+    return await сlient.setUserImage(image, name)
   }
 
   const addPost = async (data: Post) => {
-    return await addUserPost(data)
+    return await posts.addUserPost(data)
+  }
+  const deletePost = async (id: string) => {
+    const data = await posts.deleteUserPostById(id)
+    ownerPhotos.value = await posts.getUserPostsByUsername(state.username, 'OWN')
+    favouritePhotos.value = await posts.getUserPostsByUsername(state. username, 'FAVORITE')
+    return data
   }
 
   return {
@@ -76,6 +78,7 @@ export const userStore = defineStore('userInfo', () => {
     favouritePhotos,
     media,
     getUserInfo,
+    deletePost,
     updateUser,
     setImage,
     addPost,

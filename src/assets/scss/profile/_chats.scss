@@ -245,6 +245,13 @@
     color: $white;
   }
 
+  .dateOwner {
+    font-size: 10px;
+    max-width: 300px;
+    margin-left: auto;
+    padding: 5px 10px;
+  }
+
   .chatLover {
     border-top-left-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -254,6 +261,13 @@
     min-width: 150px;
     margin-right: auto;
     padding: 5px 10px;
+  }
+
+  .dateLover {
+    font-size: 10px;
+    max-width: 300px;
+    margin-right: auto;
+    padding: 5px;
   }
 
   .chat-username {

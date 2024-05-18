@@ -4,13 +4,19 @@ import router from '@/router'
 import type { Chat } from '@/types'
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { close } from '@/socket'
+import { Socket } from '@/socket'
 
 const { locale, t } = useI18n()
+const socket = new Socket()
 const props = defineProps<{ chat: Chat }>()
 const emit = defineEmits<{ (e: 'closeChat'): void; (e: 'sendMessage', val: string): void }>()
 const tempDate = ref(props.chat.chats[0]?.date)
 const message = ref('')
+const options: Intl.DateTimeFormatOptions = {
+  weekday: 'long',
+  month: 'long',
+  day: 'numeric'
+}
 
 const getName = () => {
   const username = localStorage.getItem('username')
@@ -22,24 +28,8 @@ const getName = () => {
 }
 
 const back = async (name: string) => {
-  close()
+  socket.close()
   await router.push('/' + name)
-}
-
-const isOneDay = (nowDate: string) => {
-  if (tempDate.value === nowDate) return false
-  const nowYear = new Date(nowDate).getFullYear()
-  const nowMonth = new Date(nowDate).getMonth()
-  const nowDay = new Date(nowDate).getDate()
-
-  const isEqual =
-    nowYear === new Date(tempDate.value).getFullYear() &&
-    nowMonth === new Date(tempDate.value).getMonth() &&
-    nowDay === new Date(tempDate.value).getDate()
-
-  tempDate.value = isEqual ? tempDate.value : nowDate
-
-  return isEqual
 }
 
 const closeChat = () => {
@@ -122,9 +112,6 @@ watch(
         v-for="k_chat in props.chat.chats"
         :key="k_chat.date.toString()"
       >
-        <h3 v-if="!isOneDay(k_chat.date.toString())">
-          {{ new Date(k_chat.date).toLocaleString(locale, { timeZone: 'UTC' }) }}
-        </h3>
         <div class="chat-texts">
           <p
             :class="{
@@ -138,6 +125,19 @@ watch(
           >
             {{ k_chat.text }}
           </p>
+          <h3
+            :class="{
+              dateOwner:
+                getLover(props.chat.members[0].username, props.chat.members[1].username) !==
+                k_chat.username,
+              dateLover:
+                getLover(props.chat.members[0].username, props.chat.members[1].username) ===
+                k_chat.username
+            }"
+          >
+            <!-- {{ new Date(k_chat.date).toLocaleString(locale, { timeZone: 'UTC' }) }} -->
+            {{ new Date(k_chat.date).toLocaleDateString('uk-ua', options) }}
+          </h3>
         </div>
       </div>
     </div>
