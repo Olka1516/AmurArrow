@@ -1,9 +1,10 @@
-import { getAllChatsByUsername } from '@/services'
+import { Chats } from '@/services'
 import type { Chat } from '@/types'
 import { defineStore } from 'pinia'
 import { reactive, ref, toRefs, type Ref } from 'vue'
 
 export const useMessageStore = defineStore('chats', () => {
+  const classChats = new Chats;
   const state: Chat = reactive({
     id: '',
     room: '',
@@ -44,7 +45,7 @@ export const useMessageStore = defineStore('chats', () => {
 
   const getAllChats = async () => {
     const username = localStorage.getItem('username')
-    const chats = await getAllChatsByUsername(username!)
+    const chats = await classChats.getAllChatsByUsername(username!)
     allMessages.value = chats
   }
 

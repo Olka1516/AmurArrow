@@ -1,18 +1,19 @@
 import { defineStore } from 'pinia'
-import { signUpWithUserDate, signInWithUsernameAndPassword, logOutUser } from '@/services'
+import { Auth } from '@/services'
 import type { UserSignUp, UserSignIn } from '@/types'
 
 export const authStore = defineStore('auth', () => {
+  const auth = new Auth()
   const signUp = async (user: UserSignUp) => {
-    return await signUpWithUserDate(user)
+    return await auth.signUpWithUserDate(user)
   }
 
   const signIn = async (user: UserSignIn) => {
-    return await signInWithUsernameAndPassword(user)
+    return await auth.signInWithUsernameAndPassword(user)
   }
 
   const logOut = async () => {
-    return await logOutUser()
+    return await auth.logOutUser()
   }
 
   return { signUp, signIn, logOut }
