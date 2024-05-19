@@ -5,20 +5,33 @@ export interface Post {
   date: Date | null
 }
 
+export interface Likes {
+  username: string
+  date: string
+}
+
 export interface ReqPost {
-  type: string
+  id: string
+  image: string
   title: string
   description: string
-  image: string
-  date: string
   username: string
-  id: string
-  ownUsername?: string
+  date: string
   gender: string
   location: string
   age: number
+  firstName: string
+  lastName: string
+  avatarImage: string
+  likes: Likes[]
 }
 
 export interface FavoritePost extends ReqPost {
   dateCreate?: Date
+}
+
+
+export interface AddPost {
+  date: string,
+  id: string
 }

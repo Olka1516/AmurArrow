@@ -37,7 +37,7 @@ const onSubmit = async (type: { type: string; key: string; item: FavoritePost })
     updateStorage(temp)
     updateFavoritesStatus()
     getFromStorage()
-    await store.addFavoritePost(temp)
+    await store.addFavoritePost({id: temp.id, date: (new Date()).toJSON()})
     await store.sendMessage(type.type, temp.username)
   }
   if (queue.value.length < 3) {

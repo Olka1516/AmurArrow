@@ -39,7 +39,8 @@ const modalPost = async (isClose: boolean, post?: FavoritePost) => {
 }
 
 const deletePost = async () => {
-  await store.deletePost(tempPost.value!.id)
+  if(store.username !== tempPost.value?.username) await store.deleteFavoritePost(tempPost.value!.id)
+  else await store.deletePost(tempPost.value!.id)
   modalPost(false)
 }
 watch(

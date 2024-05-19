@@ -1,5 +1,5 @@
 import { Lovers } from '@/services'
-import type { FavoritePost, FilterItems, ReqPost } from '@/types'
+import type { AddPost, FilterItems, ReqPost } from '@/types'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 
@@ -11,7 +11,7 @@ export const loverStore = defineStore('findLover', () => {
     photos.value = data
   }
 
-  const addFavoritePost = async (data: FavoritePost) => {
+  const addFavoritePost = async (data: AddPost) => {
     return await lovers.addFavoitePostForUser(data)
   }
 
