@@ -17,3 +17,8 @@ export interface Chat {
   chats: Chats[]
   id?: string
 }
+
+export interface LocalChat {
+  room: string
+  number: number
+}

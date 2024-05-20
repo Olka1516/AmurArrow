@@ -5,14 +5,14 @@ import ComponentChatItem from '@/components/profile/ComponentChatItem.vue'
 import router from '@/router'
 import { Socket } from '@/socket'
 import { useMessageStore } from '@/stores'
-import type { Chat } from '@/types'
+import type { Chat, LocalChat } from '@/types'
 import { onMounted, reactive, ref, watch, type Ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const socket = new Socket()
 const storeMessage = useMessageStore()
-
+const chatsLocale: Ref<LocalChat[] | []> = ref([])
 const allChats: Ref<Chat[]> = ref([])
 const selectedChat: Chat = reactive({
   id: '',
@@ -21,20 +21,28 @@ const selectedChat: Chat = reactive({
   chats: []
 })
 
+const closeChat = () => {
+  selectedChat.chats = []
+  selectedChat.id = ''
+  selectedChat.members = []
+  selectedChat.room = ''
+  storeMessage.setStateDefault()
+}
+
 const back = async (name: string) => {
-  if (selectedChat.room) socket.close()
+  socket.close()
   await router.push(name)
+  closeChat()
 }
 
 const chooseChat = (chat: Chat) => {
-  if (selectedChat.room) socket.close()
-  socket.initSocket(chat.room)
-  socket.enterToChat(chat)
   selectedChat.chats = chat.chats
   selectedChat.id = chat.id
   selectedChat.members = chat.members
   selectedChat.room = chat.room
   storeMessage.setState(chat)
+  chatsLocale.value = storeMessage.setToZero(chat.room)
+  allChats.value = storeMessage.allMessages
 }
 
 const isActive = (username: string) => {
@@ -43,17 +51,8 @@ const isActive = (username: string) => {
   return roomArray.includes(username)
 }
 
-const closeChat = () => {
-  socket.close()
-  selectedChat.chats = []
-  selectedChat.id = ''
-  selectedChat.members = []
-  selectedChat.room = ''
-  storeMessage.setStateDefault()
-}
-
 const sendMessage = (message: string) => {
-  if(!message) return 
+  if (!message) return
   storeMessage.addToContent(message)
   socket.send(selectedChat)
 }
@@ -62,19 +61,36 @@ const getOwn = () => {
   const username = localStorage.getItem('username')
   return username
 }
+
 const getLover = (memberOne: string, memberTwo: string) => {
   const username = getOwn()
   return username === memberOne ? memberTwo : memberOne
 }
 
+const getNumber = (room: string) => {
+  if (selectedChat.room === room) {
+    storeMessage.setToZero(room)
+    return 0
+  }
+  chatsLocale.value = storeMessage.localeChats
+  const chatIndex = chatsLocale.value.findIndex((chat: LocalChat) => chat.room === room)
+  return chatIndex !== -1 && chatsLocale.value.length ? chatsLocale.value[chatIndex].number : 0
+}
+
 watch(
-  () => storeMessage.allMessages,
+  () => storeMessage.allMessages[0]?.room,
   () => {
     allChats.value = storeMessage.allMessages
   }
 )
+
 onMounted(async () => {
+  chatsLocale.value = JSON.parse(window.localStorage.getItem('chats') || '[]')
+  storeMessage.localeChats = chatsLocale.value
   await storeMessage.getAllChats()
+  for (let i = 0; i < storeMessage.allMessages.length; i++) {
+    socket.initSocket(storeMessage.allMessages[i].room)
+  }
   if (storeMessage.room) {
     selectedChat.chats = storeMessage.chats
     selectedChat.id = storeMessage.id
@@ -100,6 +116,7 @@ onMounted(async () => {
       <div v-if="allChats.length">
         <div v-for="k_chat in allChats" :key="k_chat.id">
           <ComponentChatItem
+            :number="getNumber(k_chat.room)"
             :username="getLover(k_chat.members[0].username, k_chat.members[1].username)"
             :text="k_chat.chats[k_chat.chats.length - 1]?.text"
             @click="chooseChat(k_chat)"

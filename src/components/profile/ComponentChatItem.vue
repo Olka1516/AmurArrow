@@ -6,6 +6,7 @@ const props = defineProps<{
   firstName?: string
   lastName?: string
   isActive: boolean
+  number: number
 }>()
 
 const getName = () => {
@@ -23,6 +24,7 @@ const getName = () => {
       <h2>{{ username }}</h2>
       <p>{{ text }}</p>
     </div>
+    <h3 v-if="number">{{ number }}</h3>
   </div>
 </template>
 

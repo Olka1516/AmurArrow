@@ -67,7 +67,7 @@ router.beforeEach(async (to, from, next) => {
   const username = localStorage.getItem('username') || ''
   const store = userStore()
   try {
-    if (username && to.fullPath.includes('chats')) {
+    if (username === to.params.username && to.fullPath.includes('chats')) {
       next()
       return
     }
