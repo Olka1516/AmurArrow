@@ -1,12 +1,21 @@
 <script setup lang="ts">
+import Loading from '@/components/general/LoadingPage.vue'
 import Header from './LayoutHeader.vue'
 import Footer from './LayoutFooter.vue'
 import { useI18n } from 'vue-i18n'
+import { useLoaderState } from '@/stores'
+import { onMounted } from 'vue'
 
+const loadStore = useLoaderState()
 const { t } = useI18n()
+
+onMounted(() => {
+  loadStore.changeStateTrue()
+})
 </script>
 
 <template>
+  <Loading v-if="!loadStore.loading" />
   <Header :limit="300" />
   <div>
     <div class="main-content">

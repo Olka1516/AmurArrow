@@ -1,0 +1,41 @@
+$toastSuccess: #effbf3;
+$toastSuccessText: #479d68;
+$toastInfo: #f0f6fe;
+$toastInfoText: #2e5bdb;
+$toastWarning: #fef7ee;
+$toastWarningText: #c95728;
+$toastDanger: #fcf0f0;
+$toastDangerText: #c13434;
+
+
+.Vue-Toastification__close-button {
+opacity: 0.8;
+}
+.Vue-Toastification__progress-bar {
+  background-color: #d3d3d3;
+}
+
+.Vue-Toastification__toast--success {
+  background-color: $toastSuccess;
+  & * {
+    color: $toastSuccessText !important;
+  }
+}
+.Vue-Toastification__toast--info {
+  background-color: $toastInfo;
+  & * {
+    color: $toastInfoText !important;
+  }
+}
+.Vue-Toastification__toast--error {
+  & * {
+    color: $toastDangerText !important;
+  }
+  background-color: $toastDanger;
+}
+.Vue-Toastification__toast--warning {
+  & * {
+    color: $toastWarningText !important;
+  }
+  background-color: $toastWarning;
+}

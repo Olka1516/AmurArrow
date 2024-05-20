@@ -5,12 +5,13 @@ import Item from '@/components/profile/ComponentItem.vue'
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
 import router from '@/router'
 import { Socket } from '@/socket'
-import { useMessageStore, userStore } from '@/stores'
+import { useLoaderState, useMessageStore, userStore } from '@/stores'
 import type { Chat } from '@/types'
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
+const loadStore = useLoaderState()
 const { t } = useI18n()
 const socket = new Socket()
 const route = useRoute()
@@ -42,6 +43,7 @@ const getText = (text1: string, text2: string) => {
 
 const routeToSettings = async () => {
   await router.push('/user-settings/' + store.username)
+  loadStore.changeStateTrue()
 }
 
 const getImage = (url: string) => {
@@ -90,6 +92,7 @@ const writeMessage = async () => {
 watch(
   () => route.params.username,
   async () => {
+    loadStore.changeStateTrue()
     content.value = 'posts'
   }
 )

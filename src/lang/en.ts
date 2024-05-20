@@ -161,5 +161,12 @@ export default {
     "Our mission is to create products that change the world, advance industries and improve people's lives. We are constantly looking for new opportunities and innovative ways to succeed, building long-term relationships with our customers based on mutual trust, growing value and mutual benefit. Our company is always committed to its goals and objectives, working hard to be better tomorrow than we were today.",
   minAge: 'Min age',
   maxAge: 'Max age',
-  selectChat: 'Select a chat to start a conversation'
+  selectChat: 'Select a chat to start a conversation',
+  signInSuccess: 'You are successfully logged in',
+  textDanger: 'Something went wrong. Please try again later',
+  signOutSuccess: 'You have successfully signed out',
+  signUpSuccess: 'You have successfully signed up',
+  userUpdateInfo: 'Your data was successfully updated',
+  deletePost: 'Post deleted',
+  addPost: "Post successfully added"
 }

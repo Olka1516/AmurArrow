@@ -3,11 +3,13 @@ import Footer from './landing/LayoutFooter.vue'
 import Content from './profile/ContentLovers.vue'
 import Sidebar from '@/components/profile/ComponentSidebar.vue'
 import Button from '@/components/general/ComponentButton.vue'
+import Loading from '@/components/general/LoadingPage.vue'
 import { onMounted, ref, type Ref, provide } from 'vue'
 import type { FavoritePost } from '@/types'
-import { loverStore } from '@/stores'
+import { loverStore, useLoaderState } from '@/stores'
 import { useRoute } from 'vue-router'
 
+const loadStore = useLoaderState()
 const LoverStore = loverStore()
 const route = useRoute()
 const isOpen = ref(false)
@@ -62,10 +64,12 @@ onMounted(async () => {
   if (btnElement.value) {
     computedStyle.value = window.getComputedStyle(btnElement.value)
   }
+  loadStore.changeStateTrue();
 })
 </script>
 
 <template>
+  <Loading v-if="!loadStore.loading" />
   <div id="content">
     <Button
       id="sidebarBtn"

@@ -22,6 +22,7 @@
 @import './theme';
 @import './repetitive/cubes';
 @import './repetitive/forms';
+@import './repetitive/loading';
 
 @mixin header {
   @include find-lover-content;
@@ -211,4 +212,8 @@
 
 @mixin chat-component {
   @include users-chat-container;
+}
+
+@mixin loading {
+  @include loading-component;
 }
