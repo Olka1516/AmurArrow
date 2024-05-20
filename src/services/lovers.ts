@@ -1,4 +1,4 @@
-import type { FavoritePost, FilterItems } from '@/types'
+import type { AddPost, FilterItems } from '@/types'
 import http from '../http-common'
 import { axiosFileInstance } from '@/axios-file'
 
@@ -8,15 +8,10 @@ export class Lovers {
     return data.data
   }
 
-  addFavoitePostForUser = async (data: FavoritePost) => {
+  addFavoitePostForUser = async (data: AddPost) => {
     const formData = new FormData()
-    formData.append('image', data.image)
-    formData.append('title', data.title)
-    formData.append('description', data.description)
     formData.append('date', data.date)
-    formData.append('id', data.id)
-    formData.append('username', data.username)
-    return await axiosFileInstance.post('/api/lovers/add', formData)
+    return await axiosFileInstance.put('/api/lovers/add/' + data.id, formData)
   }
 
   sendUserMessage = async (type: string, username: string) => {

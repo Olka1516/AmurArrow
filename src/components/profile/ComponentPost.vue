@@ -1,40 +1,38 @@
 <script lang="ts" setup>
-import type { FavoritePost, ReqPost, UserInfo } from '@/types'
+import type { FavoritePost, ReqPost } from '@/types'
 import Button from '../general/ComponentButton.vue'
-import { onMounted, ref, type Ref } from 'vue'
 import { userStore } from '@/stores'
 import router from '@/router'
 
 const store = userStore()
-const data: Ref<UserInfo | undefined> = ref()
 const props = defineProps<{ post: FavoritePost | ReqPost | undefined }>()
-const emit = defineEmits<{ (e: 'close'): void, (e: 'deletePost'): void }>()
+const emit = defineEmits<{ (e: 'close'): void; (e: 'deletePost'): void }>()
 const close = () => {
   emit('close')
 }
 
 const getName = () => {
-  if (!data.value) return
-  return data.value.firstName
-    ? data.value.firstName.charAt(0) + data.value.lastName.charAt(0)
-    : data.value.username.charAt(0)
-}
-
-const getOwnOrFavorite = () => {
-  return props.post && props.post.ownUsername ? props.post.ownUsername : props.post!.username
+  console.log(props.post)
+  return props.post && props.post.firstName && props.post.lastName
+    ? props.post.firstName.charAt(0) + props.post.lastName.charAt(0)
+    : props.post!.username.charAt(0)
 }
 
 const toProfile = async () => {
-  await router.push('/user-profile/' + getOwnOrFavorite())
+  await router.push('/user-profile/' + props.post!.username)
 }
 
 const deletePost = async () => {
   emit('deletePost')
+  const favoritesFromStorage = JSON.parse(localStorage.getItem('favorites') || '[]')
+  let newFarorites = []
+  for (let i = 0; i < favoritesFromStorage.length; i++) {
+    if (favoritesFromStorage[i].id !== props.post?.id) {
+      newFarorites.push(favoritesFromStorage[i])
+    }
+  }
+  localStorage.setItem('favorites', JSON.stringify(newFarorites))
 }
-
-onMounted(async () => {
-  data.value = await store.getOnlyUserInfo(getOwnOrFavorite())
-})
 </script>
 
 <template>
@@ -45,15 +43,20 @@ onMounted(async () => {
         <img class="post" :src="post!.image" alt="" />
         <div class="post-modal-content">
           <div class="post-modal-avatar" @click="toProfile()">
-            <img v-if="data && data.profileImage" :src="data.profileImage" class="avatar" />
+            <img v-if="post && post.avatarImage" :src="post.avatarImage" class="avatar" />
             <h1 v-else class="avatar">{{ getName() }}</h1>
-            <h1>{{ getOwnOrFavorite() }}</h1>
+            <h1>{{ post?.username }}</h1>
           </div>
           <div class="post-modal-texts">
             <h1>{{ post!.title }}</h1>
             <p>{{ post!.description }}</p>
           </div>
-          <Button v-if="store.userType === 'OWNER'" icon="trash-pink" class="modal-button trash" @click="deletePost" />
+          <Button
+            v-if="store.userType === 'OWNER'"
+            icon="trash-pink"
+            class="modal-button trash"
+            @click="deletePost"
+          />
         </div>
       </div>
     </div>

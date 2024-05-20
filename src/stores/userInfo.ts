@@ -27,7 +27,7 @@ export const userStore = defineStore('userInfo', () => {
 
   const getUserInfo = async (username: string) => {
     const data = await сlient.getUserInfoByUsername(username)
-    ownerPhotos.value = await posts.getUserPostsByUsername(username, 'OWN')
+    ownerPhotos.value = await posts.getUserPostsByUsername(username)
     state.age = data.age
     state.description = data.description
     state.email = data.email
@@ -42,7 +42,7 @@ export const userStore = defineStore('userInfo', () => {
     media.value = data.media
 
     if (state.userType === 'OWNER') {
-      favouritePhotos.value = await posts.getUserPostsByUsername(username, 'FAVORITE')
+      favouritePhotos.value = await posts.getUserFavoritesByUsername(username)
       localStorage.setItem('username', data.username)
       localStorage.setItem('image', data.profileImage)
       localStorage.setItem('firstName', data.firstName)
@@ -65,10 +65,16 @@ export const userStore = defineStore('userInfo', () => {
   const addPost = async (data: Post) => {
     return await posts.addUserPost(data)
   }
+
   const deletePost = async (id: string) => {
     const data = await posts.deleteUserPostById(id)
-    ownerPhotos.value = await posts.getUserPostsByUsername(state.username, 'OWN')
-    favouritePhotos.value = await posts.getUserPostsByUsername(state. username, 'FAVORITE')
+    ownerPhotos.value = await posts.getUserPostsByUsername(state.username)
+    return data
+  }
+
+  const deleteFavoritePost = async (id: string) => {
+    const data = await posts.deleteUserFavoritePostById(id)
+    favouritePhotos.value = await posts.getUserFavoritesByUsername(state.username)
     return data
   }
 
@@ -79,6 +85,7 @@ export const userStore = defineStore('userInfo', () => {
     media,
     getUserInfo,
     deletePost,
+    deleteFavoritePost,
     updateUser,
     setImage,
     addPost,

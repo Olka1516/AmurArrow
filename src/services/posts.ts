@@ -11,14 +11,21 @@ export class Posts {
     return await axiosFileInstance.post('/api/posts/add', formData)
   }
 
-  getUserPostsByUsername = async (username: string, type: string) => {
-    const formData = new FormData()
-    formData.append('type', type)
-    const data = await axiosFileInstance.post('/api/posts/get-all/' + username, formData)
+  getUserPostsByUsername = async (username: string) => {
+    const data = await axiosFileInstance.get('/api/posts/get-all/' + username)
+    return data.data
+  }
+
+  getUserFavoritesByUsername = async (username: string) => {
+    const data = await axiosFileInstance.get('/api/posts/get-all-favorites/' + username)
     return data.data
   }
 
   deleteUserPostById = async (id: string) => {
     return await axiosFileInstance.delete('/api/posts/delete/' + id)
+  }
+
+  deleteUserFavoritePostById = async (id: string) => {
+    return await axiosFileInstance.delete('/api/posts/delete-favorite/' + id)
   }
 }
