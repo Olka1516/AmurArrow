@@ -5,7 +5,10 @@ import ComponentPost from '@/components/profile/ComponentPost.vue'
 import router from '@/router'
 import type { FavoritePost, ReqPost } from '@/types'
 import type { SvgUrls } from '@/assets/pictures/icons/allSvg'
-import { userStore } from '@/stores'
+import { toastStore, useLoaderState, userStore } from '@/stores'
+
+const loadStore = useLoaderState()
+const toastS = toastStore()
 const props = defineProps<{
   posts: FavoritePost[] | ReqPost[] | []
   text: string
@@ -26,7 +29,10 @@ const gridPhoneLength = ref(Math.ceil(props.posts.length / 2))
 
 const addPosts = async () => {
   if (props.isOnlyClick) await router.push('/user-profile/' + props.username)
-  else await router.push('/user-posts/' + props.username)
+  else {
+    loadStore.changeStateTrue()
+    await router.push('/user-posts/' + props.username)
+  }
 }
 
 const modalPost = async (isClose: boolean, post?: FavoritePost) => {
@@ -39,9 +45,15 @@ const modalPost = async (isClose: boolean, post?: FavoritePost) => {
 }
 
 const deletePost = async () => {
-  if(store.username !== tempPost.value?.username) await store.deleteFavoritePost(tempPost.value!.id)
-  else await store.deletePost(tempPost.value!.id)
-  modalPost(false)
+  try {
+    if (store.username !== tempPost.value?.username)
+      await store.deleteFavoritePost(tempPost.value!.id)
+    else await store.deletePost(tempPost.value!.id)
+    modalPost(false)
+    toastS.sendSuccess('deletePost')
+  } catch {
+    toastS.sendError('textDanger')
+  }
 }
 watch(
   () => props.posts,

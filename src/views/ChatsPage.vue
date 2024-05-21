@@ -1,14 +1,16 @@
 <script setup lang="ts">
+import Loading from '@/components/general/LoadingPage.vue'
 import Button from '@/components/general/ComponentButton.vue'
 import ComponentChat from '@/components/profile/ComponentChat.vue'
 import ComponentChatItem from '@/components/profile/ComponentChatItem.vue'
 import router from '@/router'
 import { Socket } from '@/socket'
-import { useMessageStore } from '@/stores'
+import { useLoaderState, useMessageStore } from '@/stores'
 import type { Chat, LocalChat } from '@/types'
 import { onMounted, reactive, ref, watch, type Ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+const loadStore = useLoaderState()
 const { t } = useI18n()
 const socket = new Socket()
 const storeMessage = useMessageStore()
@@ -98,10 +100,12 @@ onMounted(async () => {
     selectedChat.room = storeMessage.room
   }
   allChats.value = storeMessage.allMessages
+  loadStore.changeStateTrue();
 })
 </script>
 
 <template>
+  <Loading v-if="!loadStore.loading" />
   <div class="chats">
     <div class="chats-container">
       <div class="chat-links">

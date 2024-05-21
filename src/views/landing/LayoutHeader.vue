@@ -5,10 +5,12 @@ import Button from '@/components/general/ComponentButton.vue'
 import Burger from '@/components/profile/ComponentBurger.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useLoaderState } from '@/stores'
 
 const { t, locale } = useI18n()
 const emit = defineEmits<{ (e: 'logOut'): void }>()
 
+const loadStore = useLoaderState()
 const btnElement: Ref<HTMLElement | null> = ref(null)
 const isOpen = ref(false)
 const props = defineProps<{ limit: number }>()
@@ -29,11 +31,13 @@ const callback: IntersectionObserverCallback = () => {
 const observer = new IntersectionObserver(callback, options)
 
 const signIn = async () => {
+  loadStore.changeStateFalse()
   await router.push('/sign-in')
   document.body.style.overflow = 'auto'
 }
 
 const signUp = async () => {
+  loadStore.changeStateFalse()
   await router.push('/sign-up')
   document.body.style.overflow = 'auto'
 }

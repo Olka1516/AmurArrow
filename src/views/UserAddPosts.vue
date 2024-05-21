@@ -7,11 +7,12 @@ import ErrorMessage from '@/components/errors/ErrorMessage.vue'
 import { reactive, ref } from 'vue'
 import { required, maxLength } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import { userStore } from '@/stores'
+import { toastStore, userStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import type { Post, TRequestError } from '@/types'
 import { useI18n } from 'vue-i18n'
 
+const toastS = toastStore()
 const { t } = useI18n()
 const router = useRouter()
 const store = userStore()
@@ -46,8 +47,10 @@ const submit = async () => {
     info.date = new Date()
     await store.addPost(info)
     await router.push('/user-profile/' + store.username)
+    toastS.sendSuccess('addPost')
   } catch (err) {
     const message = err as TRequestError
+    toastS.sendError('textDanger')
     error.value = message.response?.data.message || ''
   }
 }

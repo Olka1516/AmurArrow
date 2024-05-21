@@ -6,13 +6,15 @@ import PasswordInput from '@/components/general/PasswordInput.vue'
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { reactive, ref } from 'vue'
-import { authStore } from '@/stores'
+import { authStore, toastStore, useLoaderState } from '@/stores'
 import { useRouter } from 'vue-router'
 import type { TRequestError } from '@/types'
 import { useI18n } from 'vue-i18n'
 
+const loadStore = useLoaderState()
 const { t } = useI18n()
 const authS = authStore()
+const toastS = toastStore()
 const router = useRouter()
 const error = ref('')
 const user = reactive({
@@ -35,17 +37,21 @@ const signIn = async () => {
     await authS.signIn({ username: user.username, password: user.password })
     localStorage.setItem('username', user.username)
     await router.push('/user-profile/' + user.username)
+    toastS.sendSuccess('signInSuccess')
   } catch (err) {
     const message = err as TRequestError
+    toastS.sendError('textDanger')
     error.value = message.response?.data.message || ''
   }
 }
 
 const signUp = async () => {
+  loadStore.changeStateFalse()
   await router.push('/sign-up')
 }
 
 const back = async () => {
+  loadStore.changeStateFalse()
   await router.push('/')
 }
 </script>

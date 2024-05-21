@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { userStore } from '@/stores'
+import { useLoaderState, userStore } from '@/stores'
 import type { TRequestError } from '@/types'
 
 const router = createRouter({
@@ -64,6 +64,8 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+  const loadStore = useLoaderState()
+  loadStore.changeStateFalse()
   const username = localStorage.getItem('username') || ''
   const store = userStore()
   try {
@@ -77,7 +79,6 @@ router.beforeEach(async (to, from, next) => {
     if (
       (to.fullPath.includes('find-lover') ||
         to.fullPath.includes('user-settings') ||
-        to.fullPath.includes('chats') ||
         to.fullPath.includes('user-posts')) &&
       store.userType !== 'OWNER'
     ) {

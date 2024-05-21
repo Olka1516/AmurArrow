@@ -6,11 +6,13 @@ import PasswordInput from '@/components/general/PasswordInput.vue'
 import { reactive, ref, computed } from 'vue'
 import { email, required, sameAs, minLength } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import { authStore } from '@/stores'
+import { authStore, toastStore, useLoaderState } from '@/stores'
 import { useRouter } from 'vue-router'
 import type { TRequestError } from '@/types'
 import { useI18n } from 'vue-i18n'
 
+const loadStore = useLoaderState()
+const toastS = toastStore()
 const router = useRouter()
 const { t } = useI18n()
 const authS = authStore()
@@ -41,17 +43,21 @@ const signUp = async () => {
     await authS.signUp({ username: user.username, email: user.email, password: user.password })
     localStorage.setItem('username', user.username)
     await router.push('/user-profile/' + user.username)
+    toastS.sendSuccess('signUpSuccess')
   } catch (err) {
     const message = err as TRequestError
+    toastS.sendError('textDanger')
     error.value = message.response?.data.message || ''
   }
 }
 
 const signIn = async () => {
+  loadStore.changeStateFalse()
   await router.push('/sign-in')
 }
 
 const back = async () => {
+  loadStore.changeStateFalse()
   await router.push('/')
 }
 </script>
@@ -79,11 +85,7 @@ const back = async () => {
             <ErrorMessage :v="v$.password" />
           </div>
           <div class="form-input">
-            <PasswordInput
-              v-model="user.confirmPassword"
-              :v="v$.confirmPassword"
-              type="Confirm"
-            />
+            <PasswordInput v-model="user.confirmPassword" :v="v$.confirmPassword" type="Confirm" />
             <ErrorMessage :v="v$.confirmPassword" />
           </div>
           <div class="form-input">

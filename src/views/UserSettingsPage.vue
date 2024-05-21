@@ -10,13 +10,14 @@ import SelectorInput from '@/components/general/SelectorInput.vue'
 import TextInput from '@/components/general/TextInput.vue'
 import LocationSelector from '@/components/general/locationSelector.vue'
 import router from '@/router'
-import { userStore } from '@/stores'
+import { toastStore, userStore } from '@/stores'
 import type { ReqMedia, TRequestError, UserSettings } from '@/types'
 import { useVuelidate } from '@vuelidate/core'
 import { email, required } from '@vuelidate/validators'
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+const toastS = toastStore()
 const { t } = useI18n()
 const store = userStore()
 const error = ref('')
@@ -66,8 +67,10 @@ const submit = async () => {
     if (profile.value) await store.setImage(profile.value, 'profile')
     if (blank.value) await store.setImage(blank.value, 'blank')
     await router.push('/user-profile/' + user.username)
+    toastS.sendSuccess('userUpdateInfo')
   } catch (err) {
     const message = err as TRequestError
+    toastS.sendError('textDanger')
     error.value = message.response?.data.message || ''
   }
 }
