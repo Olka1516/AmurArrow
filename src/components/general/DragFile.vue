@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import Button from './ComponentButton.vue'
 import { ref, onMounted, type Ref } from 'vue'
 import { i18n } from '../../lang'
 
+const selectedFilter = ref(1)
+const totalFilters = 12
 const props = defineProps<{
   isPostsPage?: boolean
   v?: {
@@ -9,13 +12,16 @@ const props = defineProps<{
     $dirty: boolean
   }
   url?: string
+  isPostPage?: boolean
 }>()
 
 const text = ref(i18n.global.t('defUploadImage'))
+const originalImg = ref()
 const dropArea: Ref<null | Element> = ref(null)
 const isImageChoosen = ref(false)
 const emit = defineEmits<{ (e: 'update', value: File): void }>()
 const isHeavy = ref(false)
+const uploadedFile = ref<File | null>(null)
 
 const handleDragEnter = (e: DragEvent) => {
   preventDefaults(e)
@@ -75,6 +81,7 @@ const handleFiles = (files: FileList) => {
     text.value = i18n.global.t('notImage')
     return
   }
+  uploadedFile.value = files[0]
   uploadFile(files[0])
   previewFile(files[0])
 }
@@ -92,10 +99,12 @@ const previewFile = (file: File) => {
       let img = document.createElement('img')
       img.src = reader.result
       img.style.width = '100%'
-      img.style.height = '180px'
-      img.style.verticalAlign = 'middle'
-      img.style.borderRadius = '16px'
+      img.style.minHeight = '180px'
+      originalImg.value = img
       img.style.objectFit = 'cover'
+      img.style.borderRadius = '16px'
+      img.style.verticalAlign = 'middle'
+      img.id = 'previewImage'
       document.getElementById('gallery')?.appendChild(img)
     }
   }
@@ -106,6 +115,85 @@ const clearGallery = () => {
   if (gallery) {
     gallery.innerHTML = ''
   }
+}
+
+const applyCurrentFilter = (img: HTMLImageElement) => {
+  const filters = [
+    'none',
+    'twenties',
+    'extreme_offset_red',
+    'wood',
+    'bluescale',
+    'evening',
+    'crimson',
+    'coral',
+    'incbrightness',
+    'frontward',
+    'vintage',
+    'rosetint'
+  ]
+  let canvas = document.getElementById('gallery')!.querySelector('canvas')
+  if (canvas) {
+    document.getElementById('gallery')?.removeChild(canvas)
+  }
+  if (filters[selectedFilter.value - 1] === 'none') {
+    img.style.display = 'block'
+    document.getElementById('gallery')?.appendChild(img)
+    uploadFile(uploadedFile.value!)
+    return
+  }
+  img.style.display = 'none'
+  // @ts-ignore
+  pixelsJS.filterImg(img, filters[selectedFilter.value - 1])
+  canvas = document.getElementById('gallery')!.querySelector('canvas')
+  if (canvas) {
+    canvas.style.width = '100%'
+    canvas.style.height = '100%'
+    canvas.style.objectFit = 'cover'
+    canvas.style.borderRadius = '16px'
+  }
+  document.getElementById('gallery')?.appendChild(img)
+}
+
+const nextFilter = () => {
+  selectedFilter.value = (selectedFilter.value % totalFilters) + 1
+  updateImageFilter()
+}
+
+const prevFilter = () => {
+  selectedFilter.value = ((selectedFilter.value - 2 + totalFilters) % totalFilters) + 1
+  updateImageFilter()
+}
+
+const updateImageFilter = () => {
+  applyCurrentFilter(originalImg.value)
+  const canvas = document.getElementById('gallery')!.querySelector('canvas')
+  if (canvas) {
+    const dataUrl = canvas.toDataURL('image/png')
+    const file = dataURLtoFile(dataUrl, 'canvas-image.png')
+    if (file) uploadFile(file)
+  }
+}
+
+const dataURLtoFile = (dataUrl: string, filename: string): File | null => {
+  if (dataUrl) {
+    let arr = dataUrl.split(',')
+    if (arr.length >= 2 && arr[0]) {
+      let mime = arr[0].match(/:(.*?);/)?.[1]
+      let bstr = atob(arr[1])
+      let n = bstr.length
+      let u8arr = new Uint8Array(n)
+
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+
+      if (mime) {
+        return new File([u8arr], filename, { type: mime })
+      }
+    }
+  }
+  return null
 }
 
 onMounted(() => {
@@ -146,7 +234,21 @@ const isInfoInvalid = () => {
         i18n.global.t('chooseImage')
       }}</label>
     </form>
-    <div id="gallery" :class="{ gallery: isPostsPage }"></div>
+    <div class="image-content">
+      <div id="gallery" :class="{ gallery: isPostsPage }"></div>
+      <div v-if="isImageChoosen && isPostPage" class="filter-controls">
+        <Button
+          class="no-background-no-contour-button filter-button"
+          icon="arrow"
+          @click="prevFilter"
+        />
+        <Button
+          class="no-background-no-contour-button filter-button reverse"
+          icon="arrow"
+          @click="nextFilter"
+        />
+      </div>
+    </div>
   </div>
 </template>
 

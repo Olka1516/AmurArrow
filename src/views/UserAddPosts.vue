@@ -60,7 +60,7 @@ const submit = async () => {
     <div class="user-posts">
       <div class="user-posts-content">
         <Button icon="back" class="fill-pink-button rounded" @click="back()" />
-        <DragFile :isPostsPage="true" @update="(item) => setImage(item)" :v="v$.image" />
+        <DragFile :isPostsPage="true" @update="(item) => setImage(item)" :v="v$.image" :isPostPage="true" />
         <hr />
         <div class="user-content-inputs">
           <div class="form-input">
