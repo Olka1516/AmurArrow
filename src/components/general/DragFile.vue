@@ -100,6 +100,7 @@ const previewFile = (file: File) => {
       img.src = reader.result
       img.style.width = '100%'
       img.style.minHeight = '180px'
+      img.style.maxHeight = '490px'
       originalImg.value = img
       img.style.objectFit = 'cover'
       img.style.borderRadius = '16px'
@@ -121,7 +122,7 @@ const applyCurrentFilter = (img: HTMLImageElement) => {
   const filters = [
     'none',
     'twenties',
-    'extreme_offset_red',
+    'extra_offset_red',
     'wood',
     'bluescale',
     'evening',
@@ -148,7 +149,8 @@ const applyCurrentFilter = (img: HTMLImageElement) => {
   canvas = document.getElementById('gallery')!.querySelector('canvas')
   if (canvas) {
     canvas.style.width = '100%'
-    canvas.style.height = '100%'
+    canvas.style.minHeight = '190px'
+    canvas.style.maxHeight = '490px'
     canvas.style.objectFit = 'cover'
     canvas.style.borderRadius = '16px'
   }
