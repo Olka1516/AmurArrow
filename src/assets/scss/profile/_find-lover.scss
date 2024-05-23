@@ -101,7 +101,7 @@
 }
 
 @mixin find-lover-content {
-  #content {
+  #contentFindLover {
     display: flex;
     min-height: 100vh;
     @media screen and (max-width: 767px) {

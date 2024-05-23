@@ -89,11 +89,18 @@ onMounted(() => {
               @click="back('user-profile')"
               :text="t('profile')"
             />
-            <Button
-              class="no-background-no-contour-button rounded"
-              @click="logOut"
-              icon="log-out"
-            />
+            <div class="account-buttons buttons-icon">
+              <Button
+                icon="paper-plane-white"
+                class="no-background-no-contour-button rounded"
+                @click="back('chats')"
+              />
+              <Button
+                class="no-background-no-contour-button rounded"
+                @click="logOut"
+                icon="log-out"
+              />
+            </div>
           </div>
         </div>
         <div class="account-buttons navs">
