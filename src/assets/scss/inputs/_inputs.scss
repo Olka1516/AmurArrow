@@ -99,7 +99,6 @@
   }
 }
 @mixin location-container {
-  
   .select {
     position: relative;
     display: flex;
@@ -217,10 +216,35 @@
     border-color: $pink;
   }
 
+  .image-content {
+    position: relative;
+    
+    & .filter-controls {
+      padding: 10px 0;
+      width: 100%;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      background: rgb(0,0,0);
+background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(50,50,50,0.5018382352941176) 50%, rgba(107,107,107,0.03405112044817926) 100%);
+      position: absolute;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+      & .reverse {
+        transform: rotateY(3.142rad);
+      }
+    }
+  }
+
   .gallery {
     height: 100%;
-    & :first-child {
+    & :first-child img {
+      width: 100%;
+      object-fit: cover;
       min-height: 190px !important;
+      max-height: 490px;
     }
   }
 

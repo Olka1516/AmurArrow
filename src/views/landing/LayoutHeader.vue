@@ -138,7 +138,7 @@ onMounted(() => {
           />
           <Button
             icon="paper-plane-white"
-            class="no-background-no-contour-button rounded"
+            class="no-background-no-contour-button rounded navs"
             @click="back('chats')"
           />
           <Button

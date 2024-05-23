@@ -70,7 +70,7 @@ onMounted(async () => {
 
 <template>
   <Loading v-if="!loadStore.loading" />
-  <div id="content">
+  <div id="contentFindLover">
     <Button
       id="sidebarBtn"
       @click="changeActive(true, 'hidden')"

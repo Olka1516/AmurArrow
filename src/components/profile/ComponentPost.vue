@@ -12,7 +12,6 @@ const close = () => {
 }
 
 const getName = () => {
-  console.log(props.post)
   return props.post && props.post.firstName && props.post.lastName
     ? props.post.firstName.charAt(0) + props.post.lastName.charAt(0)
     : props.post!.username.charAt(0)

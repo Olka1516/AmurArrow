@@ -26,10 +26,12 @@ import SvgFilter from './filter.svg'
 import SvgPaperPlane from './paper-plane.svg'
 import SvgPaperPlaneWhite from './paper-plane-white.svg'
 import SvgTrash from './trash-pink.svg'
+import SvgArrowPink from './arrow_pink.svg'
 
 export const SvgUrls = {
   lines: SvgLines,
   'paper-plane': SvgPaperPlane,
+  'arrow-pink': SvgArrowPink,
   'paper-plane-white': SvgPaperPlaneWhite,
   facebook: SvgFacebook,
   instagram: SvgInstagram,
