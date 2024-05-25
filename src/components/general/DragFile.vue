@@ -99,8 +99,8 @@ const previewFile = (file: File) => {
       let img = document.createElement('img')
       img.src = reader.result
       img.style.width = '100%'
-      img.style.minHeight = '180px'
-      img.style.maxHeight = '490px'
+      if(props.isPostPage)  img.style.maxHeight = '490px'
+      else img.style.maxHeight = '180px'
       originalImg.value = img
       img.style.objectFit = 'cover'
       img.style.borderRadius = '16px'
@@ -150,7 +150,7 @@ const applyCurrentFilter = (img: HTMLImageElement) => {
   if (canvas) {
     canvas.style.width = '100%'
     canvas.style.minHeight = '190px'
-    canvas.style.maxHeight = '490px'
+    canvas.style.maxHeight = '485px'
     canvas.style.objectFit = 'cover'
     canvas.style.borderRadius = '16px'
   }
@@ -236,7 +236,7 @@ const isInfoInvalid = () => {
         i18n.global.t('chooseImage')
       }}</label>
     </form>
-    <div class="image-content">
+    <div v-if="isImageChoosen || props.url" class="image-content">
       <div id="gallery" :class="{ gallery: isPostsPage }"></div>
       <div v-if="isImageChoosen && isPostPage" class="filter-controls">
         <Button

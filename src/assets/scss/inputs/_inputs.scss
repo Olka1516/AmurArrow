@@ -218,6 +218,7 @@
 
   .image-content {
     position: relative;
+    min-height: 180px;
     
     & .filter-controls {
       padding: 10px 0;
@@ -242,9 +243,8 @@ background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(50,50,50,0.501838235294
     height: 100%;
     & :first-child img {
       width: 100%;
+      height: 100%;
       object-fit: cover;
-      min-height: 190px !important;
-      max-height: 490px;
     }
   }
 

@@ -73,6 +73,11 @@
       flex-direction: column;
     }
   }
+
+  .isExist {
+     display: none;
+  }
+
   .profile-content-wrapper {
     display: flex;
     justify-content: space-between;

@@ -144,8 +144,8 @@ watch(
               </div>
               <p>{{ store.description }}</p>
               <nav class="profile-content-inner links" v-if="store.media.length">
-                <div v-for="item in store.media" :key="item.name">
-                  <a v-if="item.link" :href="item.link" class="profile-content-item link">
+                <div v-for="item in store.media" :key="item.name" :class="{ isExist: !item.link }">
+                  <a :href="item.link" class="profile-content-item link">
                     <Item :name="item.name" :text="item.link" additionalImage="copy" />
                   </a>
                 </div>

@@ -65,9 +65,9 @@ const clearGallery = () => {
 watch(
   () => props.url,
   () => {
+    clearGallery()
     if (props.url === '' || props.url === undefined) {
       isImage.value = false
-      clearGallery()
     } else {
       isImage.value = true
       const img = createImg(props.url)

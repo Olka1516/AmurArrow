@@ -69,6 +69,11 @@ const getLover = (memberOne: string, memberTwo: string) => {
   return username === memberOne ? memberTwo : memberOne
 }
 
+const getLoverInfo = (member: string, infoOne: string, infoTwo: string) => {
+  const username = getOwn()
+  return username !== member ? infoOne : infoTwo
+}
+
 const getNumber = (room: string) => {
   if (selectedChat.room === room) {
     storeMessage.setToZero(room)
@@ -89,7 +94,7 @@ watch(
 onMounted(async () => {
   chatsLocale.value = JSON.parse(window.localStorage.getItem('chats') || '[]')
   storeMessage.localeChats = chatsLocale.value
-  if(!storeMessage.room) await storeMessage.getAllChats()
+  if (!storeMessage.room) await storeMessage.getAllChats()
 
   for (let i = 0; i < storeMessage.allMessages.length; i++) {
     socket.initSocket(storeMessage.allMessages[i].room)
@@ -101,7 +106,7 @@ onMounted(async () => {
     selectedChat.room = storeMessage.room
   }
   allChats.value = storeMessage.allMessages
-  loadStore.changeStateTrue();
+  loadStore.changeStateTrue()
 })
 </script>
 
@@ -126,6 +131,27 @@ onMounted(async () => {
             :text="k_chat.chats[k_chat.chats.length - 1]?.text"
             @click="chooseChat(k_chat)"
             :isActive="isActive(getLover(k_chat.members[0].username, k_chat.members[1].username))"
+            :image="
+              getLoverInfo(
+                k_chat.members[0].username,
+                k_chat.members[0].image,
+                k_chat.members[1].image
+              )
+            "
+            :firstName="
+              getLoverInfo(
+                k_chat.members[0].username,
+                k_chat.members[0].firstName,
+                k_chat.members[1].firstName
+              )
+            "
+            :lastName="
+              getLoverInfo(
+                k_chat.members[0].username,
+                k_chat.members[0].lastName,
+                k_chat.members[1].lastName
+              )
+            "
           />
         </div>
       </div>
