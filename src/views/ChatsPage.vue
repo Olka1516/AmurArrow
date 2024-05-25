@@ -89,7 +89,8 @@ watch(
 onMounted(async () => {
   chatsLocale.value = JSON.parse(window.localStorage.getItem('chats') || '[]')
   storeMessage.localeChats = chatsLocale.value
-  await storeMessage.getAllChats()
+  if(!storeMessage.room) await storeMessage.getAllChats()
+
   for (let i = 0; i < storeMessage.allMessages.length; i++) {
     socket.initSocket(storeMessage.allMessages[i].room)
   }
@@ -118,7 +119,7 @@ onMounted(async () => {
         />
       </div>
       <div v-if="allChats.length">
-        <div v-for="k_chat in allChats" :key="k_chat.id">
+        <div v-for="k_chat in storeMessage.allMessages" :key="k_chat.id">
           <ComponentChatItem
             :number="getNumber(k_chat.room)"
             :username="getLover(k_chat.members[0].username, k_chat.members[1].username)"
@@ -145,6 +146,7 @@ onMounted(async () => {
           :chat="selectedChat"
           @closeChat="closeChat"
           @sendMessage="(val) => sendMessage(val)"
+          @backToProfile="(val) => back(val)"
         />
       </div>
     </div>
