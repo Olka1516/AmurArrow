@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   username: string
-  text: string
+  text?: string
   image?: string
   firstName?: string
   lastName?: string

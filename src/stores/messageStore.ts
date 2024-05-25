@@ -35,22 +35,32 @@ export const useMessageStore = defineStore('chats', () => {
   }
 
   const setActive = async (chat: Chat) => {
-    allMessages.value = [chat, ...allMessages.value]
-    state.room = chat.room
-    state.id = chat.id
-    state.members = chat.members
-
     await getAllChats()
     const chatIndex = allMessages.value.findIndex((item) => item.room === chat.room)
-    if (chatIndex !== -1) state.chats = allMessages.value[chatIndex].chats
-    else state.chats = chat.chats
+    if (chatIndex !== -1) {
+      state.room = chat.room
+      state.id = chat.id
+      state.members = chat.members
+      state.chats = allMessages.value[chatIndex].chats
+      chat.chats = state.chats
+      allMessages.value = [
+        chat,
+        ...allMessages.value.slice(0, chatIndex),
+        ...allMessages.value.slice(chatIndex + 1, allMessages.value.length)
+      ]
+    } else {
+      state.room = chat.room
+      state.id = chat.id
+      state.members = chat.members
+      state.chats = chat.chats
+      allMessages.value = [chat, ...allMessages.value]
+    }
   }
 
   const getAllChats = async () => {
     const username = localStorage.getItem('username')
     const chats = await classChats.getAllChatsByUsername(username!)
-    if (state.room) allMessages.value = [state, ...chats]
-    else allMessages.value = chats
+    allMessages.value = chats
   }
 
   const sortAllChats = () => {

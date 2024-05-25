@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import Button from '../general/ComponentButton.vue'
-import router from '@/router'
 import type { Chat } from '@/types'
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Socket } from '@/socket'
 
-const socket = new Socket()
 const { locale, t } = useI18n()
 const props = defineProps<{ chat: Chat }>()
-const emit = defineEmits<{ (e: 'closeChat'): void; (e: 'sendMessage', val: string): void }>()
+const emit = defineEmits<{ (e: 'closeChat'): void; (e: 'sendMessage', val: string): void; (e: 'backToProfile', val: string): void; }>()
 const message = ref('')
 const options: Intl.DateTimeFormatOptions = {
   weekday: 'long',
@@ -27,8 +24,7 @@ const getName = () => {
 }
 
 const back = async (name: string) => {
-  socket.close()
-  await router.push('/' + name)
+  emit('backToProfile', '/' + name)
 }
 
 const closeChat = () => {

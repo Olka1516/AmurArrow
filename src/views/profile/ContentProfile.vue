@@ -4,7 +4,6 @@ import Button from '@/components/general/ComponentButton.vue'
 import Item from '@/components/profile/ComponentItem.vue'
 import ContentPhotos from '@/components/profile/ComponentPhotos.vue'
 import router from '@/router'
-import { Socket } from '@/socket'
 import { useLoaderState, useMessageStore, userStore } from '@/stores'
 import type { Chat } from '@/types'
 import { ref, watch } from 'vue'
@@ -13,7 +12,6 @@ import { useRoute } from 'vue-router'
 
 const loadStore = useLoaderState()
 const { t } = useI18n()
-const socket = new Socket()
 const route = useRoute()
 const store = userStore()
 const storeMessage = useMessageStore()
@@ -62,12 +60,10 @@ const generateRoomName = (user1: string, user2: string) => {
 
 const writeMessage = async () => {
   const username = localStorage.getItem('username')
-  await router.push('/chats/' + username)
   const image = localStorage.getItem('image') || ''
   const firstName = localStorage.getItem('firstName') || ''
   const lastName = localStorage.getItem('lastName') || ''
   const room = generateRoomName(username!, store.username)
-  socket.initSocket(room)
   const chat: Chat = {
     room: room,
     members: [
@@ -86,12 +82,13 @@ const writeMessage = async () => {
     ],
     chats: []
   }
-  storeMessage.setActive(chat)
+  await storeMessage.setActive(chat)
+  await router.push('/chats/' + username)
 }
 
 watch(
   () => route.params.username,
-  async () => {
+  () => {
     loadStore.changeStateTrue()
     content.value = 'posts'
   }
